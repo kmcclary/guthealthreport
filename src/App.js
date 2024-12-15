@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './components/ui/Card';
-import { Award, Trophy, Star, Flame, Activity, Info, Filter, Beaker, ArrowRight, Clock, BookOpen, Check, AlertCircle, TrendingUp, Fingerprint, Heart, TreePine, BadgeAlert, SlidersHorizontal, Scale, Waves } from 'lucide-react';
 import BannerNavBar from './components/ui/BannerNavBar';
+import { 
+  Award, Trophy, Star, Flame, Activity, Info, Filter, Beaker, ArrowRight, Clock, BookOpen, 
+  Check, AlertCircle, TrendingUp, Fingerprint, Heart, TreePine, BadgeAlert, SlidersHorizontal, 
+  Scale, Waves, Timer, GitBranch
+} from 'lucide-react';
+import MicrobiomePersonalityV2 from './MicrobiomePersonality'; // Import the personality component
+
 
 const MicrobiomeReport = () => {
   const reportData = {
@@ -609,6 +615,30 @@ const MicrobiomeReport = () => {
 
         </Card>
 
+        <Card>
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2">
+        <Trophy className="h-5 w-5 text-yellow-500" />
+        Level {reportData.level.current}: {reportData.level.title}
+        </CardTitle>
+    </CardHeader>
+    <CardContent>
+    <div className="space-y-0">
+        <div className="w-full bg-gray-200 rounded-full h-4">
+          <div 
+            className="bg-blue-600 rounded-full h-4"
+            style={{ width: `${(reportData.scores.total % 50) * 2}%` }}
+          />
+        </div>
+        <p className="text-sm text-gray-600">
+          {reportData.level.points_to_next} points to next level
+        </p>
+      
+
+      </div>
+    </CardContent>
+  </Card>
+
 
       {/* Achievements */}
       <Card>
@@ -842,29 +872,13 @@ const MicrobiomeReport = () => {
             {/* Add the MEPSVisual component here */}
             <MEPSVisual currentProfile={reportData.current_profile} />
 
-<Card>
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2">
-        <Trophy className="h-5 w-5 text-yellow-500" />
-        Level {reportData.level.current}: {reportData.level.title}
-        </CardTitle>
-    </CardHeader>
-    <CardContent>
-    <div className="space-y-0">
-        <div className="w-full bg-gray-200 rounded-full h-4">
-          <div 
-            className="bg-blue-600 rounded-full h-4"
-            style={{ width: `${(reportData.scores.total % 50) * 2}%` }}
-          />
-        </div>
-        <p className="text-sm text-gray-600">
-          {reportData.level.points_to_next} points to next level
-        </p>
-      
+      {/* Personality Profile Section */}
 
-      </div>
-    </CardContent>
-  </Card>
+          <MicrobiomePersonalityV2 
+            currentProfile={reportData.current_profile} 
+            previousProfile={reportData.previous_profile} 
+          />
+
     </div>
   );
 };
