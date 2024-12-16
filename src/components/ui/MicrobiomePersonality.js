@@ -567,19 +567,19 @@ const MicrobiomePersonalityV2 = ({
             {showExplainer && (
               <div className="mt-4 space-y-4">
                 <div className="bg-gradient-to-br from-purple-50 via-white to-indigo-50 p-6 rounded-xl border border-purple-100 shadow-sm">
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3 flex-col sm:flex-row">
                     <div className="flex-shrink-0 bg-purple-100 rounded-lg p-2">
                       <Info className="h-6 w-6 text-purple-600" />
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-4 w-full">
                       <div>
                         <h4 className="text-lg font-medium text-purple-900 mb-2">Understanding Your Microbiome Type</h4>
-                        <p className="text-sm text-purple-800">
+                        <p className="text-sm text-purple-800 mb-4">
                           Your unique microbiome type is composed of four key dimensions that work together to characterize your gut bacteria's behavior and preferences:
                         </p>
                       </div>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
                         {[
                           {
                             title: "Substrate",
@@ -616,7 +616,7 @@ const MicrobiomePersonalityV2 = ({
                         ].map((dim, idx) => (
                           <div 
                             key={idx} 
-                            className={`bg-gradient-to-br ${dim.gradient} p-4 rounded-xl border ${dim.border} shadow-sm hover:shadow-md transition-shadow`}
+                            className={`bg-gradient-to-br ${dim.gradient} p-4 rounded-xl border ${dim.border} shadow-sm hover:shadow-md transition-shadow text-left`}
                           >
                             <div className="flex items-start gap-2 mb-3">
                               {dim.icon}
@@ -638,10 +638,10 @@ const MicrobiomePersonalityV2 = ({
                         ))}
                       </div>
                       
-                      <div className="bg-white bg-opacity-70 rounded-lg p-3 mt-2">
+                      <div className="bg-white bg-opacity-70 rounded-lg p-3">
                         <div className="flex items-start gap-2 text-sm text-purple-800">
-                          <Scale className="h-4 w-4 text-purple-600" />
-                          <span>Each dimension contributes equally to your overall microbiome profile, creating a balanced assessment of your gut ecosystem.</span>
+                          <Scale className="h-4 w-4 flex-shrink-0 mt-0.5 text-purple-600" />
+                          <span className="text-left">Each dimension contributes equally to your overall microbiome profile, creating a balanced assessment of your gut ecosystem.</span>
                         </div>
                       </div>
                     </div>
