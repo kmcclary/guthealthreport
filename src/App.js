@@ -102,39 +102,41 @@ const MicrobiomeReport = () => {
   };
 
   return (
-    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-16 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-4 md:space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      </div>
-        <TotalScoreCard reportData={reportData} /> {/* Remove CreditScoreMeter prop */}
+    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-20 md:pt-20 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-4 md:space-y-6">
+      <section id="overview">
+        <TotalScoreCard reportData={reportData} />
+      </section>
 
-        <LevelSection level={reportData.level} scores={reportData.scores} /> {/* Use the new component */}
+      <section id="level-section">
+        <LevelSection level={reportData.level} scores={reportData.scores} />
+      </section>
 
-      {/* Achievements */}
-      <Achievements /> {/* Ensure this component is used */}
+      <Achievements />
       
-      {/* Profile Change */}
       <EnterotypeProfile reportData={reportData} />
       
-      {/* Recommendations Section */}
-      <RecommendationsSection />
+      <section id="recommendations">
+        <RecommendationsSection />
+      </section>
 
-      {/* Streak Status */}
-      <StreakStatus streak={reportData.streak} /> {/* Use the new component */}
+      <StreakStatus streak={reportData.streak} />
+      
+      <section id="health-metabolism">
+        <MEPSVisual currentProfile={reportData.current_profile} />
+      </section>
 
-      {/* MEPSVisual */}
-      <MEPSVisual currentProfile={reportData.current_profile} />
+      <section id="gut-personality">
+        <MicrobiomePersonalityV2 
+          currentProfile={reportData.current_profile} 
+          previousProfile={reportData.previous_profile} 
+        />
+      </section>
 
-      {/* Personality Profile Section */}
-      <MicrobiomePersonalityV2 
-        currentProfile={reportData.current_profile} 
-        previousProfile={reportData.previous_profile} 
-      />
+      <section id="pathogen-detection">
+        <PathogenDetection />
+      </section>
 
-      {/* Pathogen Detection Section */}
-      <PathogenDetection /> {/* Remove pathogenData prop */}
-
-      {/* Commensal Microbe Detection Section */}
-      <CommensalMicrobeDetection /> {/* Add the new section */}
+      <CommensalMicrobeDetection />
     </div>
   );
 };

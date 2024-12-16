@@ -272,7 +272,7 @@ const RecommendationsSection = () => {
   const displayedRecommendations = showAll ? filteredRecommendations : filteredRecommendations.slice(0, 3);
 
   return (
-    <>
+    <div className="space-y-6">
       <div className="space-y-6">
         <Card className="bg-gradient-to-br from-white to-rose-100">
           <CardHeader>
@@ -520,7 +520,7 @@ const RecommendationsSection = () => {
           </div>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 };
 
