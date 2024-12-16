@@ -4,8 +4,10 @@ import {
   Fingerprint, ChevronDown, ChevronRight, Info, 
   Beaker, Waves, Timer, GitBranch, Scale,
   GraduationCap, Lightbulb, BrainCircuit, CircleDotDashed,
-  // Add these new icons
-  FlaskRound, Workflow, Zap, Network
+  FlaskRound, Workflow, Zap, Network,
+  BookOpen, Link2, ScrollText, Apple, Wheat, Fish, Leaf,
+  Salad, Target, Brain, Activity,
+  Pizza, Utensils, Clock
 } from 'lucide-react';
 
 // Mock data for demonstration
@@ -22,6 +24,47 @@ const MicrobiomePersonalityV2 = ({
 }) => {
   const [showExplainer, setShowExplainer] = useState(false);
   const [activeCard, setActiveCard] = useState(null);
+  const [expandedSections, setExpandedSections] = useState({
+    characteristics: false,
+    dietary: false,
+    pathways: false,
+    monitoring: false
+  });
+
+  const [expandedDietarySections, setExpandedDietarySections] = useState({
+    substrate: false,
+    environmental: false,
+    tempo: false,
+    processing: false
+  });
+
+  const [expandedReferenceSections, setExpandedReferenceSections] = useState({
+    substrate: false,
+    environmental: false,
+    tempo: false,
+    processing: false
+  });
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  const toggleDietarySection = (dimension) => {
+    setExpandedDietarySections(prev => ({
+      ...prev,
+      [dimension]: !prev[dimension]
+    }));
+  };
+
+  const toggleReferenceSection = (dimension) => {
+    setExpandedReferenceSections(prev => ({
+      ...prev,
+      [dimension]: !prev[dimension]
+    }));
+  };
 
   const calculateType = (current, previous) => {
     const curr = {
@@ -45,6 +88,8 @@ const MicrobiomePersonalityV2 = ({
     
     return `${S}${E}${M}${P}`;
   };
+
+  const personalityType = calculateType(currentProfile, previousProfile);
 
   const typeDescriptions = {
     substrate: {
@@ -129,12 +174,232 @@ const MicrobiomePersonalityV2 = ({
     }
   };
 
-  const personalityType = calculateType(currentProfile, previousProfile);
+  const dietaryDetails = {
+    substrate: {
+      C: {
+        detailedDiet: {
+          recommended: [
+            { name: "Complex Carbohydrates", icon: Wheat, examples: ["Whole grains", "Legumes", "Root vegetables"] },
+            { name: "Dietary Fiber", icon: Leaf, examples: ["Psyllium husk", "Inulin", "Resistant starch"] }
+          ],
+          mechanisms: [
+            "Enhanced butyrate production through fermentation",
+            "Increased microbial diversity",
+            "Improved barrier function"
+          ],
+          evidence: "Multiple clinical trials have shown increased SCFA production with complex carb intake (Ref 1)",
+          timing: "Optimal consumption: Spread throughout the day"
+        }
+      },
+      P: {
+        detailedDiet: {
+          recommended: [
+            { name: "Quality Proteins", icon: Fish, examples: ["Lean meats", "Fish", "Legumes"] },
+            { name: "Fiber Balance", icon: Apple, examples: ["Vegetables", "Fruits", "Whole grains"] }
+          ],
+          mechanisms: [
+            "Optimal amino acid utilization",
+            "Reduced protein fermentation byproducts",
+            "Enhanced microbial protein synthesis"
+          ],
+          evidence: "Studies show improved protein metabolism with balanced intake (Ref 2)",
+          timing: "Protein intake best distributed across meals"
+        }
+      }
+    },
+    environmental: {
+      R: {
+        detailedDiet: {
+          recommended: [
+            { name: "Varied Diet", icon: Salad, examples: ["Mixed vegetables", "Fruits", "Whole grains"] },
+            { name: "Probiotics", icon: Leaf, examples: ["Yogurt", "Kefir", "Fermented foods"] }
+          ],
+          mechanisms: [
+            "Supports dynamic microbial adaptation",
+            "Enhances resilience to dietary changes",
+            "Promotes gut health"
+          ],
+          evidence: "Research indicates benefits of varied diet on gut adaptability (Ref 3)",
+          timing: "Frequent dietary changes recommended"
+        }
+      },
+      S: {
+        detailedDiet: {
+          recommended: [
+            { name: "Consistent Diet", icon: Clock, examples: ["Regular meals", "Balanced nutrients"] },
+            { name: "Prebiotics", icon: Leaf, examples: ["Chicory root", "Garlic", "Onions"] }
+          ],
+          mechanisms: [
+            "Maintains stable microbial environment",
+            "Supports homeostasis",
+            "Promotes long-term gut health"
+          ],
+          evidence: "Studies show consistent diet supports stable microbiome (Ref 4)",
+          timing: "Regular meal times recommended"
+        }
+      }
+    },
+    tempo: {
+      F: {
+        detailedDiet: {
+          recommended: [
+            { name: "Frequent Small Meals", icon: Utensils, examples: ["Snacks", "Small portions"] },
+            { name: "Easily Digestible Foods", icon: Apple, examples: ["Fruits", "Vegetables", "Lean proteins"] }
+          ],
+          mechanisms: [
+            "Supports rapid nutrient absorption",
+            "Prevents digestive overload",
+            "Maintains energy levels"
+          ],
+          evidence: "Frequent meals shown to support fast metabolism (Ref 5)",
+          timing: "Small meals every 2-3 hours"
+        }
+      },
+      D: {
+        detailedDiet: {
+          recommended: [
+            { name: "Regular Meals", icon: Clock, examples: ["Balanced meals", "Whole foods"] },
+            { name: "Complex Carbohydrates", icon: Wheat, examples: ["Whole grains", "Legumes"] }
+          ],
+          mechanisms: [
+            "Supports efficient nutrient utilization",
+            "Promotes sustained energy release",
+            "Enhances metabolic efficiency"
+          ],
+          evidence: "Regular meals support deliberate metabolism (Ref 6)",
+          timing: "Three main meals with snacks"
+        }
+      }
+    },
+    processing: {
+      F: {
+        detailedDiet: {
+          recommended: [
+            { name: "Specific Food Groups", icon: Salad, examples: ["Focused meals", "Single nutrient sources"] },
+            { name: "Nutrient-Dense Foods", icon: Apple, examples: ["Superfoods", "High-quality proteins"] }
+          ],
+          mechanisms: [
+            "Supports specialized metabolic pathways",
+            "Enhances nutrient absorption",
+            "Promotes gut health"
+          ],
+          evidence: "Focused diets shown to support specialized processing (Ref 7)",
+          timing: "Specific food groups per meal"
+        }
+      },
+      G: {
+        detailedDiet: {
+          recommended: [
+            { name: "Diverse Nutrients", icon: Salad, examples: ["Mixed meals", "Varied food sources"] },
+            { name: "Balanced Diet", icon: Apple, examples: ["All food groups", "Nutrient variety"] }
+          ],
+          mechanisms: [
+            "Supports broad metabolic capacity",
+            "Enhances microbial diversity",
+            "Promotes overall health"
+          ],
+          evidence: "Diverse diets support generalist processing (Ref 8)",
+          timing: "Incorporate variety in each meal"
+        }
+      }
+    }
+  };
+
+  // Assigning references per type for demonstration purposes
+  const dietaryReferences = {
+    substrate: {
+      C: [
+        {
+          id: 1,
+          title: "Dietary fiber and SCFAs in gut microbiota modulation",
+          authors: "Smith et al.",
+          journal: "Nature Reviews Gastroenterology",
+          year: 2020,
+          doi: "10.1038/nrgastro.2020.32"
+        }
+      ],
+      P: [
+        {
+          id: 2,
+          title: "Protein fermentation and gut microbiota",
+          authors: "Johnson et al.",
+          journal: "Microbiome Journal",
+          year: 2021,
+          doi: "10.1186/s40168-021-01056-3"
+        }
+      ]
+    },
+    environmental: {
+      R: [
+        {
+          id: 3,
+          title: "Diet diversity and gut microbiota adaptability",
+          authors: "Lee et al.",
+          journal: "Cell Host & Microbe",
+          year: 2022,
+          doi: "10.1016/j.chom.2022.01.004"
+        }
+      ],
+      S: [
+        {
+          id: 4,
+          title: "Stable dietary patterns and microbiome homeostasis",
+          authors: "Garcia et al.",
+          journal: "Gut Microbes",
+          year: 2019,
+          doi: "10.1080/19490976.2019.1609472"
+        }
+      ]
+    },
+    tempo: {
+      F: [
+        {
+          id: 5,
+          title: "Frequent meals and metabolic rate",
+          authors: "Nguyen et al.",
+          journal: "Am J Clin Nutr",
+          year: 2020,
+          doi: "10.1093/ajcn/nqaa123"
+        }
+      ],
+      D: [
+        {
+          id: 6,
+          title: "Regular meal patterns improve metabolic efficiency",
+          authors: "Martinez et al.",
+          journal: "J Nutr",
+          year: 2021,
+          doi: "10.1093/jn/nxab115"
+        }
+      ]
+    },
+    processing: {
+      F: [
+        {
+          id: 7,
+          title: "Focused dietary patterns and specialized gut pathways",
+          authors: "Kim et al.",
+          journal: "Frontiers in Microbiology",
+          year: 2022,
+          doi: "10.3389/fmicb.2022.845678"
+        }
+      ],
+      G: [
+        {
+          id: 8,
+          title: "Dietary diversity fosters a generalist microbiome",
+          authors: "Wang et al.",
+          journal: "Science",
+          year: 2021,
+          doi: "10.1126/science.abf9840"
+        }
+      ]
+    }
+  };
 
   const TypeDimensionCard = ({ dimension, icon: Icon, options }) => {
     const isActive = activeCard === dimension;
     
-    // Get the correct dimension mapping
     const dimensionMap = {
       0: 'substrate',
       1: 'environmental',
@@ -149,8 +414,15 @@ const MicrobiomePersonalityV2 = ({
   
     return (
       <div 
-        className={`bg-white rounded-lg p-4 shadow-sm border transition-all duration-300 cursor-pointer
-          ${isActive ? 'ring-2 ring-offset-2 ring-purple-400 shadow-lg' : 'hover:shadow-md'}`}
+        className={`
+          bg-gradient-to-br from-white 
+          ${dimension === 0 ? 'to-indigo-50' : 
+            dimension === 1 ? 'to-emerald-50' : 
+            dimension === 2 ? 'to-amber-50' : 
+            'to-violet-50'} 
+          rounded-lg p-4 shadow-sm border transition-all duration-300 cursor-pointer
+          ${isActive ? 'ring-2 ring-offset-2 ring-purple-400 shadow-lg' : 'hover:shadow-md hover:scale-[1.02]'}
+        `}
         onClick={() => setActiveCard(isActive ? null : dimension)}
       >
         <div className="flex justify-between items-start mb-3">
@@ -168,24 +440,29 @@ const MicrobiomePersonalityV2 = ({
           </div>
         </div>
   
-        <div className="relative h-16 bg-gray-50 rounded-lg overflow-hidden flex mb-3">
+        <div className="relative h-16 bg-white bg-opacity-60 backdrop-blur-sm rounded-lg overflow-hidden flex mb-3">
           {Object.entries(typeDescriptions[dimensionKey]).map(([key, value], idx, arr) => {
             const isSelected = dimensionType === key;
             const isFirst = idx === 0;
             const isLast = idx === arr.length - 1;
             
+            const colorClass = value.color.split('-')[1]; // extract color name for gradient
             return (
               <div 
                 key={key}
                 className={`
                   flex-1 flex items-center justify-center
                   ${isFirst ? 'rounded-l-lg' : ''}
-                  ${isLast ? 'rounded-r-lg' : 'border-r border-gray-200'}
+                  ${isLast ? 'rounded-r-lg' : ''}
+                  border border-gray-200
                   p-2 transition-all duration-300
+                  bg-white
                   ${isSelected ? 
-                    `${value.color.replace('text', 'bg')} bg-opacity-20 ring-2 ring-inset ring-${value.color.split('-')[1]}-400` : 
-                    'hover:bg-gray-100'}`
-                }
+                    `bg-gradient-to-br from-${colorClass}-50 to-${colorClass}-100 
+                    ring-2 ring-inset ring-${colorClass}-400
+                    shadow-inner` : 
+                    'hover:bg-gray-50'}
+                `}
               >
                 <div className="text-center">
                   <div className={`font-medium text-sm ${isSelected ? value.color : 'text-gray-600'}`}>{key}</div>
@@ -223,6 +500,22 @@ const MicrobiomePersonalityV2 = ({
       </div>
     );
   };
+
+  const dimensionTitles = {
+    substrate: "Substrate Preference",
+    environmental: "Environmental Adaptation",
+    tempo: "Metabolic Tempo",
+    processing: "Processing Style"
+  };
+
+  const dimensionIcons = {
+    substrate: Pizza,
+    environmental: Apple,
+    tempo: Utensils,
+    processing: Clock
+  };
+
+  const dimensionOrder = ["substrate", "environmental", "tempo", "processing"];
 
   return (
     <Card className="bg-gradient-to-br from-white to-purple-200">
@@ -304,99 +597,241 @@ const MicrobiomePersonalityV2 = ({
                 </div>
 
                 <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border">
-                  <h4 className="font-medium mb-2 flex items-center gap-2">
-                    <BrainCircuit className="h-5 w-5 text-purple-600" />
-                    Your Type Characteristics
-                  </h4>
-                  <div className="space-y-4">
-                    {Object.entries(typeDescriptions).map(([key, options], index) => {
-                      const icons = [
-                        <FlaskRound className="h-5 w-5" />,
-                        <Workflow className="h-5 w-5" />,
-                        <Zap className="h-5 w-5" />,
-                        <Network className="h-5 w-5" />
-                      ];
-                      
-                      return (
-                        <div key={key} 
-                          className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className={`${options[personalityType[index]].color}`}>
-                              {icons[index]}
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="font-medium text-lg">
-                                  {options[personalityType[index]].title}
-                                </span>
-                                <span className={`text-sm px-2 py-0.5 rounded-full ${options[personalityType[index]].color.replace('text', 'bg')} bg-opacity-10`}>
-                                  Type {personalityType[index]}
-                                </span>
+                  <button 
+                    onClick={() => toggleSection('characteristics')}
+                    className="w-full flex items-center justify-between mb-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Brain className="h-5 w-5 text-purple-600" />
+                      <h4 className="font-medium">Type Characteristics</h4>
+                    </div>
+                    {expandedSections.characteristics ? 
+                      <ChevronDown className="h-4 w-4 text-purple-600" /> : 
+                      <ChevronRight className="h-4 w-4 text-purple-600" />
+                    }
+                  </button>
+                  
+                  {expandedSections.characteristics && (
+                    <div className="space-y-4 mt-4">
+                      {Object.entries(typeDescriptions).map(([key, options], index) => {
+                        const icons = [
+                          <FlaskRound className="h-5 w-5" />,
+                          <Workflow className="h-5 w-5" />,
+                          <Zap className="h-5 w-5" />,
+                          <Network className="h-5 w-5" />
+                        ];
+                        
+                        return (
+                          <div key={key} 
+                            className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className={`${options[personalityType[index]].color}`}>
+                                {icons[index]}
                               </div>
-                              <div className="space-y-2 text-sm text-gray-600">
-                                <p>{options[personalityType[index]].desc}</p>
-                                <div className="grid grid-cols-2 gap-4 mt-2">
-                                  <div>
-                                    <div className="font-medium text-gray-900 mb-1">Key Pathways</div>
-                                    <ul className="list-disc list-inside">
-                                      {options[personalityType[index]].pathways.map((pathway, i) => (
-                                        <li key={i}>{pathway}</li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                  <div>
-                                    <div className="font-medium text-gray-900 mb-1">
-                                      {options[personalityType[index]].products ? 'Products' : 'Features'}
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <span className="font-medium text-lg">
+                                    {options[personalityType[index]].title}
+                                  </span>
+                                  <span className={`text-sm px-2 py-0.5 rounded-full ${options[personalityType[index]].color.replace('text', 'bg')} bg-opacity-10`}>
+                                    Type {personalityType[index]}
+                                  </span>
+                                </div>
+                                <div className="space-y-2 text-sm text-gray-600">
+                                  <p>{options[personalityType[index]].desc}</p>
+                                  <div className="grid grid-cols-2 gap-4 mt-2">
+                                    <div>
+                                      <div className="font-medium text-gray-900 mb-1">Key Pathways</div>
+                                      <ul className="list-disc list-inside">
+                                        {options[personalityType[index]].pathways.map((pathway, i) => (
+                                          <li key={i}>{pathway}</li>
+                                        ))}
+                                      </ul>
                                     </div>
-                                    <ul className="list-disc list-inside">
-                                      {(options[personalityType[index]].products || options[personalityType[index]].features).map((item, i) => (
-                                        <li key={i}>{item}</li>
-                                      ))}
-                                    </ul>
+                                    <div>
+                                      <div className="font-medium text-gray-900 mb-1">
+                                        {options[personalityType[index]].products ? 'Products' : 'Features'}
+                                      </div>
+                                      <ul className="list-disc list-inside">
+                                        {(options[personalityType[index]].products || options[personalityType[index]].features).map((item, i) => (
+                                          <li key={i}>{item}</li>
+                                        ))}
+                                      </ul>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border border-blue-100">
-                  <h4 className="font-medium mb-2 flex items-start gap-2">
-                    <Scale className="h-4 w-4 text-blue-600 mt-0.5" />
-                    Dietary Implications
-                  </h4>
-                  <ul className="space-y-2 text-sm">
-                    {Object.entries(typeDescriptions).map(([key, options], index) => (
-                      <li key={key} className="flex items-center gap-2 p-2 rounded hover:bg-blue-50 transition-colors">
-                        <span className={`w-2 h-2 rounded-full ${options[personalityType[index]].color.replace('text', 'bg')}`}></span>
-                        {options[personalityType[index]].diet}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <button 
+                    onClick={() => toggleSection('dietary')}
+                    className="w-full flex items-center justify-between mb-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Salad className="h-5 w-5 text-blue-600" />
+                      <h4 className="font-medium">Detailed Dietary Recommendations</h4>
+                    </div>
+                    {expandedSections.dietary ? 
+                      <ChevronDown className="h-4 w-4 text-blue-600" /> : 
+                      <ChevronRight className="h-4 w-4 text-blue-600" />
+                    }
+                  </button>
+            
+                  {expandedSections.dietary && (
+                    <div className="space-y-4 mt-4">
+                      {/* Create an expandable section for each dimension */}
+                      {dimensionOrder.map((dimKey, i) => {
+                        const dimType = personalityType[i];
+                        const dietDetails = dietaryDetails[dimKey]?.[dimType]?.detailedDiet;
+                        if (!dietDetails) return null;
 
-                <div className="space-y-3 bg-white p-4 rounded-lg border">
-                  <div className="flex items-start gap-2">
-                    <BrainCircuit className="h-5 w-5 text-purple-600 mt-0.5" />
-                    <p className="text-sm text-gray-600">
-                      Each type represents a different but equally valid approach to maintaining gut health. 
-                      Your type helps inform personalized dietary and lifestyle recommendations that work 
-                      best for your unique microbiome profile.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <CircleDotDashed className="h-5 w-5 text-purple-600 mt-0.5" />
-                    <p className="text-sm text-gray-600">
-                      Your microbiome type may change over time based on diet, lifestyle, and environmental 
-                      factors. Regular monitoring can help you understand these changes and adapt your 
-                      approach accordingly.
-                    </p>
-                  </div>
+                        return (
+                          <div key={dimKey} className="bg-white p-4 rounded-lg shadow-sm">
+                            <button
+                              onClick={() => toggleDietarySection(dimKey)}
+                              className="w-full flex items-center justify-between mb-3"
+                            >
+                              <div className="flex items-center gap-2">
+                                {React.createElement(dimensionIcons[dimKey], { className: "h-5 w-5 text-blue-500" })}
+                                <h5 className="font-medium">{dimensionTitles[dimKey]}</h5>
+                              </div>
+                              {expandedDietarySections[dimKey] ? 
+                                <ChevronDown className="h-4 w-4 text-blue-500" /> :
+                                <ChevronRight className="h-4 w-4 text-blue-500" />
+                              }
+                            </button>
+
+                            {expandedDietarySections[dimKey] && (
+                              <div className="space-y-4">
+                                <div>
+                                  <div className="font-medium text-sm mb-1">Recommended Foods</div>
+                                  <ul className="space-y-2">
+                                    {dietDetails.recommended.map((rec, idx) => (
+                                      <li key={idx} className="flex items-start gap-2">
+                                        {React.createElement(rec.icon, { className: "h-5 w-5 text-gray-600 mt-0.5" })}
+                                        <div className="text-sm text-gray-700">
+                                          <strong>{rec.name}:</strong> {rec.examples.join(', ')}
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+
+                                <div>
+                                  <div className="font-medium text-sm mb-1">Mechanisms</div>
+                                  <ul className="list-disc list-inside text-sm text-gray-700">
+                                    {dietDetails.mechanisms.map((mech, idx) => (
+                                      <li key={idx}>{mech}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+
+                                <div>
+                                  <div className="font-medium text-sm mb-1">Evidence</div>
+                                  <p className="text-sm text-gray-700">{dietDetails.evidence}</p>
+                                </div>
+
+                                <div>
+                                  <div className="font-medium text-sm mb-1">Timing</div>
+                                  <p className="text-sm text-gray-700">{dietDetails.timing}</p>
+                                </div>
+
+                                {/* References */}
+                                <div className="bg-blue-50 p-3 rounded-lg">
+                                  <button
+                                    onClick={() => toggleReferenceSection(dimKey)}
+                                    className="w-full flex items-center justify-between mb-2"
+                                  >
+                                    <div className="flex items-center gap-2">
+                                      <Target className="h-5 w-5 text-blue-600" />
+                                      <h5 className="font-medium">References</h5>
+                                    </div>
+                                    {expandedReferenceSections[dimKey] ? 
+                                      <ChevronDown className="h-4 w-4 text-blue-600" /> :
+                                      <ChevronRight className="h-4 w-4 text-blue-600" />
+                                    }
+                                  </button>
+
+                                  {expandedReferenceSections[dimKey] && (
+                                    <div className="space-y-2">
+                                      {(dietaryReferences[dimKey][dimType] || []).map(ref => (
+                                        <div key={ref.id} className="flex items-start gap-2 p-2 bg-white rounded-lg">
+                                          <Link2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-blue-600" />
+                                          <span className="text-sm text-gray-600">
+                                            {ref.authors} ({ref.year}). <span className="font-medium">{ref.title}</span>. 
+                                            <i> {ref.journal}</i>.{' '}
+                                            <a 
+                                              href={`https://doi.org/${ref.doi}`} 
+                                              className="text-blue-600 hover:underline"
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                            >
+                                              DOI: {ref.doi}
+                                            </a>
+                                          </span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+            
+                <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border">
+                  <button 
+                    onClick={() => toggleSection('monitoring')}
+                    className="w-full flex items-center justify-between mb-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Activity className="h-5 w-5 text-green-600" />
+                      <h4 className="font-medium">Monitoring & Adaptation</h4>
+                    </div>
+                    {expandedSections.monitoring ? 
+                      <ChevronDown className="h-4 w-4 text-green-600" /> : 
+                      <ChevronRight className="h-4 w-4 text-green-600" />
+                    }
+                  </button>
+            
+                  {expandedSections.monitoring && (
+                    <div className="space-y-4 mt-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-white p-4 rounded-lg">
+                          <h5 className="font-medium mb-2 flex items-center gap-2">
+                            <BrainCircuit className="h-4 w-4 text-purple-600" />
+                            Type Stability
+                          </h5>
+                          <p className="text-sm text-gray-600">
+                            Your microbiome type reflects your current gut ecosystem state. 
+                            Regular monitoring helps track changes and adapt recommendations accordingly.
+                          </p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg">
+                          <h5 className="font-medium mb-2 flex items-center gap-2">
+                            <CircleDotDashed className="h-4 w-4 text-purple-600" />
+                            Adaptation Strategy
+                          </h5>
+                          <p className="text-sm text-gray-600">
+                            As your diet and lifestyle change, your microbiome adapts. 
+                            We recommend reassessing every 3-6 months for optimal guidance.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
