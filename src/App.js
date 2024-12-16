@@ -415,7 +415,7 @@ const MicrobiomeReport = () => {
                   <div 
                     className={`p-4 rounded-lg border transition-all cursor-pointer shadow-sm hover:shadow-md
                       ${selectedAction === rec.id ? 
-                        'bg-gradient-to-br from-gray-50 to-gray-250 border-rose-200' : 
+                        'bg-gradient-to-br from-gray-50 to-gray-250 border-gray-200' : 
                         'bg-gradient-to-br from-gray-50 to-white border-rose-200 hover:from-gray-250 hover:to-white'}`}
                     onClick={() => setSelectedAction(selectedAction === rec.id ? null : rec.id)}
                   >
@@ -553,7 +553,7 @@ const MicrobiomeReport = () => {
   
   return (
     
-    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-16 w-full max-w-4xl mx-auto bg-white p-8 space-y-6">
+    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-24 md:pt-16 w-full max-w-4xl mx-auto bg-white p-8 space-y-6">
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -562,7 +562,7 @@ const MicrobiomeReport = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Star className="h-5 w-5 text-green-700" />
-              <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text text-transparent">
                 Total Score
               </span>
             </CardTitle>
@@ -570,33 +570,32 @@ const MicrobiomeReport = () => {
 
 
           <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 pl-[30px]">
-
-            <div className="text-6xl font-bold pl-[5px]">
-
-
-              {reportData.scores.total.toFixed(1)}
+            <div className="flex flex-col md:flex-row items-center md:items-center md:justify-center md:space-x-16 gap-4">
+              <div className="text-6xl font-bold text-center">
+                {reportData.scores.total.toFixed(1)}
+              </div>
+              <div className="mt-2 space-y-1 text-sm font-bold text-center">
+                <div className="flex justify-between w-48 mx-auto">
+                  <span>Base Score:</span>
+                  <span>{reportData.scores.base.toFixed(1)}</span>
+                </div>
+                <div className="flex justify-between w-48 mx-auto">
+                  <span>Action Points:</span>
+                  <span>+{reportData.scores.action_points.toFixed(1)}</span>
+                </div>
+                <div className="flex justify-between w-48 mx-auto">
+                  <span>Streak Bonus:</span>
+                  <span>+{reportData.scores.streak_bonus.toFixed(1)}</span>
+                </div>
+              </div>
+              <div className="pb-4">
+                <CreditScoreMeter
+                  value={reportData.scores.total}
+                  levelTitle={reportData.level.title}
+                />
+              </div>
             </div>
-            <div className="mt-2 space-y-1 text-sm pl-[0px] pr-[80px] font-bold">
-              <div className="flex justify-between text-green-1000">
-                <span>Base Score:</span>
-                <span>{reportData.scores.base.toFixed(1)}</span>
-              </div>
-              <div className="flex justify-between text-green-800">
-                <span>Action Points:</span>
-                <span>+{reportData.scores.action_points.toFixed(1)}</span>
-              </div>
-              <div className="flex justify-between text-green-800">
-                <span>Streak Bonus:</span>
-                <span>+{reportData.scores.streak_bonus.toFixed(1)}</span>
-              </div>
-              </div>
-              <CreditScoreMeter value={reportData.scores.total} levelTitle={reportData.level.title} />
-
-            </div>
-
           </CardContent>
-
         </Card>
 
         <Card className="bg-gradient-to-br from-white to-yellow-100">
@@ -665,13 +664,10 @@ const MicrobiomeReport = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="relative">
-
-
-
-
-            <svg viewBox="-30 150 550 160" className="w-full h-full">
+        <div className="flex gap-6">
+          
+          <div className="relative w-full h-auto">
+            <svg viewBox="-60 150 500 160" className="w-full h-full">
               <defs>
                 <radialGradient id="firmicutesGradient" cx="50%" cy="30%" r="70%">
                   <stop offset="0%" stopColor="rgba(59, 130, 246, 0.5)" />
@@ -767,7 +763,6 @@ const MicrobiomeReport = () => {
           </div>
 
           <div className="space-y-6">
-            {/* Rest of the component remains the same */}
             <div className="flex justify-between items-center">
               <h3 className="font-semibold text-sm flex items-center gap-2">
                 <Info className="h-4 w-4" />
@@ -775,40 +770,42 @@ const MicrobiomeReport = () => {
               </h3>
 
             </div>
-
-            <div className="space-y-3 pr-[30px]">
-              {[
-                { label: 'Firmicutes', color: 'bg-blue-600', current: reportData.current_profile.ETF, previous: reportData.previous_profile.ETF },
-                { label: 'Bacteroides', color: 'bg-green-600', current: reportData.current_profile.ETB, previous: reportData.previous_profile.ETB },
-                { label: 'Prevotella', color: 'bg-orange-600', current: reportData.current_profile.ETP, previous: reportData.previous_profile.ETP },
-                { label: 'Other/Mixed', color: 'bg-gray-600', current: reportData.current_profile.ETX, previous: reportData.previous_profile.ETX }
-              ].map(({ label, color, current, previous }, index) => (
-                <div key={index} className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span>{label}</span>
-                    <div className="flex items-center gap-2">
-                      <span>{(current * 100).toFixed(1)}%</span>
+            <div className="space-y-6 w-[350px] pr-6"></div>
+            <div className="bg-white/80 rounded-lg border border-blue-200 shadow-md p-6">
+              <div className="space-y-3">
+                {[
+                  { label: 'Firmicutes', color: 'bg-blue-600', current: reportData.current_profile.ETF, previous: reportData.previous_profile.ETF },
+                  { label: 'Bacteroides', color: 'bg-green-600', current: reportData.current_profile.ETB, previous: reportData.previous_profile.ETB },
+                  { label: 'Prevotella', color: 'bg-orange-600', current: reportData.current_profile.ETP, previous: reportData.previous_profile.ETP },
+                  { label: 'Other/Mixed', color: 'bg-gray-600', current: reportData.current_profile.ETX, previous: reportData.previous_profile.ETX }
+                ].map(({ label, color, current, previous }, index) => (
+                  <div key={index} className="space-y-1">
+                    <div className="flex justify-between text-sm">
+                      <span>{label}</span>
+                      <div className="flex items-center gap-2">
+                        <span>{(current * 100).toFixed(1)}%</span>
+                        {showChange && (
+                          <span className={`text-xs ${
+                            current > previous ? 'text-green-600' : 
+                            current < previous ? 'text-red-600' : 
+                            'text-gray-600'
+                          }`}>
+                            {getChangeText(current, previous)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
                       {showChange && (
-                        <span className={`text-xs ${
-                          current > previous ? 'text-green-600' : 
-                          current < previous ? 'text-red-600' : 
-                          'text-gray-600'
-                        }`}>
-                          {getChangeText(current, previous)}
-                        </span>
+                        <div className={`h-2 rounded-full opacity-30 transition-all duration-500 ${color}`}
+                             style={{ width: `${previous * 100}%` }} />
                       )}
+                      <div className={`${color} rounded-full h-2 transition-all duration-500 relative -mt-2`}
+                           style={{ width: `${current * 100}%` }} />
                     </div>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    {showChange && (
-                      <div className={`h-2 rounded-full opacity-30 transition-all duration-500 ${color}`}
-                           style={{ width: `${previous * 100}%` }} />
-                    )}
-                    <div className={`${color} rounded-full h-2 transition-all duration-500 relative -mt-2`}
-                         style={{ width: `${current * 100}%` }} />
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

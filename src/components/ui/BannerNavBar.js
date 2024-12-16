@@ -27,12 +27,18 @@ const NavButton = ({ href, icon: Icon, label }) => (
 );
 
 const BannerNavBar = () => (
-  <div className="bg-gradient-to-br from-yellow-300 via-yellow-200 to-yellow-500 p-4 w-full fixed top-0 left-0 z-50">
-    <div className="flex justify-between items-center">
-      <img src={Logo} alt="Zymo Logo with Banner" className="h-8" />
-      <h1 className="text-2xl font-bold text-gray-800">Microbiome Health Report</h1>
-      <p className="text-gray-600">{"Jane Doe"} {"11/12/24"}</p>
-      <nav>
+  <div className="bg-gradient-to-br from-yellow-300 via-yellow-300 to-yellow-500 p-2 w-full fixed top-0 left-0 z-50">
+    <div className="flex items-center flex-nowrap">
+      <img src={Logo} alt="Zymo Logo with Banner" className="h-8 flex-shrink-0 mr-2" />
+      <div className="flex flex-col flex-shrink min-w-0 flex-1">
+        <h1 className="text-sm md:text-lg font-bold text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis">
+          Microbiome Health Report
+        </h1>
+        <p className="text-xs md:text-sm text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis">
+          {"Jane Doe"} {"11/12/24"}
+        </p>
+      </div>
+      <nav className="flex-shrink-0">
         <ul className="flex space-x-3">
           <NavButton href="#overview" icon={MdDashboard} label="Overview" />
           <NavButton href="#gut-personality" icon={MdPersonOutline} label="Gut Personality" />
