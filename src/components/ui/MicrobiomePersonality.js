@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './components/ui/Card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './Card';
 import { 
   Fingerprint, ChevronDown, ChevronRight, Info, 
   Beaker, Waves, Timer, GitBranch, Scale,
