@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './Card';
 import { Award, ArrowRight, Check, BookOpen } from 'lucide-react';
 
 const Achievements = () => {
   const [selectedAchievement, setSelectedAchievement] = useState(null);
+  const [titleVisible, setTitleVisible] = useState(false);
+  const [cardVisibility, setCardVisibility] = useState(
+    [false, false, false] // Track visibility for each achievement card
+  );
 
   const achievements = [
     {
@@ -27,10 +31,30 @@ const Achievements = () => {
     setSelectedAchievement(selectedAchievement === index ? null : index);
   };
 
+  useEffect(() => {
+    // Trigger title fade-in after mount
+    setTitleVisible(true);
+
+    // Animate the cards appearing one by one
+    let delays = [200, 400, 600]; // ms delays for each card
+    delays.forEach((delay, idx) => {
+      setTimeout(() => {
+        setCardVisibility(prev => {
+          const newVis = [...prev];
+          newVis[idx] = true;
+          return newVis;
+        });
+      }, delay);
+    });
+  }, []);
+
   return (
     <Card className="bg-gradient-to-br from-white to-purple-100">
       <CardHeader className="p-4">
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle
+          className={`flex items-center gap-2 transition-all duration-700 ease-out transform 
+          ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+        >
           <Award className="h-5 w-5 text-purple-500" />
           <span className="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent responsive-text-md">
             Achievements
@@ -42,9 +66,11 @@ const Achievements = () => {
           {achievements.map((achievement, index) => (
             <div
               key={index}
-              className={`p-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer ${
-                selectedAchievement === index ? 'bg-gray-100' : ''
-              }`}
+              className={`p-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all cursor-pointer 
+              ${selectedAchievement === index ? 'bg-gray-100' : ''}
+              transform 
+              ${cardVisibility[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}
+              duration-700 ease-out`}
               onClick={() => handleAchievementClick(index)}
             >
               {/* Top section with icon, title, and subtitle always at top */}

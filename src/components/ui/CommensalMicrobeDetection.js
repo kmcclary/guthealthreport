@@ -324,7 +324,7 @@ const CommensalMicrobeDetection = () => {
             <Pill className="h-5 w-5 text-emerald-600" />
             <span className="font-medium text-emerald-800">Recommendations for Optimal Microbiome Health</span>
           </div>
-          <div className="space-y-2 text-sm text-emerald-800">
+          <div className="space-y-2 text-sm text-gray-800">
             <p>
               1. <strong>Diverse Diet:</strong> Include a wide variety of plant-based foods to support microbial diversity.
             </p>

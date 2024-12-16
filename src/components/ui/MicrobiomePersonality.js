@@ -527,7 +527,60 @@ const MicrobiomePersonalityV2 = ({
           </span>
         </CardTitle>
         <CardDescription>
-          Your Type: <span className="font-bold text-purple-600">{personalityType}</span>
+          <div className="flex flex-col gap-1 items-center text-center sm:items-start sm:text-left">
+            <span className="font-bold text-xl text-gray-600 flex items-center gap-2 justify-center sm:justify-start w-full">
+              <span>{personalityType}</span>
+              <span className="inline-block">
+                {(() => {
+                  const type = personalityType;
+                  switch(type) {
+                    // Carbohydrate types
+                    case 'CRDF': return '🌿 The Balanced Cultivator';
+                    case 'CRDG': return '🌱 The Adaptive Gardener';
+                    case 'CRFF': return '🍃 The Swift Harvester';
+                    case 'CRFG': return '🌺 The Diverse Botanist';
+                    case 'CSDF': return '🌾 The Steady Farmer';
+                    case 'CSDG': return '🎋 The Wise Steward';
+                    case 'CSFF': return '🌲 The Forest Keeper';
+                    case 'CSFG': return '🪴 The Garden Master';
+                    // Protein types
+                    case 'PRDF': return '🦁 The Patient Hunter';
+                    case 'PRDG': return '🐯 The Adaptive Predator';
+                    case 'PRFF': return '🐆 The Swift Tracker';
+                    case 'PRFG': return '🦊 The Clever Fox';
+                    case 'PSDF': return '🦅 The Steady Hawk';
+                    case 'PSDG': return '🦉 The Wise Owl';
+                    case 'PSFF': return '🐺 The Pack Leader';
+                    case 'PSFG': return '🦈 The Ocean Navigator';
+                    default: return '🧬 The Explorer';
+                  }
+                })()}
+              </span>
+            </span>
+            <span className="text-sm text-black italic sm:max-w-2xl">
+              {(() => {
+                const type = personalityType;
+                // Match first letter to determine primary description
+                const primary = type.startsWith('C') ? 
+                  'Thrives on complex carbohydrates' : 
+                  'Excels with protein processing';
+                // Match second letter for adaptation style
+                const adaptation = type[1] === 'R' ? 
+                  'highly adaptable' : 
+                  'consistently stable';
+                // Match third letter for metabolism speed
+                const speed = type[2] === 'F' ? 
+                  'fast metabolism' : 
+                  'measured metabolism';
+                // Match fourth letter for processing style
+                const style = type[3] === 'F' ? 
+                  'focused processing' : 
+                  'versatile processing';
+                
+                return `${primary}, ${adaptation}, with ${speed} and ${style}`;
+              })()}
+            </span>
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent>

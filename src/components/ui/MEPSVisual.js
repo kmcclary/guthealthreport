@@ -1,6 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './Card';
-import { Fingerprint, TreePine, BadgeAlert, Heart, SlidersHorizontal, Waves, Scale, Info, Utensils, Trees, Wheat, Beaker, TestTube, Timer, Wind, Droplets, Thermometer, Container } from 'lucide-react';
+import { 
+  Fingerprint, TreePine, BadgeAlert, Heart, SlidersHorizontal, Waves, Scale, Info, 
+  Utensils, Trees, Wheat, Beaker, TestTube, Timer, Wind, Droplets, Thermometer, Container 
+} from 'lucide-react';
 
 const MEPSVisual = ({ currentProfile = {
   ETF: 0.25,
@@ -8,7 +11,6 @@ const MEPSVisual = ({ currentProfile = {
   ETP: 0.25,
   ETX: 0.25
 } }) => {
-  // Calculate scores (same as before)
   const calculateDimensionScores = (profile) => {
     const p = {
       ETF: Number(profile.ETF) || 0.25,
@@ -50,8 +52,10 @@ const MEPSVisual = ({ currentProfile = {
       rightIcon: TreePine,
       rightLabel: 'Diverse',
       rightDesc: 'Rich variety of bacteria',
-      color: 'bg-blue-500',
-      explanation: 'Higher diversity typically indicates a more resilient gut ecosystem'
+      explanation: 'Higher diversity typically indicates a more resilient gut ecosystem',
+      gradientClass: 'bg-gradient-to-r from-orange-400 via-yellow-300 to-green-600',
+      startColor: 'orange-600',
+      endColor: 'green-800'
     },
     {
       name: 'Functionality',
@@ -62,8 +66,10 @@ const MEPSVisual = ({ currentProfile = {
       rightIcon: Heart,
       rightLabel: 'Functional',
       rightDesc: 'Health-supporting bacteria',
-      color: 'bg-green-500',
-      explanation: 'A functional microbiome supports immune health and nutrient processing'
+      explanation: 'A functional microbiome supports immune health and nutrient processing',
+      gradientClass: 'bg-gradient-to-r from-rose-400 via-yellow-300 to-teal-600',
+      startColor: 'red-600',
+      endColor: 'emerald-800'
     },
     {
       name: 'Stability',
@@ -74,12 +80,13 @@ const MEPSVisual = ({ currentProfile = {
       rightIcon: Waves,
       rightLabel: 'Stable',
       rightDesc: 'Consistent over time',
-      color: 'bg-purple-500',
-      explanation: 'A stable microbiome maintains consistent beneficial functions'
+      explanation: 'A stable microbiome maintains consistent beneficial functions',
+      gradientClass: 'bg-gradient-to-r from-fuchsia-400 via-yellow-300 to-emerald-600',
+      startColor: 'purple-600',
+      endColor: 'emerald-600'
     }
   ];
 
-  // Neutral metabolic characteristics
   const metabolicCharacteristics = [
     {
       name: 'Primary Nutrient Processing',
@@ -116,7 +123,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Fermentation Pattern',
-      icon: Beaker,  // Changed from Flask
+      icon: Beaker,
       leftLabel: 'Saccharolytic',
       leftDesc: 'Carbohydrate fermentation',
       rightLabel: 'Proteolytic',
@@ -127,7 +134,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Primary Metabolites',
-      icon: TestTube,  // Changed from Flask2
+      icon: TestTube,
       leftLabel: 'SCFA-Dominant',
       leftDesc: 'Short-chain fatty acids',
       rightLabel: 'BCFA-Dominant',
@@ -182,7 +189,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Salt Tolerance',
-      icon: Container,  // Changed from Salt
+      icon: Container,
       leftLabel: 'Non-Halophilic',
       leftDesc: 'Low salt preference',
       rightLabel: 'Halophilic',
@@ -192,6 +199,31 @@ const MEPSVisual = ({ currentProfile = {
       gradientTo: 'to-green-100'
     }
   ];
+
+  const renderIndicator = (score) => {
+    const percentage = Math.round(score * 100);
+    return (
+      <div className="relative w-full h-full">
+        {/* Position the circle exactly at the score percentage, both horizontally and vertically centered */}
+        <div 
+          className="absolute"
+          style={{
+            left: `${score * 100}%`,
+            top: '50%',
+            transform: 'translate(-50%, -50%)' 
+          }}
+        >
+          <div className="relative flex items-center justify-center">
+            <div className="bg-gradient-to-br from-gray-900 via-gray-700 to-black text-white text-[12px] font-bold rounded-full h-10 w-7 flex items-center justify-center border border-black">
+          {percentage}
+            </div>
+            {/* Pointer triangle below the circle */}
+            <div className="bg-white absolute w-0 h-0 border-l-3 border-r-3 border-b-4 border-l-transparent border-r-transparent border-b-black -bottom-2 left-1/2 transform -translate-x-1/2"></div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Card className="bg-gradient-to-br from-white via-teal-50 to-teal-200">
@@ -210,45 +242,40 @@ const MEPSVisual = ({ currentProfile = {
         <div className="space-y-8">
           {/* Health Indicator Dimensions */}
           <div className="space-y-6">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-1 mb-4">
               <Heart className="h-5 w-5 text-green-500" />
-              <h3 className="font-medium">Health Indicators</h3>
+              <h3 className="font-bold text-black text-lg">Health Indicators</h3>
             </div>
             
             <div className="space-y-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
               {healthDimensions.map((dim, index) => (
                 <div key={index} className="space-y-2">
+                  <h4 className="font-bold text-black text-lg">{dim.name}</h4>
+
                   <div className="flex justify-between items-center mb-1">
-                    <div className="flex items-center gap-2 opacity-75">
-                      <dim.leftIcon className="h-5 w-5 text-gray-600" />
+                    <div className="flex items-center gap-2 opacity-90">
+                      <dim.leftIcon className={`h-5 w-5 text-${dim.startColor}`} />
                       <div>
-                        <div className="font-medium text-sm">{dim.leftLabel}</div>
-                        <div className="text-xs text-gray-500">{dim.leftDesc}</div>
+                        <div className="font-medium text-sm text-black">{dim.leftLabel}</div>
+                        <div className="text-[10px] text-gray-500">{dim.leftDesc}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="text-right">
-                        <div className="font-medium text-sm">{dim.rightLabel}</div>
-                        <div className="text-xs text-gray-500">{dim.rightDesc}</div>
+                        <div className="font-medium text-sm text-black">{dim.rightLabel}</div>
+                        <div className="text-[10px] text-gray-500">{dim.rightDesc}</div>
                       </div>
-                      <dim.rightIcon className="h-5 w-5 text-gray-600" />
+                      <dim.rightIcon className={`h-5 w-5 text-${dim.endColor}`} />
                     </div>
                   </div>
 
-                  <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
-                    <div 
-                      className={`absolute top-0 left-0 h-full rounded-full transition-all duration-500 ${dim.color}`}
-                      style={{ width: `${dim.score * 100}%` }}
-                    />
-                    <div 
-                      className="absolute top-0 h-full w-1 bg-white transform -translate-x-1/2 transition-all duration-500"
-                      style={{ left: `${dim.score * 100}%` }}
-                    />
+                  <div className={`relative ${dim.gradientClass} h-8 rounded-full`}>
+                    {renderIndicator(dim.score)}
                   </div>
 
-                  <div className="flex items-start gap-1 mt-1">
-                    <Info className="h-4 w-4 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-xs text-gray-600">{dim.explanation}</span>
+                  <div className="flex items-center gap-1 mt-1">
+                    <Info className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                    <span className="text-[8px] text-gray-500">{dim.explanation}</span>
                   </div>
                 </div>
               ))}
@@ -259,7 +286,7 @@ const MEPSVisual = ({ currentProfile = {
           <div className="space-y-4 border-t pt-6">
             <div className="flex items-center gap-2 mb-4">
               <Scale className="h-5 w-5 text-orange-500" />
-              <h3 className="font-medium">Metabolic Profile</h3>
+              <h3 className="font-bold text-black text-lg">Metabolic Profile</h3>
             </div>
 
             <div className="space-y-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
@@ -272,22 +299,19 @@ const MEPSVisual = ({ currentProfile = {
                   <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center gap-2">
                       <div>
-                        <div className="font-medium text-sm">{char.leftLabel}</div>
-                        <div className="text-xs text-gray-500">{char.leftDesc}</div>
+                        <div className="font-medium text-sm text-black">{char.leftLabel}</div>
+                        <div className="text-[10px] text-gray-500">{char.leftDesc}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="text-right">
-                        <div className="font-medium text-sm">{char.rightLabel}</div>
-                        <div className="text-xs text-gray-500">{char.rightDesc}</div>
+                        <div className="font-medium text-sm text-black">{char.rightLabel}</div>
+                        <div className="text-[10px] text-gray-500">{char.rightDesc}</div>
                       </div>
                     </div>
                   </div>
-                  <div className={`relative h-4 bg-gradient-to-r ${char.gradientFrom} via-gray-100 ${char.gradientTo} rounded-full overflow-hidden`}>
-                    <div 
-                      className="absolute top-0 h-full w-1 bg-gray-800 transform -translate-x-1/2 transition-all duration-500"
-                      style={{ left: `${char.score * 100}%` }}
-                    />
+                  <div className={`relative bg-gradient-to-r ${char.gradientFrom} via-gray-100 ${char.gradientTo} h-8 rounded-full overflow-visible`}>
+                    {renderIndicator(char.score)}
                   </div>
                 </div>
               ))}
