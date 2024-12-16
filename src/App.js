@@ -395,11 +395,13 @@ const MicrobiomeReport = () => {
   
     return (
       <div className="space-y-6">
-        <Card>
+        <Card className="bg-gradient-to-br from-rose-50 to-white">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Flame className="h-5 w-5 text-orange-500" />
-              Recommended Actions
+              <Flame className="h-5 w-5 text-rose-500" />
+              <span className="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
+                Recommended Actions
+              </span>
             </CardTitle>
             <CardDescription>
               Personalized actions to improve your gut microbiome composition
@@ -414,8 +416,8 @@ const MicrobiomeReport = () => {
                   <div 
                     className={`p-4 rounded-lg border transition-all cursor-pointer
                       ${selectedAction === rec.id ? 
-                        'bg-blue-50 border-blue-200' : 
-                        'bg-gray-50 border-gray-200 hover:bg-blue-50'}`}
+                        'bg-gradient-to-br from-rose-50 to-pink-50 border-rose-200' : 
+                        'bg-gradient-to-br from-gray-50 to-white border-gray-200 hover:from-rose-50 hover:to-white'}`}
                     onClick={() => setSelectedAction(selectedAction === rec.id ? null : rec.id)}
                   >
                     {/* Action Header */}
@@ -528,7 +530,7 @@ const MicrobiomeReport = () => {
             <div className="mt-6 text-center">
               <button
                 onClick={() => setShowAll(!showAll)}
-                className="px-4 py-2 text-sm font-medium text-blue-600 bg-blue-100 rounded-md hover:bg-blue-200"
+                className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-md hover:from-rose-600 hover:to-pink-700 transition-all duration-200"
               >
                 {showAll ? 'Show Less' : 'Show More'}
               </button>
@@ -850,15 +852,17 @@ const MicrobiomeReport = () => {
       </Card>
 
       {/* Streak Status */}
-      <Card className="bg-gradient-to-br from-red-50 to-white">
-        <CardContent>
-          <div className="text-center py-4">
-            <div className="text-2xl mb-2">🔥</div>
-            <div className="font-bold">{reportData.streak.days} Day Streak</div>
-            <div className="text-sm text-gray-600">{reportData.streak.message}</div>
-          </div>
-        </CardContent>
-      </Card>
+
+        <Card className="bg-gradient-to-br from-cyan-50 via-pink-50 to-orange-50">
+          <CardContent>
+            <div className="text-center py-4">
+              <div className="text-2xl mb-2">🔥</div>
+              <div className="font-bold text-orange-600">{reportData.streak.days} Day Streak</div>
+              <div className="text-sm text-gray-600">{reportData.streak.message}</div>
+            </div>
+          </CardContent>
+        </Card>
+
 
             {/* Add the MEPSVisual component here */}
             <MEPSVisual currentProfile={reportData.current_profile} />
@@ -1056,11 +1060,13 @@ const MEPSVisual = ({ currentProfile = {
   ];
 
   return (
-    <Card>
+    <Card className="bg-gradient-to-br from-teal-50 to-white">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Fingerprint className="h-5 w-5 text-blue-500" />
-          Your MEPS Profile
+          <Fingerprint className="h-5 w-5 text-teal-500" />
+          <span className="bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">
+            Your MEPS Profile
+          </span>
         </CardTitle>
         <CardDescription>
           Understanding your microbiome's key characteristics
