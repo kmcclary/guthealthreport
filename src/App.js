@@ -47,7 +47,7 @@ const MicrobiomeReport = () => {
     },
     streak: {
       days: 14,
-      message: "🔥 14+ day streak! Maximum bonus achieved!"
+      message: "🔥 Maximum bonus achieved!"
     },
     enterotype_profile: {
       ETF: 0.6,

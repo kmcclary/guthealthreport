@@ -16,7 +16,7 @@ const StreakStatus = ({ streak }) => {
         <CardHeader className="p-1">
           <CardTitle
             className={`flex items-center gap-2 transition-all duration-700 ease-out transform 
-            ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+            ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0'}`}
           >
             <Flame className="h-5 w-5 text-orange-600" />
             <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
@@ -24,9 +24,9 @@ const StreakStatus = ({ streak }) => {
             </span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-2">
+        <CardContent className="p-20">
           <div className="text-center">
-            <div className="text-xl md:text-2xl mb-1">🔥</div>
+            <div className="text-6xl md:text-2xl mb-1">🔥</div>
             <div className="font-bold text-orange-600 responsive-text-md">{streak.days} Day Streak</div>
             <div className="responsive-text-xs text-gray-600">{streak.message}</div>
           </div>
