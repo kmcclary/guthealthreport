@@ -213,7 +213,7 @@ const MicrobiomePersonalityV2 = ({
   };
 
   return (
-    <Card className="bg-gradient-to-br from-purple-50 to-white">
+    <Card className="bg-gradient-to-br from-white to-purple-200">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Fingerprint className="h-6 w-6 text-purple-500" />
@@ -261,7 +261,7 @@ const MicrobiomePersonalityV2 = ({
 
             {showExplainer && (
               <div className="mt-4 space-y-4">
-                <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border border-purple-100">
                   <div className="flex items-start gap-2">
                     <Info className="h-5 w-5 text-purple-600 mt-0.5" />
                     <div className="space-y-2">

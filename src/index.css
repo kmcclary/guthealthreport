@@ -40,3 +40,18 @@ code {
     --radius: 0.5rem;
   }
 }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: linear-gradient(to bottom right, black, black, #011709, #0a0e0c) fixed;
+}
+
+body {
+  background: none; /* Remove background from body */
+  color: white; /* Optional: to ensure text is readable */
+}

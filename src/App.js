@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './components/ui/Card';
-import BannerNavBar from './components/ui/BannerNavBar';
 import { 
   Award, Trophy, Star, Flame, Activity, Info, Filter, Beaker, ArrowRight, Clock, BookOpen, 
   Check, AlertCircle, TrendingUp, Fingerprint, Heart, TreePine, BadgeAlert, SlidersHorizontal, 
@@ -395,7 +394,7 @@ const MicrobiomeReport = () => {
   
     return (
       <div className="space-y-6">
-        <Card className="bg-gradient-to-br from-rose-50 to-white">
+        <Card className="bg-gradient-to-br from-white to-rose-100">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Flame className="h-5 w-5 text-rose-500" />
@@ -414,7 +413,7 @@ const MicrobiomeReport = () => {
               {displayedRecommendations.map(rec => (
                 <div key={rec.id}>
                   <div 
-                    className={`p-4 rounded-lg border transition-all cursor-pointer
+                    className={`p-4 rounded-lg border transition-all cursor-pointer shadow-sm hover:shadow-md
                       ${selectedAction === rec.id ? 
                         'bg-gradient-to-br from-gray-50 to-gray-250 border-rose-200' : 
                         'bg-gradient-to-br from-gray-50 to-white border-rose-200 hover:from-gray-250 hover:to-white'}`}
@@ -554,12 +553,12 @@ const MicrobiomeReport = () => {
   
   return (
     
-    <div className="w-full max-w-4xl mx-auto bg-white p-8 space-y-6">
-      <BannerNavBar />
+    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-16 w-full max-w-4xl mx-auto bg-white p-8 space-y-6">
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
       </div>
-        <Card className="bg-gradient-to-br from-green-50 to-white">
+        <Card className="bg-gradient-to-br from-white to-green-100">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Star className="h-5 w-5 text-green-700" />
@@ -600,7 +599,7 @@ const MicrobiomeReport = () => {
 
         </Card>
 
-        <Card className="bg-gradient-to-br from-yellow-50 to-white">
+        <Card className="bg-gradient-to-br from-white to-yellow-100">
     <CardHeader>
       <CardTitle className="flex items-center gap-2">
         <Trophy className="h-5 w-5 text-yellow-500" />
@@ -613,8 +612,8 @@ const MicrobiomeReport = () => {
     <div className="space-y-0">
         <div className="w-full bg-gray-200 rounded-full h-4">
           <div 
-            className="bg-blue-600 rounded-full h-4"
-            style={{ width: `${(reportData.scores.total % 50) * 2}%` }}
+            className="bg-gradient-to-r from-yellow-600 to-amber-600 rounded-full h-4"
+            style={{ width: `${(reportData.scores.total % 50) * 5}%` }}
           />
         </div>
         <p className="text-sm text-gray-600">
@@ -628,7 +627,7 @@ const MicrobiomeReport = () => {
 
 
       {/* Achievements */}
-      <Card className="bg-gradient-to-br from-purple-50 to-white">
+      <Card className="bg-gradient-to-br from-white to-purple-100">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Award className="h-5 w-5 text-purple-500" />
@@ -642,7 +641,7 @@ const MicrobiomeReport = () => {
             {reportData.achievements.map((achievement, index) => (
               <div 
                 key={index}
-                className="p-4 bg-gray-50 rounded-lg border border-gray-200"
+                className="p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="text-2xl mb-2">{achievement.icon}</div>
                 <h3 className="font-bold text-sm">{achievement.name}</h3>
@@ -656,7 +655,7 @@ const MicrobiomeReport = () => {
 
 
       {/* Profile Change */}
-      <Card className="w-full bg-gradient-to-br from-blue-50 to-white">
+      <Card className="w-full bg-gradient-to-br from-white to-blue-200">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Activity className="h-5 w-5 text-blue-500" />
@@ -819,7 +818,7 @@ const MicrobiomeReport = () => {
       <RecommendationsSection />
 
       {/* Recent Actions */}
-      <Card className="bg-gradient-to-br from-orange-50 to-white">
+      <Card className="bg-gradient-to-br from-white to-orange-100">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-green-500" />
@@ -833,7 +832,7 @@ const MicrobiomeReport = () => {
             {reportData.past_recommendations.map((action, index) => (
               <div 
                 key={index}
-                className="p-4 bg-gray-50 rounded-lg border border-gray-200"
+                className="p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start">
                   <div>
@@ -853,7 +852,7 @@ const MicrobiomeReport = () => {
 
       {/* Streak Status */}
 
-        <Card className="bg-gradient-to-br from-cyan-50 via-pink-50 to-orange-50">
+        <Card className="bg-gradient-to-br from-cyan-100 via-pink-100 to-orange-100">
           <CardContent>
             <div className="text-center py-4">
               <div className="text-2xl mb-2">🔥</div>
@@ -1060,7 +1059,7 @@ const MEPSVisual = ({ currentProfile = {
   ];
 
   return (
-    <Card className="bg-gradient-to-br from-teal-50 to-white">
+    <Card className="bg-gradient-to-br from-white via-teal-50 to-teal-200">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Fingerprint className="h-5 w-5 text-teal-500" />
@@ -1082,42 +1081,44 @@ const MEPSVisual = ({ currentProfile = {
               <span className="text-xs text-gray-500 ml-2">(Movement to the right indicates improvement)</span>
             </div>
             
-            {healthDimensions.map((dim, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center mb-1">
-                  <div className="flex items-center gap-2 opacity-75">
-                    <dim.leftIcon className="h-5 w-5 text-gray-600" />
-                    <div>
-                      <div className="font-medium text-sm">{dim.leftLabel}</div>
-                      <div className="text-xs text-gray-500">{dim.leftDesc}</div>
+            <div className="space-y-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
+              {healthDimensions.map((dim, index) => (
+                <div key={index} className="space-y-2">
+                  <div className="flex justify-between items-center mb-1">
+                    <div className="flex items-center gap-2 opacity-75">
+                      <dim.leftIcon className="h-5 w-5 text-gray-600" />
+                      <div>
+                        <div className="font-medium text-sm">{dim.leftLabel}</div>
+                        <div className="text-xs text-gray-500">{dim.leftDesc}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="text-right">
+                        <div className="font-medium text-sm">{dim.rightLabel}</div>
+                        <div className="text-xs text-gray-500">{dim.rightDesc}</div>
+                      </div>
+                      <dim.rightIcon className="h-5 w-5 text-gray-600" />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="text-right">
-                      <div className="font-medium text-sm">{dim.rightLabel}</div>
-                      <div className="text-xs text-gray-500">{dim.rightDesc}</div>
-                    </div>
-                    <dim.rightIcon className="h-5 w-5 text-gray-600" />
+
+                  <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
+                    <div 
+                      className={`absolute top-0 left-0 h-full rounded-full transition-all duration-500 ${dim.color}`}
+                      style={{ width: `${dim.score * 100}%` }}
+                    />
+                    <div 
+                      className="absolute top-0 h-full w-1 bg-white transform -translate-x-1/2 transition-all duration-500"
+                      style={{ left: `${dim.score * 100}%` }}
+                    />
+                  </div>
+
+                  <div className="flex items-start gap-1 mt-1">
+                    <Info className="h-4 w-4 text-blue-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-xs text-gray-600">{dim.explanation}</span>
                   </div>
                 </div>
-
-                <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
-                  <div 
-                    className={`absolute top-0 left-0 h-full rounded-full transition-all duration-500 ${dim.color}`}
-                    style={{ width: `${dim.score * 100}%` }}
-                  />
-                  <div 
-                    className="absolute top-0 h-full w-1 bg-white transform -translate-x-1/2 transition-all duration-500"
-                    style={{ left: `${dim.score * 100}%` }}
-                  />
-                </div>
-
-                <div className="flex items-start gap-1 mt-1">
-                  <Info className="h-4 w-4 text-blue-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-xs text-gray-600">{dim.explanation}</span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Metabolic Characteristics */}
@@ -1128,7 +1129,7 @@ const MEPSVisual = ({ currentProfile = {
               <span className="text-xs text-gray-500 ml-2">(Characteristics, not measures of health)</span>
             </div>
 
-            <div className="space-y-6 bg-gray-50 rounded-lg p-4">
+            <div className="space-y-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
               {metabolicCharacteristics.map((char, index) => (
                 <div key={index}>
                   <div className="text-sm font-medium mb-3">{char.name}</div>
@@ -1155,7 +1156,7 @@ const MEPSVisual = ({ currentProfile = {
                 </div>
               ))}
 
-              <div className="mt-4 bg-blue-50 p-3 rounded-md">
+              <div className="mt-4 bg-blue-50 p-3 rounded-md border border-blue-100 shadow-sm">
                 <div className="flex items-start gap-2">
                   <Info className="h-4 w-4 text-blue-500 flex-shrink-0 mt-0.5" />
                   <div className="text-sm text-gray-600">
