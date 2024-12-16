@@ -55,7 +55,7 @@ const EnterotypeProfile = ({ reportData }) => {
           </span>
         </CardTitle>
         <CardDescription>
-          Overview of your gut microbiome enterotype distribution
+          Your gut microbiome enterotype distribution
         </CardDescription>
       </CardHeader>
       <CardContent>

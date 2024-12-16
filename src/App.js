@@ -11,6 +11,8 @@ import RecommendationsSection from './components/ui/RecommendationsSection'; // 
 import EnterotypeProfile from './components/ui/EnterotypeProfile'; // Import the new component
 import MEPSVisual from './components/ui/MEPSVisual'; // Import the new component
 import Achievements from './components/ui/Achievements'; // Import the new component
+import PathogenDetection from './components/ui/PathogenDetection'; // Import the new component
+import CommensalMicrobeDetection from './components/ui/CommensalMicrobeDetection'; // Import the new component
 
 const MicrobiomeReport = () => {
   const reportData = {
@@ -55,7 +57,7 @@ const MicrobiomeReport = () => {
       {
         icon: "🏆",
         name: "Firmicutes Fighter",
-        description: "Completed 5+ F-type distancing actions"
+        description: "5+ F-type distancing actions"
       },
       {
         icon: "🌱",
@@ -67,7 +69,7 @@ const MicrobiomeReport = () => {
         name: "Consistency Champion",
         description: "Maintained a 14-day streak"
       }
-    ],
+    ]
   };
 
   
@@ -174,6 +176,12 @@ const MicrobiomeReport = () => {
         currentProfile={reportData.current_profile} 
         previousProfile={reportData.previous_profile} 
       />
+
+      {/* Pathogen Detection Section */}
+      <PathogenDetection /> {/* Remove pathogenData prop */}
+
+      {/* Commensal Microbe Detection Section */}
+      <CommensalMicrobeDetection /> {/* Add the new section */}
     </div>
   );
 };

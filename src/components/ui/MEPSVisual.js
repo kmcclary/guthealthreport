@@ -199,7 +199,7 @@ const MEPSVisual = ({ currentProfile = {
         <CardTitle className="flex items-center gap-2">
           <Fingerprint className="h-5 w-5 text-teal-500" />
           <span className="bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">
-            Your MEPS Profile
+            Health & Metabolism Profile
           </span>
         </CardTitle>
         <CardDescription>
