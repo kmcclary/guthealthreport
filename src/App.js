@@ -114,16 +114,16 @@ const MicrobiomeReport = () => {
   };
 
   return (
-    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-16 w-full max-w-4xl mx-auto bg-white p-8 space-y-6">
+    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-16 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-4 md:space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       </div>
         <TotalScoreCard reportData={reportData} /> {/* Remove CreditScoreMeter prop */}
 
         <Card className="bg-gradient-to-br from-white to-yellow-100">
-    <CardHeader>
+    <CardHeader className="p-4">
       <CardTitle className="flex items-center gap-2">
-        <Trophy className="h-5 w-5 text-yellow-500" />
-        <span className="bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent">
+        <Trophy className="h-4 w-4 md:h-5 md:w-5 text-yellow-500" />
+        <span className="bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent responsive-text-md">
           Level {reportData.level.current}: {reportData.level.title}
         </span>
         </CardTitle>
@@ -136,7 +136,7 @@ const MicrobiomeReport = () => {
             style={{ width: `${(reportData.scores.total % 50) * 5}%` }}
           />
         </div>
-        <p className="text-sm text-gray-600">
+        <p className="responsive-text-sm text-gray-600">
           {reportData.level.points_to_next} points to next level
         </p>
       
@@ -148,24 +148,24 @@ const MicrobiomeReport = () => {
 
       {/* Achievements */}
       <Card className="bg-gradient-to-br from-white to-purple-100">
-        <CardHeader>
+        <CardHeader className="p-4">
           <CardTitle className="flex items-center gap-2">
-            <Award className="h-5 w-5 text-purple-500" />
-            <span className="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent">
+            <Award className="h-4 w-4 md:h-5 md:w-5 text-purple-500" />
+            <span className="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent responsive-text-md">
               Achievements
             </span>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {reportData.achievements.map((achievement, index) => (
               <div 
                 key={index}
-                className="p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                className="p-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="text-2xl mb-2">{achievement.icon}</div>
-                <h3 className="font-bold text-sm">{achievement.name}</h3>
-                <p className="text-xs text-gray-600">{achievement.description}</p>
+                <div className="text-xl md:text-2xl mb-1 achievement-icon">{achievement.icon}</div>
+                <h3 className="font-bold responsive-text-sm">{achievement.name}</h3>
+                <p className="responsive-text-xs text-gray-600">{achievement.description}</p>
               </div>
             ))}
           </div>
@@ -181,10 +181,10 @@ const MicrobiomeReport = () => {
       {/* Streak Status */}
       <Card className="bg-gradient-to-br from-cyan-100 via-pink-100 to-orange-100">
         <CardContent>
-          <div className="text-center py-4">
-            <div className="text-2xl mb-2">🔥</div>
-            <div className="font-bold text-orange-600">{reportData.streak.days} Day Streak</div>
-            <div className="text-sm text-gray-600">{reportData.streak.message}</div>
+          <div className="text-center py-3">
+            <div className="text-xl md:text-2xl mb-1">🔥</div>
+            <div className="font-bold text-orange-600 responsive-text-md">{reportData.streak.days} Day Streak</div>
+            <div className="responsive-text-xs text-gray-600">{reportData.streak.message}</div>
           </div>
         </CardContent>
       </Card>

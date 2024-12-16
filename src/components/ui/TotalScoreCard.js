@@ -85,16 +85,16 @@ const TotalScoreCard = ({ reportData }) => {
           <div className="text-6xl font-bold text-center">
             {reportData.scores.total.toFixed(1)}
           </div>
-          <div className="mt-2 space-y-0.5 sm:space-y-1 text-sm font-bold text-center pr-4 sm:pr-0">
-            <div className="flex justify-between w-48 mx-auto">
+          <div className="mt-1 space-y-0 sm:space-y-1 text-xs sm:text-sm font-bold text-center pr-4 sm:pr-0">
+            <div className="flex justify-between w-40 sm:w-48 mx-auto py-0.5">
               <span>Base Score:</span>
               <span>{reportData.scores.base.toFixed(1)}</span>
             </div>
-            <div className="flex justify-between w-48 mx-auto">
+            <div className="flex justify-between w-40 sm:w-48 mx-auto py-0.5">
               <span>Action Points:</span>
               <span>+{reportData.scores.action_points.toFixed(1)}</span>
             </div>
-            <div className="flex justify-between w-48 mx-auto">
+            <div className="flex justify-between w-40 sm:w-48 mx-auto py-0.5">
               <span>Streak Bonus:</span>
               <span>+{reportData.scores.streak_bonus.toFixed(1)}</span>
             </div>
