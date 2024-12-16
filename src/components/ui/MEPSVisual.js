@@ -214,11 +214,11 @@ const MEPSVisual = ({ currentProfile = {
           }}
         >
           <div className="relative flex items-center justify-center">
-            <div className="bg-gradient-to-br from-gray-900 via-gray-700 to-black text-white text-[12px] font-bold rounded-full h-10 w-7 flex items-center justify-center border border-black">
+            <div className="bg-gradient-to-br from-gray-900 via-gray-700 to-black text-white text-[10px] font-bold rounded-full h-8 w-5 flex items-center justify-center border border-black">
           {percentage}
             </div>
             {/* Pointer triangle below the circle */}
-            <div className="bg-white absolute w-0 h-0 border-l-3 border-r-3 border-b-4 border-l-transparent border-r-transparent border-b-black -bottom-2 left-1/2 transform -translate-x-1/2"></div>
+            <div className="bg-transparent absolute w-0 h-0 border-l-3 border-r-3 border-b-4 border-l-transparent border-r-transparent border-b-black -bottom-2 left-1/2 transform -translate-x-1/2"></div>
           </div>
         </div>
       </div>
@@ -248,37 +248,41 @@ const MEPSVisual = ({ currentProfile = {
             </div>
             
             <div className="space-y-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
-              {healthDimensions.map((dim, index) => (
-                <div key={index} className="space-y-2">
-                  <h4 className="font-bold text-black text-lg">{dim.name}</h4>
+            {healthDimensions.map((dim, index) => (
+  <div key={index} className="space-y-2">
+    <h4 className="font-bold text-black text-lg">{dim.name}</h4>
 
-                  <div className="flex justify-between items-center mb-1">
-                    <div className="flex items-center gap-2 opacity-90">
-                      <dim.leftIcon className={`h-5 w-5 text-${dim.startColor}`} />
-                      <div>
-                        <div className="font-medium text-sm text-black">{dim.leftLabel}</div>
-                        <div className="text-[10px] text-gray-500">{dim.leftDesc}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="text-right">
-                        <div className="font-medium text-sm text-black">{dim.rightLabel}</div>
-                        <div className="text-[10px] text-gray-500">{dim.rightDesc}</div>
-                      </div>
-                      <dim.rightIcon className={`h-5 w-5 text-${dim.endColor}`} />
-                    </div>
-                  </div>
+    <div className="flex justify-between items-center mb-1">
+      {/* Left side */}
+      <div className="flex flex-col items-start">
+        <div className="flex items-center gap-2">
+          <dim.leftIcon className={`h-5 w-5 text-${dim.startColor}`} />
+          <div className="font-medium text-sm text-black">{dim.leftLabel}</div>
+        </div>
+        <div className="text-[10px] text-gray-500 pl-0 py-1">{dim.leftDesc}</div>
+      </div>
 
-                  <div className={`relative ${dim.gradientClass} h-8 rounded-full`}>
-                    {renderIndicator(dim.score)}
-                  </div>
+      {/* Right side */}
+      <div className="flex flex-col items-end">
+        <div className="flex items-center gap-2">
+          <div className="font-medium text-sm text-black">{dim.rightLabel}</div>
+          <dim.rightIcon className={`h-5 w-5 text-${dim.endColor}`} />
+        </div>
+        <div className="text-[10px] text-gray-500 pr-0 py-1 text-right">{dim.rightDesc}</div>
+      </div>
+    </div>
 
-                  <div className="flex items-center gap-1 mt-1">
-                    <Info className="h-3 w-3 text-gray-400 flex-shrink-0" />
-                    <span className="text-[8px] text-gray-500">{dim.explanation}</span>
-                  </div>
-                </div>
-              ))}
+    <div className={`relative ${dim.gradientClass} h-6 rounded-full`}>
+      {renderIndicator(dim.score)}
+    </div>
+
+    <div className="flex items-center gap-1 mt-1">
+      <Info className="h-3 w-3 text-gray-400 flex-shrink-0" />
+      <span className="text-[8px] text-gray-500">{dim.explanation}</span>
+    </div>
+  </div>
+))}
+
             </div>
           </div>
 
@@ -310,7 +314,7 @@ const MEPSVisual = ({ currentProfile = {
                       </div>
                     </div>
                   </div>
-                  <div className={`relative bg-gradient-to-r ${char.gradientFrom} via-gray-100 ${char.gradientTo} h-8 rounded-full overflow-visible`}>
+                  <div className={`relative bg-gradient-to-r ${char.gradientFrom} via-gray-100 ${char.gradientTo} h-6 rounded-full overflow-visible`}>
                     {renderIndicator(char.score)}
                   </div>
                 </div>
