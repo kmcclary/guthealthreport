@@ -516,11 +516,11 @@ const MicrobiomePersonalityV2 = ({
         <CardTitle className="flex items-center gap-2">
           <Fingerprint className="h-6 w-6 text-purple-500" />
           <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-            Microbiome Personality Profile
+            Gut Personality Profile
           </span>
         </CardTitle>
         <CardDescription>
-          <div className="flex flex-col gap-1 items-center text-center sm:items-start sm:text-left">
+          <div className="flex flex-col gap-1 items-center text-center sm:items-start sm:text-left py-2">
             <span className="font-bold text-xl text-gray-600 flex items-center gap-2 justify-center sm:justify-start w-full">
               <span>{personalityType}</span>
               <span className="inline-block">
@@ -577,7 +577,7 @@ const MicrobiomePersonalityV2 = ({
             >
               <div className="flex items-center gap-2">
                 <Info className="h-5 w-5 text-black" />
-                <h4 className="font-medium text-black">Understanding Your Microbiome Type</h4>
+                <h4 className="font-medium text-black">Understanding Gut Personality</h4>
               </div>
               {expandedSections.understanding ? 
                 <ChevronDown className="h-4 w-4 text-black" /> : 
@@ -690,7 +690,7 @@ const MicrobiomePersonalityV2 = ({
             >
               <div className="flex items-center gap-2">
                 <Salad className="h-5 w-5 text-blue-600" />
-                <h4 className="font-medium text-black">Detailed Dietary Recommendations</h4>
+                <h4 className="font-medium text-black">Detailed Recommendations</h4>
               </div>
               {expandedSections.dietary ? 
                 <ChevronDown className="h-4 w-4 text-black" /> : 
