@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './Card';
-import { Fingerprint, TreePine, BadgeAlert, Heart, SlidersHorizontal, Waves, Scale, Info } from 'lucide-react';
+import { Fingerprint, TreePine, BadgeAlert, Heart, SlidersHorizontal, Waves, Scale, Info, Utensils, Trees, Wheat, Beaker, TestTube, Timer, Wind, Droplets, Thermometer, Container } from 'lucide-react';
 
 const MEPSVisual = ({ currentProfile = {
   ETF: 0.25,
@@ -83,6 +83,7 @@ const MEPSVisual = ({ currentProfile = {
   const metabolicCharacteristics = [
     {
       name: 'Primary Nutrient Processing',
+      icon: Utensils,
       leftLabel: 'Carbohydrate-Focused',
       leftDesc: 'Fiber & complex carbs',
       rightLabel: 'Protein-Focused',
@@ -93,6 +94,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Carbon Source Range',
+      icon: Trees,
       leftLabel: 'Specialist',
       leftDesc: 'Limited substrate range',
       rightLabel: 'Generalist',
@@ -103,6 +105,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Fiber Utilization',
+      icon: Wheat,
       leftLabel: 'Soluble-Preferring',
       leftDesc: 'Readily fermentable fiber',
       rightLabel: 'Insoluble-Preferring',
@@ -113,6 +116,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Fermentation Pattern',
+      icon: Beaker,  // Changed from Flask
       leftLabel: 'Saccharolytic',
       leftDesc: 'Carbohydrate fermentation',
       rightLabel: 'Proteolytic',
@@ -123,6 +127,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Primary Metabolites',
+      icon: TestTube,  // Changed from Flask2
       leftLabel: 'SCFA-Dominant',
       leftDesc: 'Short-chain fatty acids',
       rightLabel: 'BCFA-Dominant',
@@ -133,6 +138,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Growth Rate Pattern',
+      icon: Timer,
       leftLabel: 'Fast-Growing',
       leftDesc: 'Rapid nutrient turnover',
       rightLabel: 'Slow-Growing',
@@ -143,6 +149,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Oxygen Tolerance',
+      icon: Wind,
       leftLabel: 'Aerotolerant',
       leftDesc: 'Can survive oxygen exposure',
       rightLabel: 'Strictly Anaerobic',
@@ -153,6 +160,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'pH Environment',
+      icon: Droplets,
       leftLabel: 'Acidophilic',
       leftDesc: 'Prefers acidic conditions',
       rightLabel: 'Alkaliphilic',
@@ -163,6 +171,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Temperature Range',
+      icon: Thermometer,
       leftLabel: 'Mesophilic',
       leftDesc: 'Moderate temperature (20-45°C)',
       rightLabel: 'Thermophilic',
@@ -173,6 +182,7 @@ const MEPSVisual = ({ currentProfile = {
     },
     {
       name: 'Salt Tolerance',
+      icon: Container,  // Changed from Salt
       leftLabel: 'Non-Halophilic',
       leftDesc: 'Low salt preference',
       rightLabel: 'Halophilic',
@@ -257,7 +267,10 @@ const MEPSVisual = ({ currentProfile = {
             <div className="space-y-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
               {metabolicCharacteristics.map((char, index) => (
                 <div key={index}>
-                  <div className="text-sm font-medium mb-3">{char.name}</div>
+                  <div className="flex items-center gap-2 text-base font-semibold mb-3 text-gray-800">
+                    <char.icon className="h-5 w-5 text-gray-600" />
+                    {char.name}
+                  </div>
                   <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center gap-2">
                       <div>

@@ -3,7 +3,9 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './Car
 import { 
   Fingerprint, ChevronDown, ChevronRight, Info, 
   Beaker, Waves, Timer, GitBranch, Scale,
-  GraduationCap, Lightbulb, BrainCircuit, CircleDotDashed
+  GraduationCap, Lightbulb, BrainCircuit, CircleDotDashed,
+  // Add these new icons
+  FlaskRound, Workflow, Zap, Network
 } from 'lucide-react';
 
 // Mock data for demonstration
@@ -152,8 +154,8 @@ const MicrobiomePersonalityV2 = ({
         onClick={() => setActiveCard(isActive ? null : dimension)}
       >
         <div className="flex justify-between items-start mb-3">
-          <div className="flex items-center gap-2">
-            <Icon className={`h-5 w-5 ${currentOption.color}`} />
+          <div className="flex items-start gap-2">
+            <Icon className={`h-5 w-5 ${currentOption.color} mt-0.5`} />
             <div>
               <div className="text-sm text-gray-600">
                 {dimension === 0 ? 'Substrate Preference' :
@@ -167,21 +169,31 @@ const MicrobiomePersonalityV2 = ({
         </div>
   
         <div className="relative h-16 bg-gray-50 rounded-lg overflow-hidden flex mb-3">
-          {Object.entries(typeDescriptions[dimensionKey]).map(([key, value]) => (
-            <div 
-              key={key}
-              className={`flex-1 flex items-center justify-center border-r last:border-r-0 p-2
-                transition-all duration-300
-                ${dimensionType === key ? 
-                  `${value.color.replace('text', 'bg')} bg-opacity-20` : 
-                  'hover:bg-gray-100'}`}
-            >
-              <div className="text-center">
-                <div className="font-medium text-sm">{key}</div>
-                <div className="text-xs text-gray-600">{value.desc}</div>
+          {Object.entries(typeDescriptions[dimensionKey]).map(([key, value], idx, arr) => {
+            const isSelected = dimensionType === key;
+            const isFirst = idx === 0;
+            const isLast = idx === arr.length - 1;
+            
+            return (
+              <div 
+                key={key}
+                className={`
+                  flex-1 flex items-center justify-center
+                  ${isFirst ? 'rounded-l-lg' : ''}
+                  ${isLast ? 'rounded-r-lg' : 'border-r border-gray-200'}
+                  p-2 transition-all duration-300
+                  ${isSelected ? 
+                    `${value.color.replace('text', 'bg')} bg-opacity-20 ring-2 ring-inset ring-${value.color.split('-')[1]}-400` : 
+                    'hover:bg-gray-100'}`
+                }
+              >
+                <div className="text-center">
+                  <div className={`font-medium text-sm ${isSelected ? value.color : 'text-gray-600'}`}>{key}</div>
+                  <div className={`text-xs ${isSelected ? 'text-gray-800' : 'text-gray-500'}`}>{value.desc}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
   
         <p className="text-sm text-gray-600">{currentOption.trait}</p>
@@ -189,8 +201,8 @@ const MicrobiomePersonalityV2 = ({
         {isActive && (
           <div className="mt-4 space-y-2">
             <div className="text-sm space-y-1">
-              <div className="font-medium flex items-center gap-1">
-                <GraduationCap className="h-4 w-4" />
+              <div className="font-medium flex items-start gap-1">
+                <GraduationCap className="h-4 w-4 mt-0.5" />
                 Key Pathways
               </div>
               <ul className="list-disc list-inside text-gray-600 text-sm">
@@ -200,8 +212,8 @@ const MicrobiomePersonalityV2 = ({
               </ul>
             </div>
             <div className="text-sm space-y-1">
-              <div className="font-medium flex items-center gap-1">
-                <Lightbulb className="h-4 w-4" />
+              <div className="font-medium flex items-start gap-1">
+                <Lightbulb className="h-4 w-4 mt-0.5" />
                 Dietary Recommendation
               </div>
               <p className="text-gray-600">{currentOption.diet}</p>
@@ -292,31 +304,70 @@ const MicrobiomePersonalityV2 = ({
                 </div>
 
                 <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border">
-                  <h4 className="font-medium mb-2">Your Type Characteristics</h4>
-                  <div className="space-y-3">
-                    {Object.entries(typeDescriptions).map(([key, options], index) => (
-                      <div key={key} 
-                        className="flex items-start gap-2 p-3 rounded-lg hover:bg-gray-50 transition-colors"
-                      >
-                        <span className={`w-2 h-2 rounded-full mt-1.5 ${options[personalityType[index]].color.replace('text', 'bg')}`}></span>
-                        <div className="flex-1">
-                          <span className="font-medium">{options[personalityType[index]].title}:</span>
-                          <ul className="mt-1 space-y-1">
-                            <li className="text-sm">• Pathways: {options[personalityType[index]].pathways.join(', ')}</li>
-                            {options[personalityType[index]].products && (
-                              <li className="text-sm">• Products: {options[personalityType[index]].products.join(', ')}</li>
-                            )}
-                            <li className="text-sm">• Features: {options[personalityType[index]].features?.join(', ')}</li>
-                          </ul>
+                  <h4 className="font-medium mb-2 flex items-center gap-2">
+                    <BrainCircuit className="h-5 w-5 text-purple-600" />
+                    Your Type Characteristics
+                  </h4>
+                  <div className="space-y-4">
+                    {Object.entries(typeDescriptions).map(([key, options], index) => {
+                      const icons = [
+                        <FlaskRound className="h-5 w-5" />,
+                        <Workflow className="h-5 w-5" />,
+                        <Zap className="h-5 w-5" />,
+                        <Network className="h-5 w-5" />
+                      ];
+                      
+                      return (
+                        <div key={key} 
+                          className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className={`${options[personalityType[index]].color}`}>
+                              {icons[index]}
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="font-medium text-lg">
+                                  {options[personalityType[index]].title}
+                                </span>
+                                <span className={`text-sm px-2 py-0.5 rounded-full ${options[personalityType[index]].color.replace('text', 'bg')} bg-opacity-10`}>
+                                  Type {personalityType[index]}
+                                </span>
+                              </div>
+                              <div className="space-y-2 text-sm text-gray-600">
+                                <p>{options[personalityType[index]].desc}</p>
+                                <div className="grid grid-cols-2 gap-4 mt-2">
+                                  <div>
+                                    <div className="font-medium text-gray-900 mb-1">Key Pathways</div>
+                                    <ul className="list-disc list-inside">
+                                      {options[personalityType[index]].pathways.map((pathway, i) => (
+                                        <li key={i}>{pathway}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                  <div>
+                                    <div className="font-medium text-gray-900 mb-1">
+                                      {options[personalityType[index]].products ? 'Products' : 'Features'}
+                                    </div>
+                                    <ul className="list-disc list-inside">
+                                      {(options[personalityType[index]].products || options[personalityType[index]].features).map((item, i) => (
+                                        <li key={i}>{item}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 
                 <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border border-blue-100">
-                  <h4 className="font-medium mb-2 flex items-center gap-2">
-                    <Scale className="h-4 w-4 text-blue-600" />
+                  <h4 className="font-medium mb-2 flex items-start gap-2">
+                    <Scale className="h-4 w-4 text-blue-600 mt-0.5" />
                     Dietary Implications
                   </h4>
                   <ul className="space-y-2 text-sm">
@@ -331,7 +382,7 @@ const MicrobiomePersonalityV2 = ({
 
                 <div className="space-y-3 bg-white p-4 rounded-lg border">
                   <div className="flex items-start gap-2">
-                    <BrainCircuit className="h-5 w-5 text-purple-600 mt-1" />
+                    <BrainCircuit className="h-5 w-5 text-purple-600 mt-0.5" />
                     <p className="text-sm text-gray-600">
                       Each type represents a different but equally valid approach to maintaining gut health. 
                       Your type helps inform personalized dietary and lifestyle recommendations that work 
@@ -339,7 +390,7 @@ const MicrobiomePersonalityV2 = ({
                     </p>
                   </div>
                   <div className="flex items-start gap-2">
-                    <CircleDotDashed className="h-5 w-5 text-purple-600 mt-1" />
+                    <CircleDotDashed className="h-5 w-5 text-purple-600 mt-0.5" />
                     <p className="text-sm text-gray-600">
                       Your microbiome type may change over time based on diet, lifestyle, and environmental 
                       factors. Regular monitoring can help you understand these changes and adapt your 
