@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './Card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './Card';
 import { Activity, Info } from 'lucide-react';
 
 const EnterotypeProfile = ({ reportData }) => {
@@ -54,6 +54,9 @@ const EnterotypeProfile = ({ reportData }) => {
             Enterotype Profile
           </span>
         </CardTitle>
+        <CardDescription>
+          Overview of your gut microbiome enterotype distribution
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

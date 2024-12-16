@@ -6,6 +6,7 @@ const RecommendationsSection = () => {
   const [selectedAction, setSelectedAction] = useState(null);
   const [priorityFilter, /* setPriorityFilter */] = useState('all');
   const [showAll, setShowAll] = useState(false);
+  const [selectedRecentAction, setSelectedRecentAction] = useState(null);
 
   const recommendationsData = {
     recommendations: [
@@ -183,19 +184,83 @@ const RecommendationsSection = () => {
         action: "Drink herbal/flavonoid teas",
         points: 24,
         completions: 12,
-        impact: "Distances ETF"
+        impact: "Distances ETF",
+        timeframe: "Implemented over 6 weeks",
+        details: {
+          overview: "Consistently drank 2-3 cups of herbal/flavonoid-rich teas daily.",
+          improvements: [
+            "Steadily decreased presence of Firmicutes",
+            "Boosted beneficial Akkermansia species",
+            "Noticed improved digestive comfort and reduced bloating"
+          ],
+          references: [
+            {
+              doi: "10.1016/j.jfda.2019.09.003",
+              note: "Herbal teas have been shown to modulate gut microbiota composition, improving metabolic profiles."
+            }
+          ],
+          completionTimeline: [
+            { week: 1, completions: 2 },
+            { week: 2, completions: 3 },
+            { week: 3, completions: 2 },
+            { week: 4, completions: 2 },
+            { week: 5, completions: 1 },
+            { week: 6, completions: 2 }
+          ]
+        }
       },
       {
         action: "Fiber-rich diet",
         points: 14,
         completions: 7,
-        impact: "Distances ETF"
+        impact: "Distances ETF",
+        timeframe: "Adopted over 4 weeks",
+        details: {
+          overview: "Increased daily fiber intake to ~30g through fruits, veggies, and whole grains.",
+          improvements: [
+            "Reduced intestinal inflammation markers",
+            "Increased abundance of Bifidobacterium and Faecalibacterium prausnitzii",
+            "Improved stool consistency and regularity"
+          ],
+          references: [
+            {
+              doi: "10.1111/nyas.13153",
+              note: "Dietary fiber is associated with a healthier gut microbial community and improved metabolic health."
+            }
+          ],
+          completionTimeline: [
+            { week: 1, completions: 2 },
+            { week: 2, completions: 2 },
+            { week: 3, completions: 1 },
+            { week: 4, completions: 2 }
+          ]
+        }
       },
       {
         action: "Avoid artificial sweeteners",
         points: 8,
         completions: 8,
-        impact: "Approaches ETB"
+        impact: "Approaches ETB",
+        timeframe: "Maintained for 3 weeks",
+        details: {
+          overview: "Eliminated artificial sweeteners (aspartame, sucralose, saccharin) from the diet.",
+          improvements: [
+            "Stabilized gut microbial diversity",
+            "Reduced fluctuations in blood glucose levels",
+            "More stable energy throughout the day"
+          ],
+          references: [
+            {
+              doi: "10.1038/nature13793",
+              note: "Artificial sweeteners may induce glucose intolerance by altering the gut microbiota."
+            }
+          ],
+          completionTimeline: [
+            { week: 1, completions: 3 },
+            { week: 2, completions: 3 },
+            { week: 3, completions: 2 }
+          ]
+        }
       }
     ]
   };
@@ -218,7 +283,7 @@ const RecommendationsSection = () => {
               </span>
             </CardTitle>
             <CardDescription>
-              Personalized actions to improve your gut microbiome composition
+              Personalized actions to improve your gut microbiome
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -366,7 +431,9 @@ const RecommendationsSection = () => {
             {recommendationsData.past_recommendations.map((action, index) => (
               <div 
                 key={index}
-                className="p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                className={`p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer
+                ${selectedRecentAction === index ? 'bg-gray-100' : ''}`}
+                onClick={() => setSelectedRecentAction(selectedRecentAction === index ? null : index)}
               >
                 <div className="flex justify-between items-start">
                   <div>
@@ -378,6 +445,76 @@ const RecommendationsSection = () => {
                     <div className="text-sm text-gray-600">{action.completions}x completed</div>
                   </div>
                 </div>
+
+                {selectedRecentAction === index && (
+                  <div className="mt-4 space-y-4 border-t pt-4">
+                    {/* Timeframe */}
+                    <div className="space-y-2">
+                      <h4 className="font-medium flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-blue-500" />
+                        Timeframe of Implementation
+                      </h4>
+                      <p className="ml-6 text-sm">{action.timeframe}</p>
+                    </div>
+
+                    {/* Detailed Overview */}
+                    <div className="space-y-2">
+                      <h4 className="font-medium flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4 text-orange-500" />
+                        Detailed Overview
+                      </h4>
+                      <p className="ml-6 text-sm">{action.details.overview}</p>
+                    </div>
+
+                    {/* Improvements */}
+                    <div className="space-y-2">
+                      <h4 className="font-medium flex items-center gap-2">
+                        <TrendingUp className="h-4 w-4 text-green-500" />
+                        Observed Improvements
+                      </h4>
+                      <ul className="ml-6 space-y-1">
+                        {action.details.improvements.map((imp, idx) => (
+                          <li key={idx} className="text-sm flex items-center gap-2">
+                            <Check className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
+                            {imp}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Completion Timeline */}
+                    <div className="space-y-2">
+                      <h4 className="font-medium flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-blue-500" />
+                        Completion Timeline
+                      </h4>
+                      <ul className="ml-6 space-y-1 text-sm">
+                        {action.details.completionTimeline.map((entry, idx) => (
+                          <li key={idx} className="flex items-center gap-2">
+                            <ArrowRight className="h-3 w-3 text-gray-400" />
+                            Week {entry.week}: {entry.completions} completions
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* References */}
+                    <div className="space-y-2">
+                      <h4 className="font-medium flex items-center gap-2">
+                        <BookOpen className="h-4 w-4 text-gray-500" />
+                        Scientific References
+                      </h4>
+                      <div className="ml-6 space-y-2">
+                        {action.details.references.map((ref, idx) => (
+                          <div key={idx} className="text-sm space-y-1">
+                            <div className="font-medium">DOI: {ref.doi}</div>
+                            <div className="text-gray-600">{ref.note}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
