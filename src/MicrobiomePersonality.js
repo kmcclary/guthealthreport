@@ -314,7 +314,7 @@ const MicrobiomePersonalityV2 = ({
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-blue-50 to-white p-4 rounded-lg border border-blue-100">
+                <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border border-blue-100">
                   <h4 className="font-medium mb-2 flex items-center gap-2">
                     <Scale className="h-4 w-4 text-blue-600" />
                     Dietary Implications

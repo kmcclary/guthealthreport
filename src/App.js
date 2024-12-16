@@ -416,8 +416,8 @@ const MicrobiomeReport = () => {
                   <div 
                     className={`p-4 rounded-lg border transition-all cursor-pointer
                       ${selectedAction === rec.id ? 
-                        'bg-gradient-to-br from-rose-50 to-pink-50 border-rose-200' : 
-                        'bg-gradient-to-br from-gray-50 to-white border-gray-200 hover:from-rose-50 hover:to-white'}`}
+                        'bg-gradient-to-br from-gray-50 to-gray-250 border-rose-200' : 
+                        'bg-gradient-to-br from-gray-50 to-white border-rose-200 hover:from-gray-250 hover:to-white'}`}
                     onClick={() => setSelectedAction(selectedAction === rec.id ? null : rec.id)}
                   >
                     {/* Action Header */}
