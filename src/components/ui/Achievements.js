@@ -2,8 +2,26 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './Card';
 import { Award, ArrowRight, Check, BookOpen } from 'lucide-react';
 
-const Achievements = ({ achievements }) => {
+const Achievements = () => {
   const [selectedAchievement, setSelectedAchievement] = useState(null);
+
+  const achievements = [
+    {
+      icon: "🏆",
+      name: "Firmicutes Fighter",
+      description: "5+ F-type distancing actions"
+    },
+    {
+      icon: "🌱",
+      name: "Gut Guardian",
+      description: "Reached Level 3"
+    },
+    {
+      icon: "🔄",
+      name: "Consistency Champion",
+      description: "Maintained a 14-day streak"
+    }
+  ];
 
   const handleAchievementClick = (index) => {
     setSelectedAchievement(selectedAchievement === index ? null : index);

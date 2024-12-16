@@ -14,6 +14,7 @@ import Achievements from './components/ui/Achievements'; // Import the new compo
 import PathogenDetection from './components/ui/PathogenDetection'; // Import the new component
 import CommensalMicrobeDetection from './components/ui/CommensalMicrobeDetection'; // Import the new component
 import LevelSection from './components/ui/LevelSection'; // Import the new component
+import StreakStatus from './components/ui/StreakStatus'; // Import the new component
 
 const MicrobiomeReport = () => {
   const reportData = {
@@ -53,24 +54,7 @@ const MicrobiomeReport = () => {
       ETB: 0.2,
       ETP: 0.1,
       ETX: 0.1
-    },
-    achievements: [
-      {
-        icon: "🏆",
-        name: "Firmicutes Fighter",
-        description: "5+ F-type distancing actions"
-      },
-      {
-        icon: "🌱",
-        name: "Gut Guardian",
-        description: "Reached Level 3"
-      },
-      {
-        icon: "🔄",
-        name: "Consistency Champion",
-        description: "Maintained a 14-day streak"
-      }
-    ]
+    }
   };
 
   
@@ -126,7 +110,7 @@ const MicrobiomeReport = () => {
         <LevelSection level={reportData.level} scores={reportData.scores} /> {/* Use the new component */}
 
       {/* Achievements */}
-      <Achievements achievements={reportData.achievements} /> {/* Use the new component */}
+      <Achievements /> {/* Ensure this component is used */}
       
       {/* Profile Change */}
       <EnterotypeProfile reportData={reportData} />
@@ -135,15 +119,7 @@ const MicrobiomeReport = () => {
       <RecommendationsSection />
 
       {/* Streak Status */}
-      <Card className="bg-gradient-to-br from-cyan-100 via-pink-100 to-orange-100">
-        <CardContent>
-          <div className="text-center py-3">
-            <div className="text-xl md:text-2xl mb-1">🔥</div>
-            <div className="font-bold text-orange-600 responsive-text-md">{reportData.streak.days} Day Streak</div>
-            <div className="responsive-text-xs text-gray-600">{reportData.streak.message}</div>
-          </div>
-        </CardContent>
-      </Card>
+      <StreakStatus streak={reportData.streak} /> {/* Use the new component */}
 
       {/* MEPSVisual */}
       <MEPSVisual currentProfile={reportData.current_profile} />
