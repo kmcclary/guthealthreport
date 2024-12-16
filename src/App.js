@@ -294,7 +294,7 @@ const MicrobiomeReport = () => {
   
     return (
       <div className="relative w-48 h-12 mx-auto">
-        <svg viewBox="-80 0 300 200">
+        <svg viewBox="-60 0 300 200">
           {/* Background arc */}
           <path
             d={createArc(180, 360, 80)}
