@@ -13,7 +13,7 @@ const StreakStatus = ({ streak }) => {
   return (
     <Card className="bg-gradient-to-br from-cyan-100 via-pink-100 to-orange-100">
       <div onClick={handleCardClick} className="cursor-pointer">
-        <CardHeader className="p-0 pb-0">
+        <CardHeader className="p-1">
           <CardTitle
             className={`flex items-center gap-2 transition-all duration-700 ease-out transform 
             ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}

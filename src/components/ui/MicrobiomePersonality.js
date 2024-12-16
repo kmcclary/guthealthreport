@@ -95,7 +95,7 @@ const MicrobiomePersonalityV2 = ({
     substrate: {
       C: {
         title: 'Carbohydrate Optimized',
-        desc: 'Specialized in carbohydrate metabolism',
+        desc: 'Specialized in carb metabolism',
         trait: 'Primary pathways focused on polysaccharide processing',
         pathways: ['Glycoside hydrolases', 'Carbohydrate transporters'],
         products: ['Acetate', 'Butyrate'],
