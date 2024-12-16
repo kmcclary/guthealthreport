@@ -13,6 +13,7 @@ import MEPSVisual from './components/ui/MEPSVisual'; // Import the new component
 import Achievements from './components/ui/Achievements'; // Import the new component
 import PathogenDetection from './components/ui/PathogenDetection'; // Import the new component
 import CommensalMicrobeDetection from './components/ui/CommensalMicrobeDetection'; // Import the new component
+import LevelSection from './components/ui/LevelSection'; // Import the new component
 
 const MicrobiomeReport = () => {
   const reportData = {
@@ -122,31 +123,7 @@ const MicrobiomeReport = () => {
       </div>
         <TotalScoreCard reportData={reportData} /> {/* Remove CreditScoreMeter prop */}
 
-        <Card className="bg-gradient-to-br from-white to-yellow-100">
-    <CardHeader className="p-4">
-      <CardTitle className="flex items-center gap-2">
-        <Trophy className="h-5 w-5 text-yellow-500" />
-        <span className="bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent responsive-text-md">
-          Level {reportData.level.current}: {reportData.level.title}
-        </span>
-        </CardTitle>
-    </CardHeader>
-    <CardContent>
-    <div className="space-y-0">
-        <div className="w-full bg-gray-200 rounded-full h-4">
-          <div 
-            className="bg-gradient-to-r from-yellow-600 to-amber-600 rounded-full h-4"
-            style={{ width: `${(reportData.scores.total % 50) * 5}%` }}
-          />
-        </div>
-        <p className="responsive-text-sm text-gray-600">
-          {reportData.level.points_to_next} points to next level
-        </p>
-      
-
-      </div>
-    </CardContent>
-  </Card>
+        <LevelSection level={reportData.level} scores={reportData.scores} /> {/* Use the new component */}
 
       {/* Achievements */}
       <Achievements achievements={reportData.achievements} /> {/* Use the new component */}

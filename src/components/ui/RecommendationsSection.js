@@ -299,7 +299,7 @@ const RecommendationsSection = () => {
                   >
                     {/* Action Header */}
                     <div className="flex justify-between items-start mb-2">
-                      <div>
+                      <div className="flex-1">
                         <h3 className="font-medium flex items-center gap-2">
                           {rec.name}
                           <span className={`px-2 py-1 rounded-full text-xs
@@ -309,12 +309,12 @@ const RecommendationsSection = () => {
                             {rec.priority}
                           </span>
                         </h3>
-                        <p className="text-sm text-gray-600">{rec.description}</p>
                       </div>
-                      <div className="text-right">
+                      <div className="text-right flex-shrink-0">
                         <div className="font-bold text-green-600">+{rec.points} pts</div>
                       </div>
                     </div>
+                    <p className="text-sm text-gray-600">{rec.description}</p>
 
                     {/* Expanded Content */}
                     {selectedAction === rec.id && (
