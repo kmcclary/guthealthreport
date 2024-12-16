@@ -664,11 +664,10 @@ const MicrobiomeReport = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex flex-col md:flex-row gap-6">
           
-          {/* Updated SVG container with better mobile scaling */}
-          <div className="relative w-full md:h-auto h-[200px] md:col-span-1">
-            <svg viewBox="40 80 320 300" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+          <div className="hidden md:block relative w-full md:w-1/2 h-auto">
+            <svg viewBox="-60 150 500 160" className="w-full h-full">
               <defs>
                 <radialGradient id="firmicutesGradient" cx="50%" cy="30%" r="70%">
                   <stop offset="0%" stopColor="rgba(59, 130, 246, 0.5)" />
@@ -763,7 +762,7 @@ const MicrobiomeReport = () => {
             </svg>
           </div>
 
-          <div className="space-y-2 md:col-span-2">
+          <div className="flex-1 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="font-semibold text-sm flex items-center gap-2">
                 <Info className="h-4 w-4" />
@@ -771,7 +770,7 @@ const MicrobiomeReport = () => {
               </h3>
 
             </div>
-
+            <div className="space-y-6 w-[350px] pr-6"></div>
             <div className="bg-white/80 rounded-lg border border-blue-200 shadow-md p-6">
               <div className="space-y-3">
                 {[
