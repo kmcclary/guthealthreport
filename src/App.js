@@ -382,15 +382,6 @@ const MicrobiomeReport = () => {
     return `${sign}${diff}%`;
   };
 
-  // Calculate midpoint for arrow
-  // Remove the line or utilize 'midpoint' in your code.
-
-  // Calculate arrow rotation angle
-  // Remove the line or utilize 'arrowAngle' in your code.
-
-
-
-
   const RecommendationsSection = () => {
     const [selectedAction, setSelectedAction] = useState(null);
     const [priorityFilter, /* setPriorityFilter */] = useState('all');
@@ -563,24 +554,16 @@ const MicrobiomeReport = () => {
     
     <div className="w-full max-w-4xl mx-auto bg-white p-8 space-y-6">
       <BannerNavBar />
-
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-
-
-
-
-
       </div>
-
-
-
-        <Card>
+        <Card className="bg-gradient-to-br from-green-50 to-white">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Star className="h- w-5 text-green-700" />
-              Total Score
+              <Star className="h-5 w-5 text-green-700" />
+              <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                Total Score
+              </span>
             </CardTitle>
           </CardHeader>
 
@@ -615,11 +598,13 @@ const MicrobiomeReport = () => {
 
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-yellow-50 to-white">
     <CardHeader>
       <CardTitle className="flex items-center gap-2">
         <Trophy className="h-5 w-5 text-yellow-500" />
-        Level {reportData.level.current}: {reportData.level.title}
+        <span className="bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent">
+          Level {reportData.level.current}: {reportData.level.title}
+        </span>
         </CardTitle>
     </CardHeader>
     <CardContent>
@@ -641,11 +626,13 @@ const MicrobiomeReport = () => {
 
 
       {/* Achievements */}
-      <Card>
+      <Card className="bg-gradient-to-br from-purple-50 to-white">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Award className="h-5 w-5 text-purple-500" />
-            Achievements
+            <span className="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent">
+              Achievements
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -667,11 +654,13 @@ const MicrobiomeReport = () => {
 
 
       {/* Profile Change */}
-      <Card className="w-full">
+      <Card className="w-full bg-gradient-to-br from-blue-50 to-white">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Activity className="h-5 w-5 text-blue-500" />
-          Enterotype Profile
+          <span className="bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">
+            Enterotype Profile
+          </span>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -828,11 +817,13 @@ const MicrobiomeReport = () => {
       <RecommendationsSection />
 
       {/* Recent Actions */}
-      <Card>
+      <Card className="bg-gradient-to-br from-orange-50 to-white">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-green-500" />
-            Recent Actions
+            <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              Recent Actions
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -859,7 +850,7 @@ const MicrobiomeReport = () => {
       </Card>
 
       {/* Streak Status */}
-      <Card>
+      <Card className="bg-gradient-to-br from-red-50 to-white">
         <CardContent>
           <div className="text-center py-4">
             <div className="text-2xl mb-2">🔥</div>
