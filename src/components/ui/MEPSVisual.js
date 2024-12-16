@@ -213,7 +213,6 @@ const MEPSVisual = ({ currentProfile = {
             <div className="flex items-center gap-2 mb-4">
               <Heart className="h-5 w-5 text-green-500" />
               <h3 className="font-medium">Health Indicators</h3>
-              <span className="text-xs text-gray-500 ml-2">(Movement to the right indicates improvement)</span>
             </div>
             
             <div className="space-y-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">
@@ -261,7 +260,6 @@ const MEPSVisual = ({ currentProfile = {
             <div className="flex items-center gap-2 mb-4">
               <Scale className="h-5 w-5 text-orange-500" />
               <h3 className="font-medium">Metabolic Profile</h3>
-              <span className="text-xs text-gray-500 ml-2">(Characteristics, not measures of health)</span>
             </div>
 
             <div className="space-y-6 bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm">

@@ -54,7 +54,7 @@ const MicrobiomeReport = () => {
       {
         icon: "🏆",
         name: "Firmicutes Fighter",
-        description: "Completed 5+ actions that distance from Firmicutes"
+        description: "Completed 5+ F-type distancing actions"
       },
       {
         icon: "🌱",
@@ -161,11 +161,13 @@ const MicrobiomeReport = () => {
             {reportData.achievements.map((achievement, index) => (
               <div 
                 key={index}
-                className="p-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                className="p-3 bg-gray-50 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex items-center md:block gap-3"
               >
-                <div className="text-xl md:text-2xl mb-1 achievement-icon">{achievement.icon}</div>
-                <h3 className="font-bold responsive-text-sm">{achievement.name}</h3>
-                <p className="responsive-text-xs text-gray-600">{achievement.description}</p>
+                <div className="text-4xl md:text-4xl md:mb-1 achievement-icon flex-shrink-0 flex items-center">{achievement.icon}</div>
+                <div>
+                  <h3 className="font-bold responsive-text-sm">{achievement.name}</h3>
+                  <p className="responsive-text-xs text-gray-600">{achievement.description}</p>
+                </div>
               </div>
             ))}
           </div>
