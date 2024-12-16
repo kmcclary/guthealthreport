@@ -114,7 +114,7 @@ const MicrobiomeReport = () => {
   };
 
   return (
-    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-24 md:pt-16 w-full max-w-4xl mx-auto bg-white p-8 space-y-6">
+    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-16 w-full max-w-4xl mx-auto bg-white p-8 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       </div>
         <TotalScoreCard reportData={reportData} /> {/* Remove CreditScoreMeter prop */}

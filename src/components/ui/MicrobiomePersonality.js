@@ -566,30 +566,82 @@ const MicrobiomePersonalityV2 = ({
 
             {showExplainer && (
               <div className="mt-4 space-y-4">
-                <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border border-purple-100">
-                  <div className="flex items-start gap-2">
-                    <Info className="h-5 w-5 text-purple-600 mt-0.5" />
-                    <div className="space-y-2">
-                      <p className="text-sm">
-                        Your microbiome type is derived from four independent dimensions that characterize 
-                        your gut bacteria's behavior:
-                      </p>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
-                        <div className="bg-white p-3 rounded-lg shadow-sm">
-                          <h4 className="font-medium text-sm mb-1">Substrate (S)</h4>
-                          <p className="text-xs text-gray-600">C: Carbohydrate<br/>P: Protein</p>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg shadow-sm">
-                          <h4 className="font-medium text-sm mb-1">Environment (E)</h4>
-                          <p className="text-xs text-gray-600">R: Responsive<br/>S: Stable</p>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg shadow-sm">
-                          <h4 className="font-medium text-sm mb-1">Metabolism (M)</h4>
-                          <p className="text-xs text-gray-600">F: Fast<br/>D: Deliberate</p>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg shadow-sm">
-                          <h4 className="font-medium text-sm mb-1">Processing (P)</h4>
-                          <p className="text-xs text-gray-600">F: Focused<br/>G: Generalist</p>
+                <div className="bg-gradient-to-br from-purple-50 via-white to-indigo-50 p-6 rounded-xl border border-purple-100 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 bg-purple-100 rounded-lg p-2">
+                      <Info className="h-6 w-6 text-purple-600" />
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-lg font-medium text-purple-900 mb-2">Understanding Your Microbiome Type</h4>
+                        <p className="text-sm text-purple-800">
+                          Your unique microbiome type is composed of four key dimensions that work together to characterize your gut bacteria's behavior and preferences:
+                        </p>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {[
+                          {
+                            title: "Substrate",
+                            code: "S",
+                            types: ["C: Carbohydrate", "P: Protein"],
+                            gradient: "from-indigo-50 to-indigo-100",
+                            border: "border-indigo-200",
+                            icon: <Beaker className="h-5 w-5 text-indigo-600" />
+                          },
+                          {
+                            title: "Environment",
+                            code: "E",
+                            types: ["R: Responsive", "S: Stable"],
+                            gradient: "from-emerald-50 to-emerald-100",
+                            border: "border-emerald-200",
+                            icon: <Waves className="h-5 w-5 text-emerald-600" />
+                          },
+                          {
+                            title: "Metabolism",
+                            code: "M",
+                            types: ["F: Fast", "D: Deliberate"],
+                            gradient: "from-amber-50 to-amber-100",
+                            border: "border-amber-200",
+                            icon: <Timer className="h-5 w-5 text-amber-600" />
+                          },
+                          {
+                            title: "Processing",
+                            code: "P",
+                            types: ["F: Focused", "G: Generalist"],
+                            gradient: "from-violet-50 to-violet-100",
+                            border: "border-violet-200",
+                            icon: <GitBranch className="h-5 w-5 text-violet-600" />
+                          }
+                        ].map((dim, idx) => (
+                          <div 
+                            key={idx} 
+                            className={`bg-gradient-to-br ${dim.gradient} p-4 rounded-xl border ${dim.border} shadow-sm hover:shadow-md transition-shadow`}
+                          >
+                            <div className="flex items-start gap-2 mb-3">
+                              {dim.icon}
+                              <div className="space-y-1">
+                                <h5 className="font-medium text-gray-900">{dim.title}</h5>
+                                <div className="inline-block px-2 py-0.5 bg-white bg-opacity-50 rounded-full text-xs font-medium">
+                                  Type {dim.code}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="space-y-1">
+                              {dim.types.map((type, i) => (
+                                <div key={i} className="text-sm bg-white bg-opacity-70 px-2 py-1 rounded">
+                                  {type}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <div className="bg-white bg-opacity-70 rounded-lg p-3 mt-2">
+                        <div className="flex items-start gap-2 text-sm text-purple-800">
+                          <Scale className="h-4 w-4 text-purple-600" />
+                          <span>Each dimension contributes equally to your overall microbiome profile, creating a balanced assessment of your gut ecosystem.</span>
                         </div>
                       </div>
                     </div>
