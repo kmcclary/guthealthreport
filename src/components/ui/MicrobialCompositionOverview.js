@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from './Card';  
-import { ChevronDown, ChevronRight, Info, Globe2, BarChart, Flame } from 'lucide-react';
+import { ChevronDown, ChevronRight, Info, Globe2, BarChart, BarChart2, Flame, Layers } from 'lucide-react';
 import { Scatter, Bar, Line, Pie, Bubble } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -378,7 +378,7 @@ const MicrobialCompositionOverview = () => {
             className="w-full flex items-center justify-between mb-2"
           >
             <div className="flex items-center gap-2">
-              <Info className="h-5 w-5 text-gray-700" />
+            <BarChart2 className="h-5 w-5 text-gray-700" />
               <h2 className="font-medium text-gray-900 text-lg">PCoA Ordination</h2>
             </div>
             {expandedSections.pcoa ? 
@@ -407,8 +407,8 @@ const MicrobialCompositionOverview = () => {
             className="w-full flex items-center justify-between mb-2"
           >
             <div className="flex items-center gap-2">
-              <Info className="h-5 w-5 text-gray-700" />
-              <h2 className="font-medium text-gray-900 text-lg">Shared Features (Venn Diagram)</h2>
+            <Layers className="h-5 w-5 text-gray-700" />
+            <h2 className="font-medium text-gray-900 text-lg">Shared Features (Venn Diagram)</h2>
             </div>
             {expandedSections.venn ? 
               <ChevronDown className="h-4 w-4 text-gray-700" /> :
