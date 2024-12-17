@@ -14,7 +14,8 @@ import {
   MdScience,
   MdContentPaste,
   MdGroup,
-  MdSettings
+  MdSettings,
+  MdViewList, // Add this import
 } from 'react-icons/md'; // Import necessary icons
 
 const MainButton = ({ to, icon: Icon, label, isActive, isPrimary }) => (
@@ -128,6 +129,12 @@ const BannerNavBar = () => {
               ))}
             </div>
             <li className="h-9 w-px bg-black/30 mx-2" />
+            <MainButton 
+              to="/components-overview"
+              icon={MdViewList}
+              label="All Components" 
+              isActive={location.pathname === '/components-overview'}
+            />
             <MainButton 
               to="/settings"
               icon={MdSettings}
