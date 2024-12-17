@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import BannerNavBar from './components/ui/BannerNavBar';
 import MicrobiomePersonalityV2 from './components/ui/MicrobiomePersonality';
 import TotalScoreCard from './components/ui/TotalScoreCard';
@@ -57,26 +57,51 @@ const ComponentsOverview = () => {
 
   return (
     <div className="space-y-8">
-      <TotalScoreCard reportData={reportData} />
-      <LevelSection level={reportData.level} scores={reportData.scores} />
-      <Achievements />
-      <EnterotypeProfile reportData={reportData} />
-      <RecommendationsSection />
-      <MEPSVisual currentProfile={reportData.current_profile} />
-      <MicrobiomePersonalityV2 
-        currentProfile={reportData.current_profile} 
-        previousProfile={reportData.previous_profile} 
-      />
-      <PathogenDetection />
-      <CommensalMicrobeDetection />
-      <PhylaAndDiversityAnalysis />
-      <MicrobialCompositionOverview />
-      <StreakStatus streak={reportData.streak} />
+      <div id="overview" className="component-section">
+        <TotalScoreCard reportData={reportData} />
+      </div>
+      <div id="level-section" className="component-section">
+        <LevelSection level={reportData.level} scores={reportData.scores} />
+      </div>
+      <div id="achievements" className="component-section">
+        <Achievements />
+      </div>
+      <div id="enterotype-profile" className="component-section">
+        <EnterotypeProfile reportData={reportData} />
+      </div>
+      <div id="recommendations" className="component-section">
+        <RecommendationsSection />
+      </div>
+      <div id="health-metabolism" className="component-section">
+        <MEPSVisual currentProfile={reportData.current_profile} />
+      </div>
+      <div id="gut-personality" className="component-section">
+        <MicrobiomePersonalityV2 
+          currentProfile={reportData.current_profile} 
+          previousProfile={reportData.previous_profile} 
+        />
+      </div>
+      <div id="pathogen-detection" className="component-section">
+        <PathogenDetection />
+      </div>
+      <div id="commensal-microbe-detection" className="component-section">
+        <CommensalMicrobeDetection />
+      </div>
+      <div id="phyla-diversity" className="component-section">
+        <PhylaAndDiversityAnalysis />
+      </div>
+      <div id="microbial-composition" className="component-section">
+        <MicrobialCompositionOverview />
+      </div>
+      <div id="streak-status" className="component-section">
+        <StreakStatus streak={reportData.streak} />
+      </div>
     </div>
   );
 };
 
 const MicrobiomeReport = () => {
+  const location = useLocation(); // Use useLocation hook
   const reportData = {
     user_name: "Jane Smith",
     report_date: "November 10, 2024",
@@ -118,40 +143,44 @@ const MicrobiomeReport = () => {
 
 
   return (
-    <BrowserRouter>
-      <BannerNavBar />
-      <div className="bg-transparent min-h-screen pt-16 md:pt-16 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-6 md:space-y-8">
-        <Routes>
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/overview" element={<TotalScoreCard reportData={reportData} />} />
-          <Route path="/level-section" element={<LevelSection level={reportData.level} scores={reportData.scores} />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/enterotype-profile" element={<EnterotypeProfile reportData={reportData} />} />
-          <Route path="/recommendations" element={<RecommendationsSection />} />
-          <Route path="/streak-status" element={<StreakStatus streak={reportData.streak} />} />
-          <Route path="/health-metabolism" element={<MEPSVisual currentProfile={reportData.current_profile} />} />
-          <Route path="/gut-personality" element={
-            <MicrobiomePersonalityV2 
-              currentProfile={reportData.current_profile} 
-              previousProfile={reportData.previous_profile} 
-            />
-          } />
-          <Route path="/pathogen-detection" element={<PathogenDetection />} />
-          <Route path="/commensal-microbe-detection" element={<CommensalMicrobeDetection />} />
-          <Route path="/phyla-diversity" element={<PhylaAndDiversityAnalysis />} />
-          <Route path="/microbial-composition" element={<MicrobialCompositionOverview />} />
-          <Route path="/components-overview" element={<ComponentsOverview />} />
-          <Route path="/" element={
-            <>
-              <TotalScoreCard reportData={reportData} />
-              <LevelSection level={reportData.level} scores={reportData.scores} />
-              {/* ...other components... */}
-            </>
-          } />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div className="bg-transparent min-h-screen pt-16 md:pt-16 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-6 md:space-y-8">
+      <Routes>
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/overview" element={<TotalScoreCard reportData={reportData} />} />
+        <Route path="/level-section" element={<LevelSection level={reportData.level} scores={reportData.scores} />} />
+        <Route path="/achievements" element={<Achievements />} />
+        <Route path="/enterotype-profile" element={<EnterotypeProfile reportData={reportData} />} />
+        <Route path="/recommendations" element={<RecommendationsSection />} />
+        <Route path="/streak-status" element={<StreakStatus streak={reportData.streak} />} />
+        <Route path="/health-metabolism" element={<MEPSVisual currentProfile={reportData.current_profile} />} />
+        <Route path="/gut-personality" element={
+          <MicrobiomePersonalityV2 
+            currentProfile={reportData.current_profile} 
+            previousProfile={reportData.previous_profile} 
+          />
+        } />
+        <Route path="/pathogen-detection" element={<PathogenDetection />} />
+        <Route path="/commensal-microbe-detection" element={<CommensalMicrobeDetection />} />
+        <Route path="/phyla-diversity" element={<PhylaAndDiversityAnalysis />} />
+        <Route path="/microbial-composition" element={<MicrobialCompositionOverview />} />
+        <Route path="/components-overview" element={<ComponentsOverview />} />
+        <Route path="/" element={
+          <>
+            <TotalScoreCard reportData={reportData} />
+            <LevelSection level={reportData.level} scores={reportData.scores} />
+            {/* ...other components... */}
+          </>
+        } />
+      </Routes>
+    </div>
   );
 };
 
-export default MicrobiomeReport;
+const App = () => (
+  <BrowserRouter>
+    <BannerNavBar />
+    <MicrobiomeReport />
+  </BrowserRouter>
+);
+
+export default App;
