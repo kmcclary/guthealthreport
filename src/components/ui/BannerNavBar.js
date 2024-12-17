@@ -135,8 +135,8 @@ const BannerNavBar = () => {
         <Link to="/">
           <img src={Logo} alt="Zymo Logo with Banner" className="h-8 flex-shrink-0" />
         </Link>
-        <nav className="flex-shrink-0 ml-auto overflow-x-auto scrollbar-hide">
-          <ul className="flex space-x-1.5 px-2">
+        <nav className="flex-shrink-0 ml-auto overflow-x-hidden">
+          <ul className="flex space-x-1 px-1">
             <MainButton 
               to="/components-overview"
               icon={MdViewList}
@@ -151,8 +151,8 @@ const BannerNavBar = () => {
               isActive={isParticipateSection}
               isPrimary={true}
             />
-            <li className="h-9 w-px bg-black/30 mx-2" />
-            <div className="flex space-x-1.5 overflow-x-auto scrollbar-hide">
+            <li className="h-9 w-px bg-black/30 mx-1" />
+            <div className="flex space-x-1 overflow-x-hidden">
               {(isComponentsOverview ? resultsButtons : participateButtons).map((button, index) => (
                 <NavButton 
                   key={index}
@@ -164,7 +164,7 @@ const BannerNavBar = () => {
                 />
               ))}
             </div>
-            <li className="h-9 w-px bg-black/30 mx-2" />
+            <li className="h-9 w-px bg-black/30 mx-1" />
             <MainButton 
               to="/settings"
               icon={MdSettings}
