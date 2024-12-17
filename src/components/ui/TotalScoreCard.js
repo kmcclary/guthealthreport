@@ -90,11 +90,106 @@ const CreditScoreMeter = ({ value, levelTitle }) => {
 };
 
 const TotalScoreCard = ({ reportData }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [titleVisible, setTitleVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger title fade-in after mount
+    setTitleVisible(true);
+  }, []);
+
+  const handleCardClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <div className="card">
-      <h2>Total Score: {reportData.scores.total}</h2>
-      {/* Add more content as needed */}
-    </div>
+    <Card className="bg-gradient-to-br from-white to-green-100">
+      <div onClick={handleCardClick} className="cursor-pointer">
+        <CardHeader>
+          <CardTitle
+            className={`flex items-center gap-2 transition-all duration-700 ease-out transform 
+            ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+          >
+            <Gauge className="h-5 w-5 text-green-600" />
+            <span className="bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text text-transparent">
+              Total Score
+            </span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 sm:grid-cols-3 items-center justify-items-center gap-4">
+            <div className="text-6xl font-bold text-center">
+              {reportData.scores.total.toFixed(1)}
+            </div>
+            <div className="mt-1 space-y-0 sm:space-y-1 text-xs sm:text-sm font-bold text-center pr-4 sm:pr-0">
+              <div className="flex justify-between w-40 sm:w-48 mx-auto py-0.5">
+                <span>Base Score:</span>
+                <span>{reportData.scores.base.toFixed(1)}</span>
+              </div>
+              <div className="flex justify-between w-40 sm:w-48 mx-auto py-0.5">
+                <span>Action Points:</span>
+                <span>+{reportData.scores.action_points.toFixed(1)}</span>
+              </div>
+              <div className="flex justify-between w-40 sm:w-48 mx-auto py-0.5">
+                <span>Streak Bonus:</span>
+                <span>+{reportData.scores.streak_bonus.toFixed(1)}</span>
+              </div>
+            </div>
+            <div className="col-span-2 sm:col-span-1 pb-12 sm:pb-4 mt-4 sm:mt-0">
+              <CreditScoreMeter
+                value={reportData.scores.total}
+                levelTitle={reportData.level.title}
+              />
+            </div>
+          </div>
+
+          {expanded && (
+            <div className="mt-4 space-y-4 border-t pt-4 text-left">
+              <div className="space-y-2">
+                <h4 className="font-medium flex items-center gap-2">
+                  <Check className="h-4 w-4 text-green-500" />
+                  In-Depth Breakdown
+                </h4>
+                <p className="text-sm text-gray-700">
+                  Your total score is a reflection of your overall performance, taking into account your base score, action points, and streak bonuses over time.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-medium flex items-center gap-2">
+                  <ArrowRight className="h-4 w-4 text-gray-500" />
+                  Key Influencers
+                </h4>
+                <ul className="space-y-1 text-sm text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <ArrowRight className="h-3 w-3 text-gray-400 mt-1" />
+                    Consistency in completing recommended actions.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <ArrowRight className="h-3 w-3 text-gray-400 mt-1" />
+                    Achieving regular streaks for bonus points.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <ArrowRight className="h-3 w-3 text-gray-400 mt-1" />
+                    Maintaining a healthy baseline through your core habits.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-medium flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-gray-500" />
+                  Additional Context
+                </h4>
+                <p className="text-sm text-gray-700">
+                  The total score serves as an overarching metric of your progress. Tracking these points helps ensure you remain on the right path, continually refining your daily routines and lifestyle habits.
+                </p>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </div>
+    </Card>
   );
 };
 

@@ -69,28 +69,29 @@ const BannerNavBar = () => {
 
   const resultsButtons = [
     { to: "/overview", icon: MdDashboard, label: "Overview" },
+    { to: "/level-section", icon: MdTrendingUp, label: "Level" },
+    { to: "/achievements", icon: MdHealthAndSafety, label: "Achievements" },
+    { to: "/enterotype-profile", icon: MdBiotech, label: "Enterotype" },
     { to: "/recommendations", icon: MdListAlt, label: "Actions" },
     { to: "/health-metabolism", icon: MdMonitorHeart, label: "Health" },
     { to: "/gut-personality", icon: MdPsychology, label: "Personality" },
-    { to: "/pathogen-detection", icon: MdBiotech, label: "Pathogens" }
+    { to: "/pathogen-detection", icon: MdBiotech, label: "Pathogens" },
+    { to: "/commensal-microbe-detection", icon: MdScience, label: "Commensals" },
+    { to: "/phyla-diversity", icon: MdContentPaste, label: "Diversity" },
+    { to: "/microbial-composition", icon: MdAssignment, label: "Composition" }
   ];
 
   const participateButtons = [
     { to: "/daily-quiz", icon: MdQuiz, label: "Daily Quiz" },
     { to: "/health-tracking", icon: MdHealthAndSafety, label: "Track Health" },
+    { to: "/streak-status", icon: MdTrendingUp, label: "Streak" },
     { to: "/progress", icon: MdTrendingUp, label: "Progress" },
     { to: "/experiments", icon: MdScience, label: "Experiments" },
     { to: "/tasks", icon: MdAssignment, label: "Tasks" }
   ];
 
-  // Determine active section based on the current route
-  const isResultsSection = location.pathname.startsWith('/results') 
-    || location.pathname === '/overview' 
-    || location.pathname === '/recommendations' 
-    || location.pathname === '/health-metabolism' 
-    || location.pathname === '/gut-personality' 
-    || location.pathname === '/pathogen-detection';
-  // Adjust the condition above based on your actual routes that fall under 'results'
+  // Modified condition to default to results section
+  const isResultsSection = !location.pathname.startsWith('/participate');
 
   return (
     <div className="bg-gradient-to-br from-yellow-300 via-yellow-300 to-yellow-500 p-1 w-full fixed top-0 left-0 z-50">
@@ -98,32 +99,34 @@ const BannerNavBar = () => {
         <Link to="/">
           <img src={Logo} alt="Zymo Logo with Banner" className="h-8 flex-shrink-0" />
         </Link>
-        <nav className="flex-shrink-0 ml-auto">
-          <ul className="flex space-x-1.5">
+        <nav className="flex-shrink-0 ml-auto overflow-x-auto scrollbar-hide">
+          <ul className="flex space-x-1.5 px-2">
             <MainButton 
               to="/results"
               icon={MdContentPaste}
               label="Results" 
-              isActive={location.pathname.startsWith('/results')}
+              isActive={isResultsSection}
               isPrimary={true}
             />
             <MainButton 
               to="/participate"
               icon={MdGroup}
               label="Participate" 
-              isActive={location.pathname.startsWith('/participate')}
+              isActive={!isResultsSection}
               isPrimary={true}
             />
             <li className="h-9 w-px bg-black/30 mx-2" />
-            {(isResultsSection ? resultsButtons : participateButtons).map((button, index) => (
-              <NavButton 
-                key={index}
-                to={button.to}
-                icon={button.icon}
-                label={button.label}
-                isActive={location.pathname === button.to}
-              />
-            ))}
+            <div className="flex space-x-1.5 overflow-x-auto scrollbar-hide">
+              {(isResultsSection ? resultsButtons : participateButtons).map((button, index) => (
+                <NavButton 
+                  key={index}
+                  to={button.to}
+                  icon={button.icon}
+                  label={button.label}
+                  isActive={location.pathname === button.to}
+                />
+              ))}
+            </div>
             <li className="h-9 w-px bg-black/30 mx-2" />
             <MainButton 
               to="/settings"
