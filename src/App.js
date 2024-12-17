@@ -16,6 +16,7 @@ import CommensalMicrobeDetection from './components/ui/CommensalMicrobeDetection
 import LevelSection from './components/ui/LevelSection'; // Import the new component
 import StreakStatus from './components/ui/StreakStatus'; // Import the new component
 import Settings from './components/ui/Settings';
+import PhylaAndDiversityAnalysis from './components/ui/PhylaAndDiversityAnalysis'; // Add this import
 
 const MicrobiomeReport = () => {
   const reportData = {
@@ -167,6 +168,10 @@ const MicrobiomeReport = () => {
           </section>
 
           <CommensalMicrobeDetection />
+
+          <section id="phyla-diversity">
+            <PhylaAndDiversityAnalysis />
+          </section>
         </>
       )}
     </div>
