@@ -566,9 +566,6 @@ const MicrobialCompositionOverview = () => {
           )}
         </section>
 
-        <footer className="text-center text-sm text-gray-500 mt-10">
-          &copy; {new Date().getFullYear()} Your Company. All Rights Reserved.
-        </footer>
       </CardContent>
     </Card>
   );
