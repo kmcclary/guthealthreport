@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './components/ui/Card';
 import { 
   Award, Trophy, Star, Flame, Activity, Info, Filter, Beaker, ArrowRight, Clock, BookOpen, 
@@ -15,6 +15,7 @@ import PathogenDetection from './components/ui/PathogenDetection'; // Import the
 import CommensalMicrobeDetection from './components/ui/CommensalMicrobeDetection'; // Import the new component
 import LevelSection from './components/ui/LevelSection'; // Import the new component
 import StreakStatus from './components/ui/StreakStatus'; // Import the new component
+import Settings from './components/ui/Settings';
 
 const MicrobiomeReport = () => {
   const reportData = {
@@ -59,6 +60,25 @@ const MicrobiomeReport = () => {
 
   
   const [showChange] = useState(true);
+  const [currentSection, setCurrentSection] = useState('report');
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'settings') {
+        setCurrentSection('settings');
+      } else {
+        setCurrentSection('report');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange(); // Initial check
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
 
   const profileToCoordinates = (profile) => {
     const firmicutesCenter = { x: 200, y: 100 };
@@ -102,47 +122,53 @@ const MicrobiomeReport = () => {
   };
 
   return (
-    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-20 md:pt-20 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-4 md:space-y-6">
-      <div className="mb-6">
-        <h2 className="text-3xl md:text-5xl font-bold text-white text-center">Microbiome Health Report</h2>
-        <div className="text-sm text-gray-100">
-        </div>
-      </div>
+    <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-16 md:pt-16 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-6 md:space-y-8">
+      {currentSection === 'settings' ? (
+        <Settings />
+      ) : (
+        <>
+          <div className="mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold text-white text-center">Microbiome Health Report</h2>
+            <div className="text-sm text-gray-100">
+            </div>
+          </div>
 
-      <section id="overview">
-        <TotalScoreCard reportData={reportData} />
-      </section>
+          <section id="overview">
+            <TotalScoreCard reportData={reportData} />
+          </section>
 
-      <section id="level-section">
-        <LevelSection level={reportData.level} scores={reportData.scores} />
-      </section>
+          <section id="level-section">
+            <LevelSection level={reportData.level} scores={reportData.scores} />
+          </section>
 
-      <Achievements />
-      
-      <EnterotypeProfile reportData={reportData} />
-      
-      <section id="recommendations">
-        <RecommendationsSection />
-      </section>
+          <Achievements />
+          
+          <EnterotypeProfile reportData={reportData} />
+          
+          <section id="recommendations">
+            <RecommendationsSection />
+          </section>
 
-      <StreakStatus streak={reportData.streak} />
-      
-      <section id="health-metabolism">
-        <MEPSVisual currentProfile={reportData.current_profile} />
-      </section>
+          <StreakStatus streak={reportData.streak} />
+          
+          <section id="health-metabolism">
+            <MEPSVisual currentProfile={reportData.current_profile} />
+          </section>
 
-      <section id="gut-personality">
-        <MicrobiomePersonalityV2 
-          currentProfile={reportData.current_profile} 
-          previousProfile={reportData.previous_profile} 
-        />
-      </section>
+          <section id="gut-personality">
+            <MicrobiomePersonalityV2 
+              currentProfile={reportData.current_profile} 
+              previousProfile={reportData.previous_profile} 
+            />
+          </section>
 
-      <section id="pathogen-detection">
-        <PathogenDetection />
-      </section>
+          <section id="pathogen-detection">
+            <PathogenDetection />
+          </section>
 
-      <CommensalMicrobeDetection />
+          <CommensalMicrobeDetection />
+        </>
+      )}
     </div>
   );
 };
