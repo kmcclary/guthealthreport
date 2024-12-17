@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Logo from '../zl.png';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import Logo from '../zl.png'; // Ensure this path is correct
 import { 
   MdDashboard, 
   MdListAlt,
@@ -14,12 +15,12 @@ import {
   MdContentPaste,
   MdGroup,
   MdSettings
-} from 'react-icons/md';
+} from 'react-icons/md'; // Import necessary icons
 
-const MainButton = ({ icon: Icon, label, isActive, onClick, isPrimary }) => (
+const MainButton = ({ to, icon: Icon, label, isActive, isPrimary }) => (
   <li className="group relative">
-    <button
-      onClick={onClick}
+    <Link
+      to={to}
       className={`flex flex-col items-center justify-center w-8 sm:w-12 h-10 sm:h-9 rounded-lg shadow transition-colors
         ${isPrimary && isActive
           ? 'bg-black text-white'
@@ -38,158 +39,97 @@ const MainButton = ({ icon: Icon, label, isActive, onClick, isPrimary }) => (
       >
         {label}
       </span>
-    </button>
+    </Link>
   </li>
 );
 
-const NavButton = ({ href, icon: Icon, label, isActive }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    if (element) {
-      const headerHeight = 70; // Changed to 70 - slightly more offset than before
-      const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: elementTop - headerHeight,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  return (
-    <li className="group relative">
-      <a 
-        href={href}
-        onClick={handleClick}
-        className={`flex flex-col items-center justify-center w-8 sm:w-12 h-10 sm:h-9 rounded-lg shadow transition-colors
-          ${isActive 
-            ? 'bg-white text-black' 
-            : 'bg-black/20 text-white hover:bg-white/30'}`}
+const NavButton = ({ to, icon: Icon, label, isActive }) => (
+  <li className="group relative">
+    <Link 
+      to={to}
+      className={`flex flex-col items-center justify-center w-8 sm:w-12 h-10 sm:h-9 rounded-lg shadow transition-colors
+        ${isActive 
+          ? 'bg-white text-black' 
+          : 'bg-black/20 text-white hover:bg-white/30'}`}
+    >
+      <Icon 
+        className="w-6 h-5 sm:w-10 sm:h-8 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"
+      />
+      <span 
+        className="relative mt-1 text-[8px] sm:text-[10px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[10px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap"
       >
-        <Icon 
-          className="w-6 h-5 sm:w-10 sm:h-8 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"
-        />
-        <span 
-          className="relative mt-1 text-[8px] sm:text-[10px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[10px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap"
-        >
-          {label}
-        </span>
-      </a>
-    </li>
-  );
-};
+        {label}
+      </span>
+    </Link>
+  </li>
+);
 
 const BannerNavBar = () => {
-  const [activeSection, setActiveSection] = useState('results');
-  const [activeSubSection, setActiveSubSection] = useState('');
+  const location = useLocation();
 
   const resultsButtons = [
-    { href: "#overview", icon: MdDashboard, label: "Overview" },
-    { href: "#recommendations", icon: MdListAlt, label: "Actions" },
-    { href: "#health-metabolism", icon: MdMonitorHeart, label: "Health" },
-    { href: "#gut-personality", icon: MdPsychology, label: "Personality" },
-    { href: "#pathogen-detection", icon: MdBiotech, label: "Pathogens" }
+    { to: "/overview", icon: MdDashboard, label: "Overview" },
+    { to: "/recommendations", icon: MdListAlt, label: "Actions" },
+    { to: "/health-metabolism", icon: MdMonitorHeart, label: "Health" },
+    { to: "/gut-personality", icon: MdPsychology, label: "Personality" },
+    { to: "/pathogen-detection", icon: MdBiotech, label: "Pathogens" }
   ];
 
   const participateButtons = [
-    { href: "#daily-quiz", icon: MdQuiz, label: "Daily Quiz" },
-    { href: "#health-tracking", icon: MdHealthAndSafety, label: "Track Health" },
-    { href: "#progress", icon: MdTrendingUp, label: "Progress" },
-    { href: "#experiments", icon: MdScience, label: "Experiments" },
-    { href: "#tasks", icon: MdAssignment, label: "Tasks" }
+    { to: "/daily-quiz", icon: MdQuiz, label: "Daily Quiz" },
+    { to: "/health-tracking", icon: MdHealthAndSafety, label: "Track Health" },
+    { to: "/progress", icon: MdTrendingUp, label: "Progress" },
+    { to: "/experiments", icon: MdScience, label: "Experiments" },
+    { to: "/tasks", icon: MdAssignment, label: "Tasks" }
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.pageYOffset + 80;
-      let newActiveSection = activeSubSection; // Start with current active section
-
-      // Sort sections by their position on the page
-      const visibleSections = resultsButtons
-        .map(button => {
-          const section = document.getElementById(button.href.replace('#', ''));
-          if (section) {
-            return {
-              href: button.href,
-              top: section.offsetTop
-            };
-          }
-          return null;
-        })
-        .filter(Boolean)
-        .sort((a, b) => a.top - b.top);
-
-      // Find the last section that we've scrolled past
-      for (const section of visibleSections) {
-        if (scrollPosition >= section.top) {
-          newActiveSection = section.href;
-        }
-      }
-
-      if (newActiveSection !== activeSubSection) {
-        setActiveSubSection(newActiveSection);
-      }
-    };
-
-    if (activeSection === 'results') {
-      window.addEventListener('scroll', handleScroll);
-      handleScroll(); // Initial check
-    } else {
-      setActiveSubSection('');
-    }
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [activeSection, activeSubSection]); // Added activeSubSection to dependencies
+  // Determine active section based on the current route
+  const isResultsSection = location.pathname.startsWith('/results') 
+    || location.pathname === '/overview' 
+    || location.pathname === '/recommendations' 
+    || location.pathname === '/health-metabolism' 
+    || location.pathname === '/gut-personality' 
+    || location.pathname === '/pathogen-detection';
+  // Adjust the condition above based on your actual routes that fall under 'results'
 
   return (
     <div className="bg-gradient-to-br from-yellow-300 via-yellow-300 to-yellow-500 p-1 w-full fixed top-0 left-0 z-50">
-      <div className="flex items-center justify-between flex-nowrap"> {/* Added justify-between */}
-        <img src={Logo} alt="Zymo Logo with Banner" className="h-8 flex-shrink-0" /> {/* Removed mr-2 */}
-        
-        <nav className="flex-shrink-0 ml-auto"> {/* Added ml-auto */}
+      <div className="flex items-center justify-between flex-nowrap">
+        <Link to="/">
+          <img src={Logo} alt="Zymo Logo with Banner" className="h-8 flex-shrink-0" />
+        </Link>
+        <nav className="flex-shrink-0 ml-auto">
           <ul className="flex space-x-1.5">
             <MainButton 
+              to="/results"
               icon={MdContentPaste}
               label="Results" 
-              isActive={activeSection === 'results'}
-              onClick={() => {
-                setActiveSection('results');
-                window.location.hash = ''; // Clear hash to exit settings
-              }}
+              isActive={location.pathname.startsWith('/results')}
               isPrimary={true}
             />
             <MainButton 
+              to="/participate"
               icon={MdGroup}
               label="Participate" 
-              isActive={activeSection === 'participate'}
-              onClick={() => {
-                setActiveSection('participate');
-                window.location.hash = ''; // Clear hash to exit settings
-              }}
+              isActive={location.pathname.startsWith('/participate')}
               isPrimary={true}
             />
-            <li className="h-9 w-px bg-black/30 mx-2" /> {/* Vertical divider */}
-            {(activeSection === 'results' ? resultsButtons : participateButtons).map((button, index) => (
+            <li className="h-9 w-px bg-black/30 mx-2" />
+            {(isResultsSection ? resultsButtons : participateButtons).map((button, index) => (
               <NavButton 
                 key={index}
-                href={button.href}
+                to={button.to}
                 icon={button.icon}
                 label={button.label}
-                isActive={activeSubSection === button.href}
+                isActive={location.pathname === button.to}
               />
             ))}
             <li className="h-9 w-px bg-black/30 mx-2" />
             <MainButton 
+              to="/settings"
               icon={MdSettings}
               label="Settings" 
-              isActive={activeSection === 'settings'}
-              onClick={() => {
-                setActiveSection('settings');
-                window.location.hash = '#settings';
-              }}
+              isActive={location.pathname === '/settings'}
             />
           </ul>
         </nav>
