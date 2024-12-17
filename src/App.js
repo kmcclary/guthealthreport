@@ -103,6 +103,12 @@ const MicrobiomeReport = () => {
 
   return (
     <div style={{ backgroundColor: 'transparent', minHeight: '100vh' }} className="pt-20 md:pt-20 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-4 md:space-y-6">
+      <div className="mb-6">
+        <h2 className="text-3xl md:text-5xl font-bold text-white text-center">Microbiome Health Report</h2>
+        <div className="text-sm text-gray-100">
+        </div>
+      </div>
+
       <section id="overview">
         <TotalScoreCard reportData={reportData} />
       </section>
