@@ -18,7 +18,7 @@ import {
   MdViewList, // Add this import
 } from 'react-icons/md'; // Import necessary icons
 
-const MainButton = ({ to, icon: Icon, label, isActive, isPrimary }) => (
+const MainButton = ({ to, icon: Icon, label, isActive, isPrimary, onClick }) => (
   <li className="group relative">
     <Link
       to={to}
@@ -28,6 +28,7 @@ const MainButton = ({ to, icon: Icon, label, isActive, isPrimary }) => (
           : isActive
             ? 'bg-white text-black'
             : 'bg-black/20 text-white hover:bg-white/30'}`}
+      onClick={onClick}
     >
       <Icon 
         className="w-6 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"
@@ -87,38 +88,72 @@ const NavButton = ({ to, icon: Icon, label, isActive, onClick }) => (
 
 const BannerNavBar = () => {
   const location = useLocation();
-  const [activeSection, setActiveSection] = useState('overview'); // Set initial active section
-  const [lastActiveSubbutton, setLastActiveSubbutton] = useState('overview'); // Set initial last active subbutton
+  // Add forceComponents state
+  const [forceComponents, setForceComponents] = useState(true);
+  const [activeSection, setActiveSection] = useState('overview');
+  const [lastActiveSubbutton, setLastActiveSubbutton] = useState('overview');
 
-  // Add scroll event listener for Components Overview page
+  // Force Components view on initial render
   useEffect(() => {
-    if (location.pathname === '/components-overview' || location.pathname === '/') {
+    setForceComponents(true);
+    setActiveSection('overview');
+    setLastActiveSubbutton('overview');
+  }, []); // Empty dependency array means this runs once on mount
+
+  // Define all Components-related paths
+  const componentsPaths = [
+    '/',
+    '/components-overview',
+    '/overview',
+    '/level-section',
+    '/achievements',
+    '/enterotype-profile',
+    '/recommendations',
+    '/health-metabolism',
+    '/gut-personality',
+    '/pathogen-detection',
+    '/commensal-microbe-detection',
+    '/phyla-diversity',
+    '/microbial-composition'
+  ];
+
+  // Update isComponentsOverview to use forceComponents
+  const isComponentsOverview = forceComponents || componentsPaths.includes(location.pathname);
+
+  // Consolidate the useEffect hooks
+  useEffect(() => {
+    // Set Components view as default when app launches
+    if (isComponentsOverview) {
+      setActiveSection('overview');
+      setLastActiveSubbutton('overview');
+      
       const handleScroll = () => {
         const sections = document.querySelectorAll('.component-section');
         let topmostSection = '';
         sections.forEach(section => {
           const rect = section.getBoundingClientRect();
-          if (rect.top >= 0 && rect.top <= window.innerHeight / 8) { // Adjusted condition
+          if (rect.top >= 0 && rect.top <= window.innerHeight / 8) {
             topmostSection = section.id;
           }
         });
         if (topmostSection) {
           setActiveSection(topmostSection);
-          setLastActiveSubbutton(topmostSection); // Update last active subbutton only when a new section is detected
+          setLastActiveSubbutton(topmostSection);
         }
       };
 
       window.addEventListener('scroll', handleScroll);
       return () => window.removeEventListener('scroll', handleScroll);
     }
-  }, [location.pathname]);
+  }, [location.pathname, isComponentsOverview]);
 
+  // Directly set the active state for the Components button on app launch
   useEffect(() => {
-    if (location.pathname === '/' || location.pathname === '/components-overview') {
-      setActiveSection('overview'); // Set initial active section
-      setLastActiveSubbutton('overview'); // Set initial last active subbutton
+    if (isComponentsOverview) {
+      setActiveSection('overview');
+      setLastActiveSubbutton('overview');
     }
-  }, [location.pathname]);
+  }, [isComponentsOverview]);
 
   const resultsButtons = [
     { to: "overview", icon: MdDashboard, label: "Overview" },
@@ -148,10 +183,9 @@ const BannerNavBar = () => {
     return path.includes('/quiz') || path === '/gut-health-survey';
   };
 
-  // Modified condition to check for components overview
-  const isComponentsOverview = location.pathname === '/components-overview' || location.pathname === '/';
-  
-  const isParticipateSection = location.pathname === '/gut-health-survey' || location.pathname === '/biosample-submission' || isQuizRelatedPath(location.pathname);
+  const isParticipateSection = location.pathname === '/gut-health-survey' || 
+                              location.pathname === '/biosample-submission' || 
+                              isQuizRelatedPath(location.pathname);
 
   // Add this helper function before the return statement
   const isButtonActive = (buttonTo) => {
@@ -164,6 +198,11 @@ const BannerNavBar = () => {
       }
       return location.pathname === buttonTo;
     }
+  };
+
+  // Modify click handlers to update forceComponents
+  const handleParticipateClick = () => {
+    setForceComponents(false);
   };
 
   return (
@@ -187,13 +226,14 @@ const BannerNavBar = () => {
               label="Participate" 
               isActive={isParticipateSection}
               isPrimary={true}
+              onClick={handleParticipateClick}
             />
             <li className="h-9 w-px bg-black/30 mx-1" />
             <div className="flex space-x-1 overflow-x-hidden">
               {(isComponentsOverview ? resultsButtons : participateButtons).map((button, index) => (
                 <NavButton 
                   key={index}
-                  to={isComponentsOverview ? "#" : button.to}
+                  to={isComponentsOverview ? `/${button.to}` : button.to} // Ensure correct paths
                   icon={button.icon}
                   label={button.label}
                   isActive={isButtonActive(button.to)}

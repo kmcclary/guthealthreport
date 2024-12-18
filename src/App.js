@@ -97,8 +97,10 @@ const App = () => (
         <Route path="/health-tracking" element={<FitbitIntegrationPage />} />
         <Route path="/biosample-submission" element={<BiosampleCollectionKitRequest />} />
         <Route path="/study-signup" element={<GutHealthTrialSignup />} />
-        <Route path="/" element={<ComponentsOverview />} /> {/* Set default route */}
-        <Route path="*" element={<ComponentsOverview />} /> {/* Handle unmatched routes */}
+        {/* Set default route to ComponentsOverview */}
+        <Route path="/" element={<ComponentsOverview />} />
+        {/* Handle unmatched routes */}
+        <Route path="*" element={<ComponentsOverview />} />
       </Routes>
     </div>
   </BrowserRouter>
