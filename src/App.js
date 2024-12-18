@@ -15,6 +15,8 @@ import Settings from './components/ui/Settings';
 import PhylaAndDiversityAnalysis from './components/ui/PhylaAndDiversityAnalysis';
 import MicrobialCompositionOverview from './components/ui/MicrobialCompositionOverview';
 import GutHealthSurvey from './components/ui/GutHealthSurvey'; // Import GutHealthSurvey component
+import FitbitIntegrationPage from './components/ui/FitbitIntegrationPage'; // Add this import
+import BiosampleCollectionKitRequest from './components/ui/BiosampleCollectionKitRequest'; // Added import
 
 const ComponentsOverview = () => {
   const reportData = {
@@ -166,13 +168,9 @@ const MicrobiomeReport = () => {
         <Route path="/microbial-composition" element={<MicrobialCompositionOverview />} />
         <Route path="/components-overview" element={<ComponentsOverview />} />
         <Route path="/gut-health-survey" element={<GutHealthSurvey />} /> {/* Add new route */}
-        <Route path="/" element={
-          <>
-            <TotalScoreCard reportData={reportData} />
-            <LevelSection level={reportData.level} scores={reportData.scores} />
-            {/* ...other components... */}
-          </>
-        } />
+        <Route path="/health-tracking" element={<FitbitIntegrationPage />} /> {/* Add this route */}
+        <Route path="/biosample-submission" element={<BiosampleCollectionKitRequest />} /> {/* Added route */}
+        <Route path="/" element={<ComponentsOverview />} />
       </Routes>
     </div>
   );
@@ -181,10 +179,6 @@ const MicrobiomeReport = () => {
 const App = () => (
   <BrowserRouter>
     <BannerNavBar />
-    <Routes>
-      {/* ...existing routes... */}
-      <Route path="/gut-health-survey" element={<GutHealthSurvey />} /> {/* Add new route */}
-    </Routes>
     <MicrobiomeReport />
   </BrowserRouter>
 );

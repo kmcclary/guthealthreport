@@ -128,9 +128,9 @@ const BannerNavBar = () => {
   ];
 
   const participateButtons = [
-    { to: "/gut-health-survey", icon: MdQuiz, label: "Daily Quiz" }, // Update link to GutHealthSurvey
+    { to: "/gut-health-survey", icon: MdQuiz, label: "Daily Quiz" },
     { to: "/health-tracking", icon: MdHealthAndSafety, label: "Track Health" },
-    { to: "/streak-status", icon: MdTrendingUp, label: "Streak" },
+    { to: "/biosample-submission", icon: MdBiotech, label: "Biosample" }, // Changed this line
     { to: "/progress", icon: MdTrendingUp, label: "Progress" },
     { to: "/experiments", icon: MdScience, label: "Experiments" },
     { to: "/tasks", icon: MdAssignment, label: "Tasks" }
@@ -142,11 +142,9 @@ const BannerNavBar = () => {
   };
 
   // Modified condition to check for components overview
-  const isComponentsOverview = location.pathname === '/components-overview' || 
-    (!location.pathname.startsWith('/participate') && !isQuizRelatedPath(location.pathname));
+  const isComponentsOverview = location.pathname === '/components-overview' || location.pathname === '/';
   
-  const isParticipateSection = location.pathname.startsWith('/participate') || 
-    isQuizRelatedPath(location.pathname);
+  const isParticipateSection = location.pathname === '/gut-health-survey' || location.pathname === '/biosample-submission' || isQuizRelatedPath(location.pathname);
 
   // Add this helper function before the return statement
   const isButtonActive = (buttonTo) => {
@@ -177,7 +175,7 @@ const BannerNavBar = () => {
               isPrimary={true}
             />
             <MainButton 
-              to="/participate"
+              to="/gut-health-survey"
               icon={MdGroup}
               label="Participate" 
               isActive={isParticipateSection}
