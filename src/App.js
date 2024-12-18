@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import BannerNavBar from './components/ui/BannerNavBar';
+import ComponentsOverview from './components/ui/ComponentsOverview'; // Import ComponentsOverview
 import MicrobiomePersonalityV2 from './components/ui/MicrobiomePersonality';
 import TotalScoreCard from './components/ui/TotalScoreCard';
 import RecommendationsSection from './components/ui/RecommendationsSection';
@@ -14,138 +15,60 @@ import StreakStatus from './components/ui/StreakStatus';
 import Settings from './components/ui/Settings';
 import PhylaAndDiversityAnalysis from './components/ui/PhylaAndDiversityAnalysis';
 import MicrobialCompositionOverview from './components/ui/MicrobialCompositionOverview';
-import GutHealthSurvey from './components/ui/GutHealthSurvey'; // Import GutHealthSurvey component
-import FitbitIntegrationPage from './components/ui/FitbitIntegrationPage'; // Add this import
-import BiosampleCollectionKitRequest from './components/ui/BiosampleCollectionKitRequest'; // Added import
+import GutHealthSurvey from './components/ui/GutHealthSurvey';
+import FitbitIntegrationPage from './components/ui/FitbitIntegrationPage';
+import BiosampleCollectionKitRequest from './components/ui/BiosampleCollectionKitRequest';
+import GutHealthTrialSignup from './components/ui/GutHealthTrialSignup';
 
-const ComponentsOverview = () => {
-  const reportData = {
-    user_name: "Jane Smith",
-    report_date: "November 10, 2024",
-    level: {
-      current: 3,
-      title: "Health Challenger",
-      points_to_next: 16
-    },
-    scores: {
-      total: 54.5,
-      base: 18.5,      action_points: 26,
-      streak_bonus: 10
-    },
-    current_profile: {
-      ETF: 0.6,
-      ETB: 0.2,
-      ETP: 0.1,
-      ETX: 0.1,
-      date: "November 10, 2024"
-    },
-    previous_profile: {
-      ETF: 0.7,
-      ETB: 0.15,
-      ETP: 0.1,
-      ETX: 0.05,
-      date: "October 10, 2024"
-    },
-    streak: {
-      days: 14,
-      message: "🔥 Maximum bonus achieved!"
-    },
-    enterotype_profile: {
-      ETF: 0.6,
-      ETB: 0.2,
-      ETP: 0.1,
-      ETX: 0.1
-    }
-  };
+// Remove the empty ComponentsOverview definition
+// const ComponentsOverview = () => {
+//   // ... your ComponentsOverview component code ...
+// };
 
-  return (
-    <div className="space-y-8">
-      <div id="overview" className="component-section">
-        <TotalScoreCard reportData={reportData} />
-      </div>
-      <div id="level-section" className="component-section">
-        <LevelSection level={reportData.level} scores={reportData.scores} />
-      </div>
-      <div id="achievements" className="component-section">
-        <Achievements />
-      </div>
-      <div id="enterotype-profile" className="component-section">
-        <EnterotypeProfile reportData={reportData} />
-      </div>
-      <div id="recommendations" className="component-section">
-        <RecommendationsSection />
-      </div>
-      <div id="health-metabolism" className="component-section">
-        <MEPSVisual currentProfile={reportData.current_profile} />
-      </div>
-      <div id="gut-personality" className="component-section">
-        <MicrobiomePersonalityV2 
-          currentProfile={reportData.current_profile} 
-          previousProfile={reportData.previous_profile} 
-        />
-      </div>
-      <div id="pathogen-detection" className="component-section">
-        <PathogenDetection />
-      </div>
-      <div id="commensal-microbe-detection" className="component-section">
-        <CommensalMicrobeDetection />
-      </div>
-      <div id="phyla-diversity" className="component-section">
-        <PhylaAndDiversityAnalysis />
-      </div>
-      <div id="microbial-composition" className="component-section">
-        <MicrobialCompositionOverview />
-      </div>
-      <div id="streak-status" className="component-section">
-        <StreakStatus streak={reportData.streak} />
-      </div>
-    </div>
-  );
+// Define reportData if needed by your components
+const reportData = {
+  user_name: "Jane Smith",
+  report_date: "November 10, 2024",
+  level: {
+    current: 3,
+    title: "Health Challenger",
+    points_to_next: 16
+  },
+  scores: {
+    total: 54.5,
+    base: 18.5,
+    action_points: 26,
+    streak_bonus: 10
+  },
+  current_profile: {
+    ETF: 0.6,
+    ETB: 0.2,
+    ETP: 0.1,
+    ETX: 0.1,
+    date: "November 10, 2024"
+  },
+  previous_profile: {
+    ETF: 0.7,
+    ETB: 0.15,
+    ETP: 0.1,
+    ETX: 0.05,
+    date: "October 10, 2024"
+  },
+  streak: {
+    days: 14,
+    message: "🔥 Maximum bonus achieved!"
+  },
+  enterotype_profile: {
+    ETF: 0.6,
+    ETB: 0.2,
+    ETP: 0.1,
+    ETX: 0.1
+  }
 };
 
-const MicrobiomeReport = () => {
-  const location = useLocation(); // Use useLocation hook
-  const reportData = {
-    user_name: "Jane Smith",
-    report_date: "November 10, 2024",
-    level: {
-      current: 3,
-      title: "Health Challenger",
-      points_to_next: 16
-    },
-    scores: {
-      total: 54.5,
-      base: 18.5,      action_points: 26,
-      streak_bonus: 10
-    },
-    current_profile: {
-      ETF: 0.6,
-      ETB: 0.2,
-      ETP: 0.1,
-      ETX: 0.1,
-      date: "November 10, 2024"
-    },
-    previous_profile: {
-      ETF: 0.7,
-      ETB: 0.15,
-      ETP: 0.1,
-      ETX: 0.05,
-      date: "October 10, 2024"
-    },
-    streak: {
-      days: 14,
-      message: "🔥 Maximum bonus achieved!"
-    },
-    enterotype_profile: {
-      ETF: 0.6,
-      ETB: 0.2,
-      ETP: 0.1,
-      ETX: 0.1
-    }
-  };
-
-
-  return (
+const App = () => (
+  <BrowserRouter>
+    <BannerNavBar />
     <div className="bg-transparent min-h-screen pt-16 md:pt-16 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-6 md:space-y-8">
       <Routes>
         <Route path="/settings" element={<Settings />} />
@@ -156,30 +79,28 @@ const MicrobiomeReport = () => {
         <Route path="/recommendations" element={<RecommendationsSection />} />
         <Route path="/streak-status" element={<StreakStatus streak={reportData.streak} />} />
         <Route path="/health-metabolism" element={<MEPSVisual currentProfile={reportData.current_profile} />} />
-        <Route path="/gut-personality" element={
-          <MicrobiomePersonalityV2 
-            currentProfile={reportData.current_profile} 
-            previousProfile={reportData.previous_profile} 
-          />
-        } />
+        <Route
+          path="/gut-personality"
+          element={
+            <MicrobiomePersonalityV2
+              currentProfile={reportData.current_profile}
+              previousProfile={reportData.previous_profile}
+            />
+          }
+        />
         <Route path="/pathogen-detection" element={<PathogenDetection />} />
         <Route path="/commensal-microbe-detection" element={<CommensalMicrobeDetection />} />
         <Route path="/phyla-diversity" element={<PhylaAndDiversityAnalysis />} />
         <Route path="/microbial-composition" element={<MicrobialCompositionOverview />} />
         <Route path="/components-overview" element={<ComponentsOverview />} />
-        <Route path="/gut-health-survey" element={<GutHealthSurvey />} /> {/* Add new route */}
-        <Route path="/health-tracking" element={<FitbitIntegrationPage />} /> {/* Add this route */}
-        <Route path="/biosample-submission" element={<BiosampleCollectionKitRequest />} /> {/* Added route */}
-        <Route path="/" element={<ComponentsOverview />} />
+        <Route path="/gut-health-survey" element={<GutHealthSurvey />} />
+        <Route path="/health-tracking" element={<FitbitIntegrationPage />} />
+        <Route path="/biosample-submission" element={<BiosampleCollectionKitRequest />} />
+        <Route path="/study-signup" element={<GutHealthTrialSignup />} />
+        <Route path="/" element={<ComponentsOverview />} /> {/* Set default route */}
+        <Route path="*" element={<ComponentsOverview />} /> {/* Handle unmatched routes */}
       </Routes>
     </div>
-  );
-};
-
-const App = () => (
-  <BrowserRouter>
-    <BannerNavBar />
-    <MicrobiomeReport />
   </BrowserRouter>
 );
 

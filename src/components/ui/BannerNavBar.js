@@ -87,12 +87,12 @@ const NavButton = ({ to, icon: Icon, label, isActive, onClick }) => (
 
 const BannerNavBar = () => {
   const location = useLocation();
-  const [activeSection, setActiveSection] = useState('');
-  const [lastActiveSubbutton, setLastActiveSubbutton] = useState(''); // Add state for last active subbutton
+  const [activeSection, setActiveSection] = useState('overview'); // Set initial active section
+  const [lastActiveSubbutton, setLastActiveSubbutton] = useState('overview'); // Set initial last active subbutton
 
   // Add scroll event listener for Components Overview page
   useEffect(() => {
-    if (location.pathname === '/components-overview') {
+    if (location.pathname === '/components-overview' || location.pathname === '/') {
       const handleScroll = () => {
         const sections = document.querySelectorAll('.component-section');
         let topmostSection = '';
@@ -113,6 +113,13 @@ const BannerNavBar = () => {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (location.pathname === '/' || location.pathname === '/components-overview') {
+      setActiveSection('overview'); // Set initial active section
+      setLastActiveSubbutton('overview'); // Set initial last active subbutton
+    }
+  }, [location.pathname]);
+
   const resultsButtons = [
     { to: "overview", icon: MdDashboard, label: "Overview" },
     { to: "level-section", icon: MdTrendingUp, label: "Level" },
@@ -130,10 +137,10 @@ const BannerNavBar = () => {
   const participateButtons = [
     { to: "/gut-health-survey", icon: MdQuiz, label: "Daily Quiz" },
     { to: "/health-tracking", icon: MdHealthAndSafety, label: "Track Health" },
-    { to: "/biosample-submission", icon: MdBiotech, label: "Biosample" }, // Changed this line
-    { to: "/progress", icon: MdTrendingUp, label: "Progress" },
-    { to: "/experiments", icon: MdScience, label: "Experiments" },
-    { to: "/tasks", icon: MdAssignment, label: "Tasks" }
+    { to: "/biosample-submission", icon: MdBiotech, label: "Biosample" },
+    { to: "/study-signup", icon: MdTrendingUp, label: "Study Signup" }, // Changed this line
+    // { to: "/experiments", icon: MdScience, label: "Experiments" },
+    // { to: "/tasks", icon: MdAssignment, label: "Tasks" }
   ];
 
   // Add this helper function
