@@ -14,6 +14,7 @@ import StreakStatus from './components/ui/StreakStatus';
 import Settings from './components/ui/Settings';
 import PhylaAndDiversityAnalysis from './components/ui/PhylaAndDiversityAnalysis';
 import MicrobialCompositionOverview from './components/ui/MicrobialCompositionOverview';
+import GutHealthSurvey from './components/ui/GutHealthSurvey'; // Import GutHealthSurvey component
 
 const ComponentsOverview = () => {
   const reportData = {
@@ -164,6 +165,7 @@ const MicrobiomeReport = () => {
         <Route path="/phyla-diversity" element={<PhylaAndDiversityAnalysis />} />
         <Route path="/microbial-composition" element={<MicrobialCompositionOverview />} />
         <Route path="/components-overview" element={<ComponentsOverview />} />
+        <Route path="/gut-health-survey" element={<GutHealthSurvey />} /> {/* Add new route */}
         <Route path="/" element={
           <>
             <TotalScoreCard reportData={reportData} />
@@ -179,6 +181,10 @@ const MicrobiomeReport = () => {
 const App = () => (
   <BrowserRouter>
     <BannerNavBar />
+    <Routes>
+      {/* ...existing routes... */}
+      <Route path="/gut-health-survey" element={<GutHealthSurvey />} /> {/* Add new route */}
+    </Routes>
     <MicrobiomeReport />
   </BrowserRouter>
 );

@@ -55,22 +55,33 @@ const scrollToSection = (sectionId) => {
 
 const NavButton = ({ to, icon: Icon, label, isActive, onClick }) => (
   <li className="group relative">
-    <button 
-      onClick={onClick}
-      className={`flex flex-col items-center justify-center w-6 sm:w-8 h-8 sm:h-8 rounded-lg shadow transition-colors
-        ${isActive 
-          ? 'bg-white text-black' 
-          : 'bg-black/20 text-white hover:bg-white/30'}`}
-    >
-      <Icon 
-        className="w-6 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"
-      />
-      <span 
-        className="relative mt-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap"
+    {onClick ? (
+      <button 
+        onClick={onClick}
+        className={`flex flex-col items-center justify-center w-6 sm:w-8 h-8 sm:h-8 rounded-lg shadow transition-colors
+          ${isActive 
+            ? 'bg-white text-black' 
+            : 'bg-black/20 text-white hover:bg-white/30'}`}
       >
-        {label}
-      </span>
-    </button>
+        <Icon className="w-6 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"/>
+        <span className="relative mt-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap">
+          {label}
+        </span>
+      </button>
+    ) : (
+      <Link 
+        to={to}
+        className={`flex flex-col items-center justify-center w-6 sm:w-8 h-8 sm:h-8 rounded-lg shadow transition-colors
+          ${isActive 
+            ? 'bg-white text-black' 
+            : 'bg-black/20 text-white hover:bg-white/30'}`}
+      >
+        <Icon className="w-6 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"/>
+        <span className="relative mt-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap">
+          {label}
+        </span>
+      </Link>
+    )}
   </li>
 );
 
@@ -117,7 +128,7 @@ const BannerNavBar = () => {
   ];
 
   const participateButtons = [
-    { to: "/daily-quiz", icon: MdQuiz, label: "Daily Quiz" },
+    { to: "/gut-health-survey", icon: MdQuiz, label: "Daily Quiz" }, // Update link to GutHealthSurvey
     { to: "/health-tracking", icon: MdHealthAndSafety, label: "Track Health" },
     { to: "/streak-status", icon: MdTrendingUp, label: "Streak" },
     { to: "/progress", icon: MdTrendingUp, label: "Progress" },
@@ -125,9 +136,30 @@ const BannerNavBar = () => {
     { to: "/tasks", icon: MdAssignment, label: "Tasks" }
   ];
 
+  // Add this helper function
+  const isQuizRelatedPath = (path) => {
+    return path.includes('/quiz') || path === '/gut-health-survey';
+  };
+
   // Modified condition to check for components overview
-  const isComponentsOverview = location.pathname === '/components-overview' || !location.pathname.startsWith('/participate');
-  const isParticipateSection = location.pathname.startsWith('/participate');
+  const isComponentsOverview = location.pathname === '/components-overview' || 
+    (!location.pathname.startsWith('/participate') && !isQuizRelatedPath(location.pathname));
+  
+  const isParticipateSection = location.pathname.startsWith('/participate') || 
+    isQuizRelatedPath(location.pathname);
+
+  // Add this helper function before the return statement
+  const isButtonActive = (buttonTo) => {
+    if (isComponentsOverview) {
+      return activeSection === buttonTo || lastActiveSubbutton === buttonTo;
+    } else {
+      // Check if the current path matches the button's path or if it's the quiz route
+      if (buttonTo === '/gut-health-survey') {
+        return isQuizRelatedPath(location.pathname);
+      }
+      return location.pathname === buttonTo;
+    }
+  };
 
   return (
     <div className="bg-gradient-to-br from-yellow-300 via-yellow-300 to-yellow-500 p-1 w-full fixed top-0 left-0 z-50">
@@ -159,7 +191,7 @@ const BannerNavBar = () => {
                   to={isComponentsOverview ? "#" : button.to}
                   icon={button.icon}
                   label={button.label}
-                  isActive={isComponentsOverview ? activeSection === button.to || lastActiveSubbutton === button.to : location.pathname === button.to}
+                  isActive={isButtonActive(button.to)}
                   onClick={isComponentsOverview ? () => { scrollToSection(button.to); setLastActiveSubbutton(button.to); } : undefined}
                 />
               ))}
