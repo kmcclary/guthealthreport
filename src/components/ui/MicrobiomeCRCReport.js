@@ -42,14 +42,23 @@ const PatientInfoDropdown = ({ patientData }) => {
         <ChevronDown className={`h-5 w-5 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
       </button>
       {isOpen && (
-        <div className="mt-2 p-4 bg-white rounded-lg shadow-sm text-sm text-gray-600">
-          <div className="grid grid-cols-2 gap-y-2">
+        <div className="mt-2 p-4 bg-white rounded-lg shadow-sm space-y-4">
+          <div className="text-sm text-gray-600 grid grid-cols-2 gap-y-2">
             <p><span className="font-semibold">Patient:</span> {patientData.patientName}</p>
             <p><span className="font-semibold">DOB:</span> {patientData.patientDOB}</p>
             <p><span className="font-semibold">Ordering Physician:</span> {patientData.physicianName}</p>
             <p><span className="font-semibold">Test ID:</span> {patientData.testId}</p>
             <p><span className="font-semibold">Collection Date:</span> {patientData.collectionDate}</p>
             <p><span className="font-semibold">Report Date:</span> {patientData.reportDate}</p>
+          </div>
+          <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-900 flex items-start gap-2">
+            <User className="h-5 w-5 text-blue-500 mt-0.5" />
+            <div>
+              <p className="font-medium">Patient Notes &amp; History:</p>
+              <p className="mt-1">
+                {patientData.patientNotes} No family history of colorectal cancer is reported. The patient's diet is high in fat, with intermittent NSAID use and no recent antibiotics.
+              </p>
+            </div>
           </div>
         </div>
       )}
@@ -188,17 +197,6 @@ const MicrobiomeCRCReport = () => {
         <PatientInfoDropdown patientData={patientData} />
       </div>
 
-      {/* Patient Notes with added icon */}
-      <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-900 flex items-start gap-2">
-        <User className="h-5 w-5 text-blue-500 mt-0.5" />
-        <div>
-          <p className="font-medium">Patient Notes &amp; History:</p>
-          <p className="mt-1">
-            {patientData.patientNotes} No family history of colorectal cancer is reported. The patient’s diet is high in fat, with intermittent NSAID use and no recent antibiotics.
-          </p>
-        </div>
-      </div>
-
       {/* Result Summary Card with added icon and color */}
       <Card className="border-t-4 border-t-red-500 bg-white">
         <CardHeader>
@@ -334,7 +332,7 @@ const MicrobiomeCRCReport = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-8 text-sm">
+          <div className="space-y-8 text-xs sm:text-sm md:text-base">
             {microbialMarkers.map((marker, index) => (
               <div key={index} className="border-b border-gray-200 pb-6 last:border-0">
                 <div className="flex justify-between items-start mb-4">
@@ -344,17 +342,17 @@ const MicrobiomeCRCReport = () => {
                     }`}>
                       {marker.name}
                     </h3>
-                    <p className="text-gray-600 text-sm">{marker.description}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm">{marker.description}</p>
                   </div>
                   <div className="flex flex-col items-end">
-                    {renderStatus(marker.status)}
-                    <span className="text-sm text-gray-500 mt-1">
-                      Clinical Significance: {marker.clinicalSignificance}
+                  <span className="text-xs xs:text-sm text-gray-500 mt-1">
+                    Significance:
                     </span>
+                    {renderStatus(marker.status)}
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex justify-between text-sm text-gray-600 mb-1">
+                  <div className="flex justify-between text-xs sm:text-sm text-gray-600 mb-1">
                     <div className="flex items-center gap-2">
                       <TestTube className="h-4 w-4 text-blue-500" />
                       <span>Patient Value: {marker.value} {marker.unit}</span>
@@ -371,7 +369,7 @@ const MicrobiomeCRCReport = () => {
             <div className="bg-blue-50 p-4 rounded-lg">
               <div className="flex gap-2">
                 <Info className="h-5 w-5 text-blue-500 flex-shrink-0" />
-                <div className="text-blue-800 leading-relaxed">
+                <div className="text-blue-800 leading-relaxed text-xs sm:text-sm">
                   <p>
                     The observed microorganisms are a subset of a broader network of bacteria consistently linked to CRC. Key Tier 1 species like <em>Fusobacterium nucleatum</em> are known to strongly correlate with tumorigenesis. Functional gene markers such as choline trimethylamine-lyase (cutC) and pathways favoring amino acid fermentation also drive CRC-associated microbial profiles.
                   </p>
@@ -734,7 +732,7 @@ const MicrobiomeCRCReport = () => {
         </CardContent>
       </Card>
 
-      {/* Additional Resources & References */}
+      {/* Additional Resources, Methodology & References */}
       <Card className="bg-white">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -754,11 +752,19 @@ const MicrobiomeCRCReport = () => {
           </p>
           <p className="font-medium">Peer-Reviewed Literature &amp; Guidelines:</p>
           <ul className="list-disc list-inside mt-1 space-y-1">
-            <li><em>Chen, W. et al.</em> (2022). “Gut Microbiome Signatures of Colorectal Cancer.” <em>Gastroenterology</em>, 162(4), 1232-1245.</li>
-            <li><em>Liang, Q. et al.</em> (2021). “Microbial Markers for Early Detection of Colorectal Neoplasia.” <em>Nature Medicine</em>, 27(10), 1834-1842.</li>
-            <li><em>Smith, J. &amp; Johnson, R.</em> (2020). “Metagenomics in Cancer Screening.” <em>Clinical Cancer Research</em>, 26(11), 2753-2761.</li>
-            <li><em>US Preventive Services Task Force.</em> (2021). “Screening for Colorectal Cancer.” <em>JAMA</em>, 325(19), 1965–1977.</li>
-            <li><em>American Cancer Society.</em> (2023). “Colorectal Cancer Screening Guidelines.” Available at: <a href="https://www.cancer.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">www.cancer.org</a>.</li>
+            <li>Chen, W., Liu, F., Ling, Z., Tong, X., & Xiang, C. (2022). “Gut Microbiome Signatures of Colorectal Cancer.” <em>Gastroenterology</em>, 162(4), 1232-1245.</li>
+            <li>Liang, Q., Chiu, J., Chen, Y., Huang, Y., Higashimori, A., Fang, J., Brim, H., Ashktorab, H., Ng, S.C., Ng, S.S.M., Zheng, S., Chan, F.K.L., Sung, J.J.Y., & Yu, J. (2021). “Microbial Markers for Early Detection of Colorectal Neoplasia.” <em>Nature Medicine</em>, 27(10), 1834-1842.</li>
+            <li>Wirbel, J., Pyl, P.T., Kartal, E., Zych, K., Kashani, A., Milanese, A., Fleck, J.S., Voigt, A.Y., Palleja, A., Ponnudurai, R., Sunagawa, S., Coelho, L.P., Schrotz-King, P., Vogtmann, E., Habermann, N., Niméus, E., Thomas, A.M., Manghi, P., Gandini, S., ... Zeller, G. (2019). “Meta-analysis of fecal metagenomes reveals global microbial signatures that are specific for colorectal cancer.” <em>Nature Medicine</em>, 25(4), 679-689.</li>
+            <li>Yachida, S., Mizutani, S., Shiroma, H., Shiba, S., Nakajima, T., Sakamoto, T., Watanabe, H., Masuda, K., Nishimoto, Y., Kubo, M., Hosoda, F., Rokutan, H., Matsumoto, M., Takamaru, H., Yamada, M., Matsuda, T., Iwasaki, M., Yamaji, T., Yachida, T., ... Yamada, T. (2019). “Metagenomic and metabolomic analyses reveal distinct stage-specific phenotypes of the gut microbiota in colorectal cancer.” <em>Nature Medicine</em>, 25(6), 968-976.</li>
+            <li>Feng, Q., Liang, S., Jia, H., Stadlmayr, A., Tang, L., Lan, Z., Zhang, D., Xia, H., Xu, X., Jie, Z., Su, L., Li, X., Li, X., Li, J., Xiao, L., Huber-Schönauer, U., Niederseer, D., Xu, X., Al-Aama, J.Y., ... Wang, J. (2015). “Gut microbiome development along the colorectal adenoma-carcinoma sequence.” <em>Nature Communications</em>, 6, 6528.</li>
+            <li>Zackular, J.P., Rogers, M.A., Ruffin, M.T., & Schloss, P.D. (2014). “The human gut microbiome as a screening tool for colorectal cancer.” <em>Cancer Prevention Research</em>, 7(11), 1112-1121.</li>
+            <li>Thomas, A.M., Manghi, P., Asnicar, F., Pasolli, E., Armanini, F., Zolfo, M., Beghini, F., Manara, S., Karcher, N., Pozzi, C., Gandini, S., Serrano, D., Tarallo, S., Francavilla, A., Gallo, G., Trompetto, M., Ferrero, G., Mizutani, S., Shiroma, H., ... Segata, N. (2019). “Metagenomic analysis of colorectal cancer datasets identifies cross-cohort microbial diagnostic signatures and a link with choline degradation.” <em>Nature Medicine</em>, 25(4), 667-678.</li>
+            <li>Dai, Z., Coker, O.O., Nakatsu, G., Wu, W.K.K., Zhao, L., Chen, Z., Chan, F.K.L., Kristiansen, K., Sung, J.J.Y., Wong, S.H., & Yu, J. (2018). “Multi-cohort analysis of colorectal cancer metagenome identified altered bacteria across populations and universal bacterial markers.” <em>Microbiome</em>, 6(1), 70.</li>
+            <li>Flemer, B., Lynch, D.B., Brown, J.M., Jeffery, I.B., Ryan, F.J., Claesson, M.J., O'Riordain, M., Shanahan, F., & O'Toole, P.W. (2017). “Tumour-associated and non-tumour-associated microbiota in colorectal cancer.” <em>Gut</em>, 66(4), 633-643.</li>
+            <li>Baxter, N.T., Ruffin, M.T., Rogers, M.A., & Schloss, P.D. (2016). “Microbiota-based model improves the sensitivity of fecal immunochemical test for detecting colonic lesions.” <em>Genome Medicine</em>, 8(1), 37.</li>
+            <li>Kostic, A.D., Gevers, D., Pedamallu, C.S., Michaud, M., Duke, F., Earl, A.M., Ojesina, A.I., Jung, J., Bass, A.J., Tabernero, J., Baselga, J., Liu, C., Shivdasani, R.A., Ogino, S., Birren, B.W., Huttenhower, C., Garrett, W.S., & Meyerson, M. (2012). “Genomic analysis identifies association of Fusobacterium with colorectal carcinoma.” <em>Genome Research</em>, 22(2), 292-298.</li>
+            <li>Yu, J., Feng, Q., Wong, S.H., Zhang, D., Liang, Q.Y., Qin, Y., Tang, L., Zhao, H., Stenvang, J., Li, Y., Wang, X., Xu, X., Chen, N., Wu, W.K., Al-Aama, J., Nielsen, H.J., Kiilerich, P., Jensen, B.A., Yau, T.O., ... Wang, J. (2017). “Metagenomic analysis of faecal microbiome as a tool towards targeted non-invasive biomarkers for colorectal cancer.” <em>Gut</em>, 66(1), 70-78.</li>
+            <li>Zeller, G., Tap, J., Voigt, A.Y., Sunagawa, S., Kultima, J.R., Costea, P.I., Amiot, A., Böhm, J., Brunetti, F., Habermann, N., Hercog, R., Koch, M., Luciani, A., Mende, D.R., Schneider, M.A., Schrotz-King, P., Tournigand, C., Tran Van Nhieu, J., Yamada, T., ... Bork, P. (2014). “Potential of fecal microbiota for early-stage detection of colorectal cancer.” <em>Molecular Systems Biology</em>, 10(11), 766.</li>
           </ul>
           <p>
             Additional materials, including patient support and educational resources, can be found at the 

@@ -90,7 +90,6 @@ const NavButton = ({ to, icon: Icon, label, isActive, onClick }) => (
 
 const BannerNavBar = () => {
   const location = useLocation();
-  const [forceComponents, setForceComponents] = useState(true);
   const [activeSection, setActiveSection] = useState('overview');
   const [lastActiveSubbutton, setLastActiveSubbutton] = useState('overview');
 
@@ -131,16 +130,20 @@ const BannerNavBar = () => {
   ];
 
   // Update isComponentsOverview to include CRC detection
-  const isComponentsOverview = forceComponents || componentsPaths.includes(location.pathname);
+  const isComponentsOverview = componentsPaths.includes(location.pathname) || location.pathname === '/components-overview';
   const isCRCSection = location.pathname.startsWith('/crc-detection');
 
   // Consolidate the useEffect hooks
   useEffect(() => {
-    // Set Components view as default when app launches
-    if (isComponentsOverview) {
+    // Set initial state when app launches
+    if (location.pathname === '/' || location.pathname === '/components-overview') {
       setActiveSection('overview');
       setLastActiveSubbutton('overview');
-      
+      // Initial scroll to overview section
+      setTimeout(() => scrollToSection('overview'), 100);
+    }
+
+    if (isComponentsOverview) {
       const handleScroll = () => {
         const sections = document.querySelectorAll('.component-section, .crc-section');
         const viewportHeight = window.innerHeight;
@@ -172,15 +175,7 @@ const BannerNavBar = () => {
       setTimeout(handleScroll, 100);
       return () => window.removeEventListener('scroll', handleScroll);
     }
-  }, [location.pathname, isComponentsOverview, isCRCSection]);
-
-  // Directly set the active state for the Components button on app launch
-  useEffect(() => {
-    if (isComponentsOverview) {
-      setActiveSection('overview');
-      setLastActiveSubbutton('overview');
-    }
-  }, [isComponentsOverview]);
+  }, [location.pathname, isComponentsOverview]);
 
   const resultsButtons = [
     { to: "overview", icon: MdDashboard, label: "Overview" },
@@ -212,6 +207,8 @@ const BannerNavBar = () => {
 
   const isParticipateSection = location.pathname === '/gut-health-survey' || 
                               location.pathname === '/biosample-submission' || 
+                              location.pathname === '/health-tracking' ||
+                              location.pathname === '/study-signup' ||
                               isQuizRelatedPath(location.pathname);
 
   // Add this helper function before the return statement
@@ -227,11 +224,6 @@ const BannerNavBar = () => {
       }
       return location.pathname === buttonTo;
     }
-  };
-
-  // Modify click handlers to update forceComponents
-  const handleParticipateClick = () => {
-    setForceComponents(false);
   };
 
   return (
@@ -255,33 +247,36 @@ const BannerNavBar = () => {
               label="Participate" 
               isActive={isParticipateSection}
               isPrimary={true}
-              onClick={handleParticipateClick}
             />
             <MainButton 
               to="/crc-detection"
               icon={MdMedicalServices}
               label="CRC Detection" 
-              isActive={location.pathname.startsWith('/crc-detection')}
+              isActive={isCRCSection}
               isPrimary={true}
             />
-            <li className="h-9 w-px bg-black/30 mx-1" />
-            <div className="flex space-x-1 overflow-x-hidden">
-              {(isComponentsOverview 
-                ? resultsButtons 
-                : isCRCSection 
-                  ? crcButtons 
-                  : participateButtons
-              ).map((button, index) => (
-                <NavButton 
-                  key={index}
-                  to={isComponentsOverview ? `/${button.to}` : button.to} // Ensure correct paths
-                  icon={button.icon}
-                  label={button.label}
-                  isActive={isButtonActive(button.to)}
-                  onClick={isComponentsOverview || isCRCSection ? () => { scrollToSection(button.to); setLastActiveSubbutton(button.to); } : undefined}
-                />
-              ))}
-            </div>
+            {(!isCRCSection) && (
+              <>
+                <li className="h-9 w-px bg-black/30 mx-1" />
+                <div className="flex space-x-1 overflow-x-hidden">
+                  {(isComponentsOverview 
+                    ? resultsButtons 
+                    : isParticipateSection
+                      ? participateButtons
+                      : []
+                  ).map((button, index) => (
+                    <NavButton 
+                      key={index}
+                      to={isComponentsOverview ? `/${button.to}` : button.to}
+                      icon={button.icon}
+                      label={button.label}
+                      isActive={isButtonActive(button.to)}
+                      onClick={isComponentsOverview ? () => { scrollToSection(button.to); setLastActiveSubbutton(button.to); } : undefined}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
             <li className="h-9 w-px bg-black/30 mx-1" />
             <MainButton 
               to="/settings"
