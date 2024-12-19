@@ -22,7 +22,7 @@ const MainButton = ({ to, icon: Icon, label, isActive, isPrimary, onClick }) => 
   <li className="group relative">
     <Link
       to={to}
-      className={`flex flex-col items-center justify-center w-6 sm:w-8 h-8 sm:h-8 rounded-lg shadow transition-colors
+      className={`flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 rounded-lg shadow transition-colors
         ${isPrimary && isActive
           ? 'bg-black text-white'
           : isActive
@@ -31,13 +31,14 @@ const MainButton = ({ to, icon: Icon, label, isActive, isPrimary, onClick }) => 
       onClick={onClick}
     >
       <Icon 
-        className="w-6 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"
+        className="w-6 h-6 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:scale-90"
       />
       <span 
-        className={`relative mt-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap
+        className={`absolute bottom-0 mb-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap
           ${isPrimary && isActive
             ? 'group-hover:bg-black group-hover:text-white' 
-            : 'group-hover:bg-white group-hover:text-gray-800'}`}
+            : 'group-hover:bg-white group-hover:text-gray-800'}
+          hidden sm:inline-block`} // Add this line
       >
         {label}
       </span>
@@ -59,26 +60,26 @@ const NavButton = ({ to, icon: Icon, label, isActive, onClick }) => (
     {onClick ? (
       <button 
         onClick={onClick}
-        className={`flex flex-col items-center justify-center w-6 sm:w-8 h-8 sm:h-8 rounded-lg shadow transition-colors
+        className={`flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 rounded-lg shadow transition-colors
           ${isActive 
             ? 'bg-white text-black' 
             : 'bg-black/20 text-white hover:bg-white/30'}`}
       >
-        <Icon className="w-6 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"/>
-        <span className="relative mt-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap">
+        <Icon className="w-6 h-6 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:scale-90"/>
+        <span className="absolute bottom-0 mb-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap hidden sm:inline-block">
           {label}
         </span>
       </button>
     ) : (
       <Link 
         to={to}
-        className={`flex flex-col items-center justify-center w-6 sm:w-8 h-8 sm:h-8 rounded-lg shadow transition-colors
+        className={`flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 rounded-lg shadow transition-colors
           ${isActive 
             ? 'bg-white text-black' 
             : 'bg-black/20 text-white hover:bg-white/30'}`}
       >
-        <Icon className="w-6 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform translate-y-2 group-hover:translate-y-1.5 group-hover:scale-90"/>
-        <span className="relative mt-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap">
+        <Icon className="w-6 h-6 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:scale-90"/>
+        <span className="absolute bottom-0 mb-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap hidden sm:inline-block">
           {label}
         </span>
       </Link>
@@ -221,7 +222,7 @@ const BannerNavBar = () => {
   return (
     <div className="bg-gradient-to-br from-yellow-300 via-yellow-300 to-yellow-500 p-1 w-full fixed top-0 left-0 z-50">
       <div className="flex items-center justify-between flex-nowrap">
-        <Link to="/">
+        <Link to="/" className="hidden sm:block"> {/* Add hidden sm:block class */}
           <img src={Logo} alt="Zymo Logo with Banner" className="h-8 flex-shrink-0" />
         </Link>
         <nav className="flex-shrink-0 ml-auto overflow-x-hidden">
