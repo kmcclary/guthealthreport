@@ -16,6 +16,7 @@ import {
   MdGroup,
   MdSettings,
   MdViewList, // Add this import
+  MdMedicalServices, // Import this icon
 } from 'react-icons/md'; // Import necessary icons
 
 const MainButton = ({ to, icon: Icon, label, isActive, isPrimary, onClick }) => (
@@ -241,6 +242,13 @@ const BannerNavBar = () => {
               isActive={isParticipateSection}
               isPrimary={true}
               onClick={handleParticipateClick}
+            />
+            <MainButton 
+              to="/crc-detection"
+              icon={MdMedicalServices}
+              label="CRC Detection" 
+              isActive={location.pathname.startsWith('/crc-detection')}
+              isPrimary={true}
             />
             <li className="h-9 w-px bg-black/30 mx-1" />
             <div className="flex space-x-1 overflow-x-hidden">

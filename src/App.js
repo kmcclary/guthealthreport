@@ -19,6 +19,7 @@ import GutHealthSurvey from './components/ui/GutHealthSurvey';
 import FitbitIntegrationPage from './components/ui/FitbitIntegrationPage';
 import BiosampleCollectionKitRequest from './components/ui/BiosampleCollectionKitRequest';
 import GutHealthTrialSignup from './components/ui/GutHealthTrialSignup';
+import MicrobiomeCRCReport from './components/ui/MicrobiomeCRCReport';
 
 // Remove the empty ComponentsOverview definition
 // const ComponentsOverview = () => {
@@ -97,6 +98,7 @@ const App = () => (
         <Route path="/health-tracking" element={<FitbitIntegrationPage />} />
         <Route path="/biosample-submission" element={<BiosampleCollectionKitRequest />} />
         <Route path="/study-signup" element={<GutHealthTrialSignup />} />
+        <Route path="/crc-detection" element={<MicrobiomeCRCReport />} />
         {/* Set default route to ComponentsOverview */}
         <Route path="/" element={<ComponentsOverview />} />
         {/* Handle unmatched routes */}
