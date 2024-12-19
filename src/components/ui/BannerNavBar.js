@@ -105,8 +105,8 @@ const BannerNavBar = () => {
     '/',
     '/components-overview',
     '/overview',
-    '/level-section',
-    '/achievements',
+    // '/level-section',
+    // '/achievements',
     '/enterotype-profile',
     '/recommendations',
     '/health-metabolism',
@@ -129,20 +129,33 @@ const BannerNavBar = () => {
       
       const handleScroll = () => {
         const sections = document.querySelectorAll('.component-section');
-        let topmostSection = '';
+        const viewportHeight = window.innerHeight;
+        let maxVisibility = 0;
+        let mostVisibleSection = '';
+
         sections.forEach(section => {
           const rect = section.getBoundingClientRect();
-          if (rect.top >= 0 && rect.top <= window.innerHeight / 8) {
-            topmostSection = section.id;
+          // Calculate how much of the section is visible
+          const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+          const visibility = visibleHeight / rect.height;
+
+          // Only consider sections that are at least 30% visible
+          if (visibility > maxVisibility && visibility > 0.3) {
+            maxVisibility = visibility;
+            mostVisibleSection = section.id;
           }
         });
-        if (topmostSection) {
-          setActiveSection(topmostSection);
-          setLastActiveSubbutton(topmostSection);
+
+        // Only update if we have a clearly visible section
+        if (mostVisibleSection) {
+          setActiveSection(mostVisibleSection);
+          setLastActiveSubbutton(mostVisibleSection);
         }
       };
 
       window.addEventListener('scroll', handleScroll);
+      // Initial check
+      setTimeout(handleScroll, 100);
       return () => window.removeEventListener('scroll', handleScroll);
     }
   }, [location.pathname, isComponentsOverview]);
@@ -157,16 +170,16 @@ const BannerNavBar = () => {
 
   const resultsButtons = [
     { to: "overview", icon: MdDashboard, label: "Overview" },
-    { to: "level-section", icon: MdTrendingUp, label: "Level" },
+    // { to: "level-section", icon: MdTrendingUp, label: "Level" },
     { to: "achievements", icon: MdHealthAndSafety, label: "Achievements" },
-    { to: "enterotype-profile", icon: MdBiotech, label: "Enterotype" },
+    // { to: "enterotype-profile", icon: MdBiotech, label: "Enterotype" },
     { to: "recommendations", icon: MdListAlt, label: "Actions" },
     { to: "health-metabolism", icon: MdMonitorHeart, label: "Health" },
     { to: "gut-personality", icon: MdPsychology, label: "Personality" },
     { to: "pathogen-detection", icon: MdBiotech, label: "Pathogens" },
-    { to: "commensal-microbe-detection", icon: MdScience, label: "Commensals" },
+    // { to: "commensal-microbe-detection", icon: MdScience, label: "Commensals" },
     { to: "phyla-diversity", icon: MdContentPaste, label: "Diversity" },
-    { to: "microbial-composition", icon: MdAssignment, label: "Composition" }
+    // { to: "microbial-composition", icon: MdAssignment, label: "Composition" }
   ];
 
   const participateButtons = [

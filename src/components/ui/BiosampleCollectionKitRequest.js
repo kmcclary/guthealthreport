@@ -48,11 +48,11 @@ const BiosampleCollectionKitRequest = () => {
   };
 
   return (
-    <Card className="rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 shadow-xl border border-gray-200 max-w-4xl mx-auto mt-8 mb-16">
-      <CardHeader className="p-4">
+    <Card className="rounded-xl bg-gradient-to-br from-white via-teal-50 to-teal-100 shadow-xl border border-gray-200 max-w-4xl mx-auto mt-8 mb-16">
+      <CardHeader className="p-4 bg-gradient-to-r from-teal-100 to-teal-50 border-b border-gray-200">
         <CardTitle className="flex items-center gap-2">
-          <Globe2 className="h-6 w-6 text-gray-800" />
-          <span className="bg-gradient-to-r from-gray-800 to-gray-900 bg-clip-text text-transparent text-xl font-semibold">
+          <Globe2 className="h-6 w-6 text-teal-700" />
+          <span className="bg-gradient-to-r from-teal-700 to-teal-900 bg-clip-text text-transparent text-xl font-semibold">
             Biosample Collection Kit Request
           </span>
         </CardTitle>
@@ -60,10 +60,10 @@ const BiosampleCollectionKitRequest = () => {
       <CardContent className="px-4 pb-10 space-y-6">
         
         {/* Overview */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('overview')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
           >
             <div className="flex items-center gap-2">
               <Info className="h-5 w-5 text-gray-700" />
@@ -90,10 +90,10 @@ const BiosampleCollectionKitRequest = () => {
         </section>
 
         {/* Instructions */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('instructions')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
           >
             <div className="flex items-center gap-2">
               <HelpCircle className="h-5 w-5 text-gray-700" />
@@ -122,10 +122,10 @@ const BiosampleCollectionKitRequest = () => {
         </section>
 
         {/* Request Form */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('form')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
           >
             <div className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-gray-700" />
@@ -314,10 +314,10 @@ const BiosampleCollectionKitRequest = () => {
         </section>
 
         {/* Packaging Instructions */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('packaging')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
           >
             <div className="flex items-center gap-2">
               <Package className="h-5 w-5 text-gray-700" />
@@ -347,10 +347,10 @@ const BiosampleCollectionKitRequest = () => {
         </section>
 
         {/* Shipping & Return */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('shipping')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
           >
             <div className="flex items-center gap-2">
               <Truck className="h-5 w-5 text-gray-700" />
@@ -379,10 +379,10 @@ const BiosampleCollectionKitRequest = () => {
         </section>
 
         {/* FAQs */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('faq')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
           >
             <div className="flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-gray-700" />
@@ -408,10 +408,10 @@ const BiosampleCollectionKitRequest = () => {
         </section>
 
         {/* Additional Resources */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('resources')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
           >
             <div className="flex items-center gap-2">
               <Mail className="h-5 w-5 text-gray-700" />

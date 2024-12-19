@@ -84,11 +84,11 @@ const GutHealthTrialSignup = () => {
   };
 
   return (
-    <Card className="rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 shadow-xl border border-gray-200 mx-auto max-w-3xl mt-10">
-      <CardHeader className="p-4">
+    <Card className="rounded-xl bg-gradient-to-br from-white via-teal-50 to-teal-100 shadow-xl border border-gray-200 mx-auto max-w-3xl mt-10">
+      <CardHeader className="p-4 bg-gradient-to-r from-teal-100 to-teal-50 border-b border-gray-200">
         <CardTitle className="flex items-center gap-2">
-          <Globe2 className="h-6 w-6 text-gray-800" />
-          <span className="bg-gradient-to-r from-gray-800 to-gray-900 bg-clip-text text-transparent text-xl font-semibold">
+          <Globe2 className="h-6 w-6 text-teal-700" />
+          <span className="bg-gradient-to-r from-teal-700 to-teal-900 bg-clip-text text-transparent text-xl font-semibold">
             Gut Health Clinical Trial Participation
           </span>
         </CardTitle>
@@ -96,10 +96,10 @@ const GutHealthTrialSignup = () => {
       <CardContent className="px-4 pb-6 space-y-6">
         
         {/* Introduction Section */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('introduction')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
             type="button"
           >
             <div className="flex items-center gap-2">
@@ -127,10 +127,10 @@ const GutHealthTrialSignup = () => {
         </section>
 
         {/* Eligibility Criteria Section */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('eligibility')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
             type="button"
           >
             <div className="flex items-center gap-2">
@@ -166,10 +166,10 @@ const GutHealthTrialSignup = () => {
         </section>
 
         {/* Data Usage and Privacy */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('dataUsage')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
             type="button"
           >
             <div className="flex items-center gap-2">
@@ -197,10 +197,10 @@ const GutHealthTrialSignup = () => {
         </section>
 
         {/* Risks and Benefits */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('risksBenefits')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
             type="button"
           >
             <div className="flex items-center gap-2">
@@ -225,10 +225,10 @@ const GutHealthTrialSignup = () => {
         </section>
 
         {/* Study Procedures */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('procedures')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
             type="button"
           >
             <div className="flex items-center gap-2">
@@ -261,10 +261,10 @@ const GutHealthTrialSignup = () => {
         </section>
 
         {/* Consent and Sign-Up Form */}
-        <section className="bg-white p-4 rounded-lg border border-gray-200">
+        <section className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm bg-gradient-to-br from-gray-50 to-gray-100">
           <button 
             onClick={() => toggleSection('consentForm')}
-            className="w-full flex items-center justify-between mb-2"
+            className="w-full flex items-center justify-between mb-2 hover:bg-white/50 transition-colors rounded-lg px-2 py-1"
             type="button"
           >
             <div className="flex items-center gap-2">
