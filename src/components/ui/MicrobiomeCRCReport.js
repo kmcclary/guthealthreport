@@ -18,6 +18,15 @@ import {
   Sun,
   User,
   Activity,
+  Target,
+  Microscope,
+  TestTube,    // Instead of Flask
+  Crown,
+  BadgeAlert,
+  Beaker,
+  Binary,
+  ArrowUpCircle,
+  ArrowDownCircle,
 } from 'lucide-react';
 
 const PatientInfoDropdown = ({ patientData }) => {
@@ -71,7 +80,6 @@ const MicrobiomeCRCReport = () => {
       unit: "relative abundance",
       status: "HIGH",
       description: "Most consistently reported CRC-associated bacterium across multiple datasets with highest effect sizes. Strong evidence for involvement in tumor development and progression through modulation of inflammatory pathways.",
-      evidence: "Meta-analysis from Thomas et al. 2019 Nature Medicine",
       clinicalSignificance: "HIGH"
     },
     {
@@ -81,7 +89,6 @@ const MicrobiomeCRCReport = () => {
       unit: "relative abundance", 
       status: "HIGH",
       description: "One of the most significant species with the highest effect size in meta-analysis studies. Frequently associated with early-stage colorectal cancer development.",
-      evidence: "Multiple cohort studies and meta-analysis (Thomas et al. 2019)",
       clinicalSignificance: "HIGH"
     },
     {
@@ -91,7 +98,6 @@ const MicrobiomeCRCReport = () => {
       unit: "relative abundance",
       status: "HIGH", 
       description: "Strong and consistent association with CRC across multiple datasets. Particularly relevant for advanced disease stages.",
-      evidence: "Identified in meta-analysis with high effect size (Thomas et al. 2019)",
       clinicalSignificance: "HIGH"
     },
     {
@@ -101,7 +107,6 @@ const MicrobiomeCRCReport = () => {
       unit: "relative abundance",
       status: "HIGH",
       description: "Shows high effect size with consistent enrichment across multiple CRC cohorts and meta-analyses.",
-      evidence: "Meta-analysis from Thomas et al. 2019",
       clinicalSignificance: "HIGH"
     },
     {
@@ -111,7 +116,6 @@ const MicrobiomeCRCReport = () => {
       unit: "relative abundance",
       status: "HIGH",
       description: "Identified as potential marker for early CRC detection with significant enrichment in meta-analysis studies.",
-      evidence: "Thomas et al. 2019, Lee et al. 2023",
       clinicalSignificance: "MODERATE"
     },
     {
@@ -121,7 +125,6 @@ const MicrobiomeCRCReport = () => {
       unit: "relative abundance",
       status: "HIGH",
       description: "Key functional gene significantly overabundant in CRC, indicating altered choline metabolism. Different variants show distinct associations with disease status.",
-      evidence: "Meta-analysis shows significant overabundance (p=0.001) across cohorts",
       clinicalSignificance: "HIGH"
     }
   ];
@@ -138,6 +141,36 @@ const MicrobiomeCRCReport = () => {
       <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
         Normal
       </span>
+    );
+  };
+
+  const renderGradientMeter = (value, referenceRange, status) => {
+    const maxValue = parseFloat(referenceRange.replace("< ", "")) * 2;
+    const percentage = (value / maxValue) * 100;
+    const gradientClass = status === "HIGH" 
+      ? "bg-gradient-to-r from-green-300 via-yellow-300 to-red-500"
+      : "bg-gradient-to-r from-green-500 to-emerald-400";
+  
+    return (
+      <div className="relative w-full">
+        <div className={`h-2 ${gradientClass} rounded-full`}>
+          <div 
+            className="absolute"
+            style={{
+              left: `${percentage}%`,
+              top: '50%',
+              transform: 'translate(-50%, -50%)'
+            }}
+          >
+            <div className="relative flex items-center justify-center">
+              <div className="bg-gradient-to-br from-gray-900 via-gray-700 to-black text-white text-[10px] font-bold rounded-full h-6 w-6 flex items-center justify-center border border-black">
+                {value}
+              </div>
+              <div className="bg-transparent absolute w-0 h-0 border-l-3 border-r-3 border-b-4 border-l-transparent border-r-transparent border-b-black -bottom-2 left-1/2 transform -translate-x-1/2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   };
 
@@ -275,7 +308,7 @@ const MicrobiomeCRCReport = () => {
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-3 w-3 text-purple-500 flex-shrink-0 mt-1" />
                     <div>
-                      <span className="font-semibold">Quality &amp; Compliance:</span> FDA-approved methods, CLIA-certified, CAP-accredited, ensuring reliable and reproducible results.
+                      <span className="font-semibold">Quality &amp; Compliance:</span> CLIA-certified, CAP-accredited, ensuring reliable and reproducible results.
                     </div>
                   </li>
                 </ul>
@@ -303,29 +336,35 @@ const MicrobiomeCRCReport = () => {
         <CardContent>
           <div className="space-y-8 text-sm">
             {microbialMarkers.map((marker, index) => (
-              <div key={index} className="border-b border-gray-200 pb-4 last:border-0">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h3 className="font-medium text-gray-900">{marker.name}</h3>
-                    <p className="text-gray-500">{marker.description}</p>
+              <div key={index} className="border-b border-gray-200 pb-6 last:border-0">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="space-y-1">
+                    <h3 className={`font-medium text-lg ${
+                      marker.status === "HIGH" ? "text-red-700" : "text-green-700"
+                    }`}>
+                      {marker.name}
+                    </h3>
+                    <p className="text-gray-600 text-sm">{marker.description}</p>
                   </div>
-                  {renderStatus(marker.status)}
+                  <div className="flex flex-col items-end">
+                    {renderStatus(marker.status)}
+                    <span className="text-sm text-gray-500 mt-1">
+                      Clinical Significance: {marker.clinicalSignificance}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-3">
-                  <div className="flex justify-between text-gray-600 mb-1">
-                    <span>Patient Value: {marker.value} {marker.unit}</span>
-                    <span>Reference Range: {marker.referenceRange}</span>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm text-gray-600 mb-1">
+                    <div className="flex items-center gap-2">
+                      <TestTube className="h-4 w-4 text-blue-500" />
+                      <span>Patient Value: {marker.value} {marker.unit}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Target className="h-4 w-4 text-green-500" />
+                      <span>Reference Range: {marker.referenceRange}</span>
+                    </div>
                   </div>
-                  <div className="h-2 bg-gray-200 rounded-full">
-                    <div 
-                      className={`h-2 rounded-full ${
-                        marker.status === "HIGH" ? "bg-red-500" : "bg-green-500"
-                      }`}
-                      style={{
-                        width: `${(marker.value / (parseFloat(marker.referenceRange.replace("< ", "")) * 2)) * 100}%`
-                      }}
-                    />
-                  </div>
+                  {renderGradientMeter(marker.value, marker.referenceRange, marker.status)}
                 </div>
               </div>
             ))}
@@ -388,103 +427,193 @@ const MicrobiomeCRCReport = () => {
       {/* Detailed Taxa Section */}
       <Card className="bg-white">
         <CardHeader>
-          <CardTitle>Bacterial Taxa Associated with CRC &amp; Controls</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <CircuitBoard className="h-5 w-5 text-purple-600" /> {/* Changed from Bacteria */}
+            Bacterial Taxa Associated with CRC &amp; Controls
+          </CardTitle>
           <CardDescription className="mt-2">
             Detailed information on bacterial taxa enriched in CRC and control samples
           </CardDescription>
         </CardHeader>
-        <CardContent className="text-sm text-gray-700 leading-relaxed space-y-4">
+        <CardContent className="text-sm text-gray-700 leading-relaxed space-y-6">
           {/* Tier 1 Biomarkers */}
-          <h3 className="font-medium text-gray-900">Tier 1: High Priority Biomarkers</h3>
-          <p>Strong evidence, high effect sizes, and reproducible associations with CRC.</p>
-          <ul className="list-disc list-inside space-y-2">
-            <li>
-              <span className="font-semibold">Fusobacterium nucleatum:</span> Most consistently reported CRC-associated bacterium with high effect sizes. Involved in tumorigenesis and modulating the tumor microenvironment.
-            </li>
-            <li>
-              <span className="font-semibold">Solobacterium moorei:</span> Consistently identified with high effect sizes across multiple CRC cohorts.
-            </li>
-            <li>
-              <span className="font-semibold">Porphyromonas asaccharolytica:</span> Consistently identified with high effect sizes in CRC patients.
-            </li>
-            <li>
-              <span className="font-semibold">Parvimonas micra:</span> Strong association with CRC, particularly in advanced stages.
-            </li>
-            <li>
-              <span className="font-semibold">Choline Trimethylamine-Lyase Gene (cutC):</span> Overabundant in CRC, indicating a link between microbiome choline metabolism and CRC.
-            </li>
-            <li>
-              <span className="font-semibold">Putrefaction and Fermentation Pathways:</span> Overabundant in CRC, these pathways are related to amino acid metabolism, producing tumor-promoting compounds.
-            </li>
-          </ul>
+          <div className="bg-red-50 p-4 rounded-lg">
+            <h3 className="font-medium text-gray-900 flex items-center gap-2 mb-2">
+              <Crown className="h-5 w-5 text-red-500" />
+              <span>Tier 1: High Priority Biomarkers</span>
+            </h3>
+            <p className="text-red-700 mb-3">Strong evidence, high effect sizes, and reproducible associations with CRC.</p>
+            <ul className="list-none space-y-3">
+              {/* Convert list items to custom styled components */}
+              <li className="flex items-start gap-2">
+                <Target className="h-4 w-4 text-red-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Fusobacterium nucleatum:</span> Most consistently reported CRC-associated bacterium with high effect sizes. Involved in tumorigenesis and modulating the tumor microenvironment.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Target className="h-4 w-4 text-red-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Solobacterium moorei:</span> Consistently identified with high effect sizes across multiple CRC cohorts.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Target className="h-4 w-4 text-red-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Porphyromonas asaccharolytica:</span> Consistently identified with high effect sizes in CRC patients.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Target className="h-4 w-4 text-red-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Parvimonas micra:</span> Strong association with CRC, particularly in advanced stages.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Target className="h-4 w-4 text-red-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Choline Trimethylamine-Lyase Gene (cutC):</span> Overabundant in CRC, indicating a link between microbiome choline metabolism and CRC.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Target className="h-4 w-4 text-red-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Putrefaction and Fermentation Pathways:</span> Overabundant in CRC, these pathways are related to amino acid metabolism, producing tumor-promoting compounds.
+                </div>
+              </li>
+            </ul>
+          </div>
 
           {/* Tier 2 Biomarkers */}
-          <h3 className="font-medium text-gray-900">Tier 2: Moderate Priority Biomarkers</h3>
-          <p>Good evidence with lower effect sizes and some variability.</p>
-          <ul className="list-disc list-inside space-y-2">
-            <li>
-              <span className="font-semibold">Clostridium symbiosum:</span> Potential marker for early CRC detection with strong enrichment in meta-analyses.
-            </li>
-            <li>
-              <span className="font-semibold">Gordonibacter pamelaeae:</span> Generally associated with healthy controls but shows enrichment in some CRC studies; may mediate dietary changes.
-            </li>
-            <li>
-              <span className="font-semibold">Bifidobacterium catenulatum:</span> Control-associated species; consistently depleted in CRC and used as a probiotic supplement.
-            </li>
-            <li>
-              <span className="font-semibold">Gluconeogenesis Pathways:</span> Overabundant in CRC, indicating metabolic shifts that could drive cancer development.
-            </li>
-            <li>
-              <span className="font-semibold">Starch, Stachyose, and Galactose Degradation:</span> Overabundant in healthy controls, suggesting diet-associated functional shifts.
-            </li>
-          </ul>
+          <div className="bg-orange-50 p-4 rounded-lg">
+            <h3 className="font-medium text-gray-900 flex items-center gap-2 mb-2">
+              <Microscope className="h-5 w-5 text-orange-500" />
+              <span>Tier 2: Moderate Priority Biomarkers</span>
+            </h3>
+            <p className="text-orange-700 mb-3">Good evidence with lower effect sizes and some variability.</p>
+            <ul className="list-none space-y-3">
+              <li className="flex items-start gap-2">
+                <Beaker className="h-4 w-4 text-orange-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Clostridium symbiosum:</span> Potential marker for early CRC detection with strong enrichment in meta-analyses.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Beaker className="h-4 w-4 text-orange-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Gordonibacter pamelaeae:</span> Generally associated with healthy controls but shows enrichment in some CRC studies; may mediate dietary changes.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Beaker className="h-4 w-4 text-orange-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Bifidobacterium catenulatum:</span> Control-associated species; consistently depleted in CRC and used as a probiotic supplement.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Beaker className="h-4 w-4 text-orange-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Gluconeogenesis Pathways:</span> Overabundant in CRC, indicating metabolic shifts that could drive cancer development.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Beaker className="h-4 w-4 text-orange-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Starch, Stachyose, and Galactose Degradation:</span> Overabundant in healthy controls, suggesting diet-associated functional shifts.
+                </div>
+              </li>
+            </ul>
+          </div>
 
           {/* Tier 3 Biomarkers */}
-          <h3 className="font-medium text-gray-900">Tier 3: Lower Priority Biomarkers</h3>
-          <p>Limited evidence with more variable associations.</p>
-          <ul className="list-disc list-inside space-y-2">
-            <li>
-              <span className="font-semibold">Anaerococcus vaginalis:</span> Often enriched in CRC but with variability across datasets.
-            </li>
-            <li>
-              <span className="font-semibold">Peptostreptococcus anaerobius:</span> Enriched in CRC with less consistent associations.
-            </li>
-            <li>
-              <span className="font-semibold">Fusobacterium mortiferum:</span> Enriched in CRC across several datasets but less consistently than F. nucleatum.
-            </li>
-            <li>
-              <span className="font-semibold">Increased Oral Species Richness/Abundance:</span> Presence of oral taxa in stool is often more abundant in CRC, suggesting translocation from the oral cavity.
-            </li>
-            <li>
-              <span className="font-semibold">Altered Secondary Bile Acid Levels:</span> Consistently found in CRC; may point to changes in bile acid metabolism.
-            </li>
-            <li>
-              <span className="font-semibold">Branched-Chain Amino Acids and Phenylalanine:</span> Elevated in CRC and advanced adenomas; associated with cancer metabolism pathways.
-            </li>
-          </ul>
+          <div className="bg-yellow-50 p-4 rounded-lg">
+            <h3 className="font-medium text-gray-900 flex items-center gap-2 mb-2">
+              <TestTube className="h-5 w-5 text-yellow-600" /> {/* Changed from Flask */}
+              <span>Tier 3: Lower Priority Biomarkers</span>
+            </h3>
+            <p className="text-yellow-700 mb-3">Limited evidence with more variable associations.</p>
+            <ul className="list-none space-y-3">
+              <li className="flex items-start gap-2">
+                <Binary className="h-4 w-4 text-yellow-600 mt-1" />
+                <div>
+                  <span className="font-semibold">Anaerococcus vaginalis:</span> Often enriched in CRC but with variability across datasets.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Binary className="h-4 w-4 text-yellow-600 mt-1" />
+                <div>
+                  <span className="font-semibold">Peptostreptococcus anaerobius:</span> Enriched in CRC with less consistent associations.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Binary className="h-4 w-4 text-yellow-600 mt-1" />
+                <div>
+                  <span className="font-semibold">Fusobacterium mortiferum:</span> Enriched in CRC across several datasets but less consistently than F. nucleatum.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Binary className="h-4 w-4 text-yellow-600 mt-1" />
+                <div>
+                  <span className="font-semibold">Increased Oral Species Richness/Abundance:</span> Presence of oral taxa in stool is often more abundant in CRC, suggesting translocation from the oral cavity.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Binary className="h-4 w-4 text-yellow-600 mt-1" />
+                <div>
+                  <span className="font-semibold">Altered Secondary Bile Acid Levels:</span> Consistently found in CRC; may point to changes in bile acid metabolism.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <Binary className="h-4 w-4 text-yellow-600 mt-1" />
+                <div>
+                  <span className="font-semibold">Branched-Chain Amino Acids and Phenylalanine:</span> Elevated in CRC and advanced adenomas; associated with cancer metabolism pathways.
+                </div>
+              </li>
+            </ul>
+          </div>
 
           {/* Tier 4 Biomarkers */}
-          <h3 className="font-medium text-gray-900">Tier 4: Markers for Adenoma Testing</h3>
-          <p>Potential indicators of early metabolic dysbiosis.</p>
-          <ul className="list-disc list-inside space-y-2">
-            <li>
-              <span className="font-semibold">Secondary Bile Acids and Polyamines:</span> Elevated in adenomas; may indicate early metabolic changes but require further validation.
-            </li>
-            <li>
-              <span className="font-semibold">Increased UniRef90 Gene Families:</span> Higher genomic activity in the gut microbiome of CRC patients; indicates general shifts but needs more correlation studies.
-            </li>
-          </ul>
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h3 className="font-medium text-gray-900 flex items-center gap-2 mb-2">
+              <BadgeAlert className="h-5 w-5 text-blue-500" />
+              <span>Tier 4: Markers for Adenoma Testing</span>
+            </h3>
+            <p className="text-blue-700 mb-3">Potential indicators of early metabolic dysbiosis.</p>
+            <ul className="list-none space-y-3">
+              <li className="flex items-start gap-2">
+                <ArrowUpCircle className="h-4 w-4 text-blue-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Secondary Bile Acids and Polyamines:</span> Elevated in adenomas; may indicate early metabolic changes but require further validation.
+                </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <ArrowUpCircle className="h-4 w-4 text-blue-500 mt-1" />
+                <div>
+                  <span className="font-semibold">Increased UniRef90 Gene Families:</span> Higher genomic activity in the gut microbiome of CRC patients; indicates general shifts but needs more correlation studies.
+                </div>
+              </li>
+            </ul>
+          </div>
 
-          {/* Additional Notes */}
-          <p>
-            <span className="font-semibold">Note on Oral Species:</span> Increased oral species richness and abundance are observed in CRC, suggesting possible translocation of oral bacteria to the gut environment.
-          </p>
-          <p>
-            <span className="font-semibold">Control-Enriched Taxa:</span> Species like <em>Gordonibacter pamelaeae</em> and <em>Bifidobacterium longum</em> are generally beneficial and more abundant in healthy controls.
-          </p>
-          <p>
-            <span className="font-semibold">Functional Pathways in Controls:</span> Pathways involved in starch and stachyose degradation are more active in healthy individuals, reflecting a balanced gut environment.
-          </p>
+          {/* Additional Notes in a different style */}
+          <div className="bg-green-50 p-4 rounded-lg space-y-3">
+            <h3 className="font-medium text-gray-900 flex items-center gap-2">
+              <Info className="h-5 w-5 text-green-600" />
+              <span>Additional Insights</span>
+            </h3>
+            <div className="flex items-start gap-2">
+              <ArrowUpCircle className="h-4 w-4 text-green-600 mt-1" />
+              <p>
+                <span className="font-semibold">Oral Species:</span> Increased oral species richness and abundance are observed in CRC, suggesting possible translocation of oral bacteria to the gut environment.
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <ArrowDownCircle className="h-4 w-4 text-green-600 mt-1" />
+              <p>
+                <span className="font-semibold">Control-Enriched Taxa:</span> Species like <em>Gordonibacter pamelaeae</em> and <em>Bifidobacterium longum</em> are generally beneficial and more abundant in healthy controls.
+              </p>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

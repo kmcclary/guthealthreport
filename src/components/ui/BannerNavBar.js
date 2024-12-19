@@ -90,17 +90,28 @@ const NavButton = ({ to, icon: Icon, label, isActive, onClick }) => (
 
 const BannerNavBar = () => {
   const location = useLocation();
-  // Add forceComponents state
   const [forceComponents, setForceComponents] = useState(true);
   const [activeSection, setActiveSection] = useState('overview');
   const [lastActiveSubbutton, setLastActiveSubbutton] = useState('overview');
 
-  // Force Components view on initial render
-  useEffect(() => {
-    setForceComponents(true);
-    setActiveSection('overview');
-    setLastActiveSubbutton('overview');
-  }, []); // Empty dependency array means this runs once on mount
+  // Add crcPaths array
+  const crcPaths = [
+    '/crc-detection',
+    '/crc-overview',
+    '/crc-biomarkers',
+    '/crc-pathways',
+    '/crc-metabolites',
+    '/crc-results'
+  ];
+
+  // Define CRC-related buttons
+  const crcButtons = [
+    { to: "crc-overview", icon: MdDashboard, label: "Overview" },
+    { to: "crc-biomarkers", icon: MdBiotech, label: "Biomarkers" },
+    { to: "crc-pathways", icon: MdScience, label: "Pathways" },
+    { to: "crc-metabolites", icon: MdContentPaste, label: "Metabolites" },
+    { to: "crc-results", icon: MdAssignment, label: "Results" }
+  ];
 
   // Define all Components-related paths
   const componentsPaths = [
@@ -119,8 +130,9 @@ const BannerNavBar = () => {
     '/microbial-composition'
   ];
 
-  // Update isComponentsOverview to use forceComponents
+  // Update isComponentsOverview to include CRC detection
   const isComponentsOverview = forceComponents || componentsPaths.includes(location.pathname);
+  const isCRCSection = location.pathname.startsWith('/crc-detection');
 
   // Consolidate the useEffect hooks
   useEffect(() => {
@@ -130,7 +142,7 @@ const BannerNavBar = () => {
       setLastActiveSubbutton('overview');
       
       const handleScroll = () => {
-        const sections = document.querySelectorAll('.component-section');
+        const sections = document.querySelectorAll('.component-section, .crc-section');
         const viewportHeight = window.innerHeight;
         let maxVisibility = 0;
         let mostVisibleSection = '';
@@ -160,7 +172,7 @@ const BannerNavBar = () => {
       setTimeout(handleScroll, 100);
       return () => window.removeEventListener('scroll', handleScroll);
     }
-  }, [location.pathname, isComponentsOverview]);
+  }, [location.pathname, isComponentsOverview, isCRCSection]);
 
   // Directly set the active state for the Components button on app launch
   useEffect(() => {
@@ -205,6 +217,8 @@ const BannerNavBar = () => {
   // Add this helper function before the return statement
   const isButtonActive = (buttonTo) => {
     if (isComponentsOverview) {
+      return activeSection === buttonTo || lastActiveSubbutton === buttonTo;
+    } else if (isCRCSection) {
       return activeSection === buttonTo || lastActiveSubbutton === buttonTo;
     } else {
       // Check if the current path matches the button's path or if it's the quiz route
@@ -252,14 +266,19 @@ const BannerNavBar = () => {
             />
             <li className="h-9 w-px bg-black/30 mx-1" />
             <div className="flex space-x-1 overflow-x-hidden">
-              {(isComponentsOverview ? resultsButtons : participateButtons).map((button, index) => (
+              {(isComponentsOverview 
+                ? resultsButtons 
+                : isCRCSection 
+                  ? crcButtons 
+                  : participateButtons
+              ).map((button, index) => (
                 <NavButton 
                   key={index}
                   to={isComponentsOverview ? `/${button.to}` : button.to} // Ensure correct paths
                   icon={button.icon}
                   label={button.label}
                   isActive={isButtonActive(button.to)}
-                  onClick={isComponentsOverview ? () => { scrollToSection(button.to); setLastActiveSubbutton(button.to); } : undefined}
+                  onClick={isComponentsOverview || isCRCSection ? () => { scrollToSection(button.to); setLastActiveSubbutton(button.to); } : undefined}
                 />
               ))}
             </div>
