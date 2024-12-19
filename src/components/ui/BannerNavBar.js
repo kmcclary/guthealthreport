@@ -34,15 +34,8 @@ const MainButton = ({ to, icon: Icon, label, isActive, isPrimary, onClick }) => 
       <Icon 
         className="w-6 h-6 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:scale-90"
       />
-      <span 
-        className={`absolute bottom-0 mb-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap
-          ${isPrimary && isActive
-            ? 'group-hover:bg-black group-hover:text-white' 
-            : 'group-hover:bg-white group-hover:text-gray-800'}
-          hidden sm:inline-block`} // Add this line
-      >
-        {label}
-      </span>
+
+
     </Link>
   </li>
 );
@@ -67,9 +60,7 @@ const NavButton = ({ to, icon: Icon, label, isActive, onClick }) => (
             : 'bg-black/20 text-white hover:bg-white/30'}`}
       >
         <Icon className="w-6 h-6 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:scale-90"/>
-        <span className="absolute bottom-0 mb-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap hidden sm:inline-block">
-          {label}
-        </span>
+
       </button>
     ) : (
       <Link 
@@ -80,9 +71,7 @@ const NavButton = ({ to, icon: Icon, label, isActive, onClick }) => (
             : 'bg-black/20 text-white hover:bg-white/30'}`}
       >
         <Icon className="w-6 h-6 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:scale-90"/>
-        <span className="absolute bottom-0 mb-1 text-[8px] sm:text-[8px] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:font-bold group-hover:text-[8px] group-hover:bg-white group-hover:text-gray-800 group-hover:px-2 group-hover:py-1 group-hover:rounded z-50 whitespace-nowrap hidden sm:inline-block">
-          {label}
-        </span>
+
       </Link>
     )}
   </li>
@@ -92,6 +81,7 @@ const BannerNavBar = () => {
   const location = useLocation();
   const [activeSection, setActiveSection] = useState('overview');
   const [lastActiveSubbutton, setLastActiveSubbutton] = useState('overview');
+  const [activeMainButton, setActiveMainButton] = useState('components-overview'); // Add this line
 
   // Add crcPaths array
   const crcPaths = [
@@ -130,20 +120,16 @@ const BannerNavBar = () => {
   ];
 
   // Update isComponentsOverview to include CRC detection
-  const isComponentsOverview = componentsPaths.includes(location.pathname) || location.pathname === '/components-overview';
-  const isCRCSection = location.pathname.startsWith('/crc-detection');
+  const isComponentsOverview = activeMainButton === 'components-overview';
+  const isCRCSection = activeMainButton === 'crc-detection';
 
   // Consolidate the useEffect hooks
   useEffect(() => {
-    // Set initial state when app launches
-    if (location.pathname === '/' || location.pathname === '/components-overview') {
+    // Set Components view as default when app launches
+    if (isComponentsOverview) {
       setActiveSection('overview');
       setLastActiveSubbutton('overview');
-      // Initial scroll to overview section
-      setTimeout(() => scrollToSection('overview'), 100);
-    }
-
-    if (isComponentsOverview) {
+      
       const handleScroll = () => {
         const sections = document.querySelectorAll('.component-section, .crc-section');
         const viewportHeight = window.innerHeight;
@@ -175,7 +161,15 @@ const BannerNavBar = () => {
       setTimeout(handleScroll, 100);
       return () => window.removeEventListener('scroll', handleScroll);
     }
-  }, [location.pathname, isComponentsOverview]);
+  }, [location.pathname, isComponentsOverview, isCRCSection]);
+
+  // Directly set the active state for the Components button on app launch
+  useEffect(() => {
+    if (isComponentsOverview) {
+      setActiveSection('overview');
+      setLastActiveSubbutton('overview');
+    }
+  }, [isComponentsOverview]);
 
   const resultsButtons = [
     { to: "overview", icon: MdDashboard, label: "Overview" },
@@ -207,15 +201,13 @@ const BannerNavBar = () => {
 
   const isParticipateSection = location.pathname === '/gut-health-survey' || 
                               location.pathname === '/biosample-submission' || 
-                              location.pathname === '/health-tracking' ||
-                              location.pathname === '/study-signup' ||
                               isQuizRelatedPath(location.pathname);
 
   // Add this helper function before the return statement
   const isButtonActive = (buttonTo) => {
-    if (isComponentsOverview) {
+    if (activeMainButton === 'components-overview') {
       return activeSection === buttonTo || lastActiveSubbutton === buttonTo;
-    } else if (isCRCSection) {
+    } else if (activeMainButton === 'crc-detection') {
       return activeSection === buttonTo || lastActiveSubbutton === buttonTo;
     } else {
       // Check if the current path matches the button's path or if it's the quiz route
@@ -238,32 +230,33 @@ const BannerNavBar = () => {
               to="/components-overview"
               icon={MdViewList}
               label="Components" 
-              isActive={isComponentsOverview}
+              isActive={activeMainButton === 'components-overview'}
               isPrimary={true}
+              onClick={() => setActiveMainButton('components-overview')}
             />
             <MainButton 
               to="/gut-health-survey"
               icon={MdGroup}
               label="Participate" 
-              isActive={isParticipateSection}
+              isActive={activeMainButton === 'participate'}
               isPrimary={true}
+              onClick={() => setActiveMainButton('participate')}
             />
             <MainButton 
               to="/crc-detection"
               icon={MdMedicalServices}
               label="CRC Detection" 
-              isActive={isCRCSection}
+              isActive={activeMainButton === 'crc-detection'}
               isPrimary={true}
+              onClick={() => setActiveMainButton('crc-detection')}
             />
-            {(!isCRCSection) && (
+            {!isCRCSection && (
               <>
                 <li className="h-9 w-px bg-black/30 mx-1" />
                 <div className="flex space-x-1 overflow-x-hidden">
                   {(isComponentsOverview 
                     ? resultsButtons 
-                    : isParticipateSection
-                      ? participateButtons
-                      : []
+                    : participateButtons
                   ).map((button, index) => (
                     <NavButton 
                       key={index}
@@ -282,7 +275,8 @@ const BannerNavBar = () => {
               to="/settings"
               icon={MdSettings}
               label="Settings" 
-              isActive={location.pathname === '/settings'}
+              isActive={activeMainButton === 'settings'}
+              onClick={() => setActiveMainButton('settings')}
             />
           </ul>
         </nav>
