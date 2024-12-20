@@ -242,14 +242,6 @@ const BannerNavBar = () => {
               isPrimary={true}
               onClick={() => setActiveMainButton('participate')}
             />
-            <MainButton 
-              to="/crc-detection"
-              icon={MdMedicalServices}
-              label="CRC Detection" 
-              isActive={activeMainButton === 'crc-detection'}
-              isPrimary={true}
-              onClick={() => setActiveMainButton('crc-detection')}
-            />
             {!isCRCSection && (
               <>
                 <li className="h-9 w-px bg-black/30 mx-1" />
