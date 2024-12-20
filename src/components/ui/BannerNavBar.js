@@ -174,10 +174,10 @@ const BannerNavBar = () => {
   const resultsButtons = [
     { to: "overview", icon: MdDashboard, label: "Overview" },
     // { to: "level-section", icon: MdTrendingUp, label: "Level" },
-    { to: "achievements", icon: MdHealthAndSafety, label: "Achievements" },
+    // { to: "achievements", icon: MdHealthAndSafety, label: "Achievements" },
     // { to: "enterotype-profile", icon: MdBiotech, label: "Enterotype" },
     { to: "recommendations", icon: MdListAlt, label: "Actions" },
-    { to: "health-metabolism", icon: MdMonitorHeart, label: "Health" },
+    // { to: "health-metabolism", icon: MdMonitorHeart, label: "Health" },
     { to: "gut-personality", icon: MdPsychology, label: "Personality" },
     { to: "pathogen-detection", icon: MdBiotech, label: "Pathogens" },
     // { to: "commensal-microbe-detection", icon: MdScience, label: "Commensals" },

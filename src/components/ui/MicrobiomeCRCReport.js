@@ -797,7 +797,7 @@ const MicrobiomeCRCReport = () => {
       </Card>
 
       {/* Footer */}
-      <div className="text-center text-xs text-gray-500 pt-8 space-y-1">
+      <div className="text-center text-gray-500 pt-8 space-y-1" style={{ fontSize: '0.5rem' }}>
         <p>MicrobiomeScreen™ is a registered trademark of BioTech Diagnostics, Inc.</p>
         <p>For questions, contact your healthcare provider or call (800) 555-1234 (Mon-Fri, 9am-5pm EST).</p>
         <p className="mt-3">Laboratory Director: Jane Smith, MD, PhD • CLIA #: 99D9999999</p>
