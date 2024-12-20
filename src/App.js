@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import BannerNavBar from './components/ui/BannerNavBar';
 import ComponentsOverview from './components/ui/ComponentsOverview'; // Import ComponentsOverview
 import MicrobiomePersonalityV2 from './components/ui/MicrobiomePersonality';
@@ -68,7 +68,7 @@ const reportData = {
 };
 
 const App = () => (
-  <HashRouter>
+  <BrowserRouter basename="/guthealthreport">
     <BannerNavBar />
     <div className="bg-transparent min-h-screen pt-16 md:pt-16 w-full max-w-4xl mx-auto bg-white p-4 md:p-8 space-y-6 md:space-y-8">
       <Routes>
@@ -105,7 +105,7 @@ const App = () => (
         <Route path="*" element={<ComponentsOverview />} />
       </Routes>
     </div>
-  </HashRouter>
+  </BrowserRouter>
 );
 
 export default App;
