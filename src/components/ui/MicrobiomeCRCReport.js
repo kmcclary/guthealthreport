@@ -480,7 +480,7 @@ const MicrobiomeCRCReport = () => {
           </AnalysisDropdown>
 
           <AnalysisDropdown 
-            title="Tier 2: Medium Priority Biomarkers"
+            title="Tier 2: Mid Priority Biomarkers"
             icon={Microscope}
             bgColor="bg-orange-50"
             textColor="text-orange-700"
