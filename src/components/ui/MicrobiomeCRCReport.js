@@ -27,6 +27,7 @@ import {
   Binary,
   ArrowUpCircle,
   ArrowDownCircle,
+  Fingerprint,
 } from 'lucide-react';
 
 const PatientInfoDropdown = ({ patientData }) => {
@@ -39,7 +40,7 @@ const PatientInfoDropdown = ({ patientData }) => {
         className="w-full flex items-center justify-between p-3 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors"
       >
         <span className="font-medium">Patient Information</span>
-        <ChevronDown className={`h-5 w-5 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
+        <ChevronDown className={`h-5 w-5 flex-shrink-0 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
       </button>
       {isOpen && (
         <div className="mt-2 p-4 bg-white rounded-lg shadow-sm space-y-4">
@@ -52,7 +53,7 @@ const PatientInfoDropdown = ({ patientData }) => {
             <p><span className="font-semibold">Report Date:</span> {patientData.reportDate}</p>
           </div>
           <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-900 flex items-start gap-2">
-            <User className="h-5 w-5 text-blue-500 mt-0.5" />
+            <User className="h-5 w-5 flex-shrink-0 text-blue-500 mt-0.5" />
             <div>
               <p className="font-medium">Patient Notes &amp; History:</p>
               <p className="mt-1">
@@ -60,6 +61,30 @@ const PatientInfoDropdown = ({ patientData }) => {
               </p>
             </div>
           </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const AnalysisDropdown = ({ title, icon: Icon, bgColor, textColor, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className={`${bgColor} p-4 rounded-lg`}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between"
+      >
+        <h3 className={`font-medium ${textColor} flex items-center gap-2`}>
+          {Icon && <Icon className="h-5 w-5 flex-shrink-0" />}
+          {title}
+        </h3>
+        <ChevronDown className={`h-5 w-5 flex-shrink-0 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
+      </button>
+      {isOpen && (
+        <div className="mt-4 space-y-2">
+          {children}
         </div>
       )}
     </div>
@@ -184,7 +209,7 @@ const MicrobiomeCRCReport = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-10 bg-gray-50 text-gray-900">
+    <div className="max-w-4xl mx-auto p-6 space-y-5 bg-gray-50 text-gray-900">
       {/* Header Section with Branding and Patient Information Dropdown */}
       <div className="space-y-4">
         <div className="flex items-start gap-2">
@@ -228,7 +253,7 @@ const MicrobiomeCRCReport = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-blue-500" />
-            Comprehensive Risk Assessment Details
+            Risk Assessment Details
           </CardTitle>
           <CardDescription className="mt-2">
             Explore the personalized risk score, test performance metrics, and the CRC-associated microbiome signatures.
@@ -257,39 +282,41 @@ const MicrobiomeCRCReport = () => {
             </div>
 
             {/* Analyzed Markers & Test Performance with added icons and color */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <h3 className="font-medium mb-2 text-blue-900 flex items-center gap-2">
-                  <Circle className="h-5 w-5 text-blue-500" />
-                  Analyzed Biological Markers
-                </h3>
+            <div className="space-y-4">
+              <AnalysisDropdown 
+                title="Analyzed Biological Markers"
+                icon={Fingerprint}
+                bgColor="bg-blue-50"
+                textColor="text-blue-900"
+              >
                 <ul className="space-y-2 text-gray-700 leading-relaxed">
                   <li className="flex items-start gap-2">
-                    <Circle className="h-3 w-3 text-blue-500 flex-shrink-0 mt-1" />
+                    <Fingerprint className="h-3 w-3 text-blue-500 flex-shrink-0 mt-1" />
                     <div>
                       <span className="font-semibold">CRC-Associated Bacterial Taxa:</span> Includes Tier 1 markers like <em>Fusobacterium nucleatum</em> and other species enriched in CRC. These organisms may promote inflammation and tumorigenesis.
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Circle className="h-3 w-3 text-blue-500 flex-shrink-0 mt-1" />
+                    <Fingerprint className="h-3 w-3 text-blue-500 flex-shrink-0 mt-1" />
                     <div>
                       <span className="font-semibold">Functional Pathways:</span> We assess pathways (e.g., putrefaction, gluconeogenesis) and genes (e.g., cutC) known to drive CRC-related metabolic shifts.
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Circle className="h-3 w-3 text-blue-500 flex-shrink-0 mt-1" />
+                    <Fingerprint className="h-3 w-3 text-blue-500 flex-shrink-0 mt-1" />
                     <div>
                       <span className="font-semibold">Inflammatory Indicators:</span> Detection of bacterial species and metabolites contributing to chronic inflammation, a recognized factor in colorectal carcinogenesis.
                     </div>
                   </li>
                 </ul>
-              </div>
+              </AnalysisDropdown>
 
-              <div className="bg-purple-50 p-4 rounded-lg">
-                <h3 className="font-medium mb-2 text-purple-900 flex items-center gap-2">
-                  <Star className="h-5 w-5 text-purple-500" />
-                  Test Performance Highlights
-                </h3>
+              <AnalysisDropdown
+                title="Test Performance Highlights"
+                icon={Star}
+                bgColor="bg-purple-50"
+                textColor="text-purple-900"
+              >
                 <ul className="space-y-2 text-gray-700 leading-relaxed">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-3 w-3 text-purple-500 flex-shrink-0 mt-1" />
@@ -310,7 +337,7 @@ const MicrobiomeCRCReport = () => {
                     </div>
                   </li>
                 </ul>
-              </div>
+              </AnalysisDropdown>
             </div>
 
             <p className="text-gray-600 leading-relaxed">
@@ -342,25 +369,33 @@ const MicrobiomeCRCReport = () => {
                     }`}>
                       {marker.name}
                     </h3>
-                    <p className="text-gray-600 text-xs sm:text-sm">{marker.description}</p>
+                    <p className="text-gray-600" style={{ fontSize: '0.7rem' }}>{marker.description}</p>
                   </div>
                   <div className="flex flex-col items-end">
-                  <span className="text-xs xs:text-sm text-gray-500 mt-1">
+                  <span className="text-gray-500 mt-1" style={{ fontSize: '0.6rem' }}>
                     Significance:
                     </span>
                     {renderStatus(marker.status)}
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex justify-between text-xs sm:text-sm text-gray-600 mb-1">
+                  <div className="flex justify-between text-gray-600 mb-1" style={{ fontSize: '0.6rem' }}>
                     <div className="flex items-center gap-2">
                       <TestTube className="h-4 w-4 text-blue-500" />
-                      <span>Patient Value: {marker.value} {marker.unit}</span>
+                        <span>
+                          Patient Value:<br />
+                          {marker.value} {marker.unit}
+                        </span>
                     </div>
                     <div className="flex items-center gap-2">
+                      <span style={{ textAlign: 'right', display: 'block', width: '100%' }}>
+                        Reference Range: <br />
+                        {marker.referenceRange}
+                      </span>
                       <Target className="h-4 w-4 text-green-500" />
-                      <span>Reference Range: {marker.referenceRange}</span>
+
                     </div>
+
                   </div>
                   {renderGradientMeter(marker.value, marker.referenceRange, marker.status)}
                 </div>
@@ -383,63 +418,26 @@ const MicrobiomeCRCReport = () => {
         </CardContent>
       </Card>
 
-      {/* Biomarker Tier Overview with added icon */}
-      <Card className="bg-white">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sun className="h-5 w-5 text-yellow-500" />
-            Microbiome Biomarker Tiers
-          </CardTitle>
-          <CardDescription className="mt-2">
-            Understanding the priority tiers of CRC-associated biomarkers
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-sm text-gray-700 leading-relaxed space-y-4">
-          <p>
-            Biomarkers are grouped based on strength of evidence, reproducibility, and effect size. Tier 1 biomarkers (e.g., <em>Fusobacterium nucleatum</em>) are consistently reported across studies and strongly associated with CRC.
-          </p>
-          <ul className="list-disc list-inside space-y-1">
-            <li>
-              <span className="font-semibold">Tier 1 (High Priority):</span> 
-              <em> Fusobacterium nucleatum</em>, <em>Solobacterium moorei</em>, <em>Porphyromonas asaccharolytica</em>, <em>Parvimonas micra</em>, and the <em>cutC</em> gene.
-            </li>
-            <li>
-              <span className="font-semibold">Tier 2 (Moderate Priority):</span> 
-              <em> Clostridium symbiosum</em>, gluconeogenesis pathways, and control-associated species like <em>Bifidobacterium catenulatum</em> (depleted in CRC).
-            </li>
-            <li>
-              <span className="font-semibold">Tier 3 (Lower Priority):</span> 
-              Additional species (e.g., <em>Fusobacterium mortiferum</em>, <em>Anaerococcus vaginalis</em>) and less consistently enriched biomarkers.
-            </li>
-            <li>
-              <span className="font-semibold">Tier 4 (Adenoma-Focused):</span> 
-              Metabolites like secondary bile acids and polyamines that may be relevant for early adenoma detection.
-            </li>
-          </ul>
-          <p>
-            These categorizations guide clinicians and researchers in prioritizing confirmatory tests, tailoring interventions, and informing future research directions.
-          </p>
-        </CardContent>
-      </Card>
+
 
       {/* Detailed Taxa Section */}
       <Card className="bg-white">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CircuitBoard className="h-5 w-5 text-purple-600" /> {/* Changed from Bacteria */}
-            Bacterial Taxa Associated with CRC &amp; Controls
+            Bacterial Association Tiers
           </CardTitle>
           <CardDescription className="mt-2">
             Detailed information on bacterial taxa enriched in CRC and control samples
           </CardDescription>
         </CardHeader>
         <CardContent className="text-sm text-gray-700 leading-relaxed space-y-6">
-          {/* Tier 1 Biomarkers */}
-          <div className="bg-red-50 p-4 rounded-lg">
-            <h3 className="font-medium text-gray-900 flex items-center gap-2 mb-2">
-              <Crown className="h-5 w-5 text-red-500" />
-              <span>Tier 1: High Priority Biomarkers</span>
-            </h3>
+          <AnalysisDropdown 
+            title="Tier 1: High Priority Biomarkers"
+            icon={Crown}
+            bgColor="bg-red-50"
+            textColor="text-red-700"
+          >
             <p className="text-red-700 mb-3">Strong evidence, high effect sizes, and reproducible associations with CRC.</p>
             <ul className="list-none space-y-3">
               {/* Convert list items to custom styled components */}
@@ -480,14 +478,14 @@ const MicrobiomeCRCReport = () => {
                 </div>
               </li>
             </ul>
-          </div>
+          </AnalysisDropdown>
 
-          {/* Tier 2 Biomarkers */}
-          <div className="bg-orange-50 p-4 rounded-lg">
-            <h3 className="font-medium text-gray-900 flex items-center gap-2 mb-2">
-              <Microscope className="h-5 w-5 text-orange-500" />
-              <span>Tier 2: Moderate Priority Biomarkers</span>
-            </h3>
+          <AnalysisDropdown 
+            title="Tier 2: Moderate Priority Biomarkers"
+            icon={Microscope}
+            bgColor="bg-orange-50"
+            textColor="text-orange-700"
+          >
             <p className="text-orange-700 mb-3">Good evidence with lower effect sizes and some variability.</p>
             <ul className="list-none space-y-3">
               <li className="flex items-start gap-2">
@@ -521,14 +519,14 @@ const MicrobiomeCRCReport = () => {
                 </div>
               </li>
             </ul>
-          </div>
+          </AnalysisDropdown>
 
-          {/* Tier 3 Biomarkers */}
-          <div className="bg-yellow-50 p-4 rounded-lg">
-            <h3 className="font-medium text-gray-900 flex items-center gap-2 mb-2">
-              <TestTube className="h-5 w-5 text-yellow-600" /> {/* Changed from Flask */}
-              <span>Tier 3: Lower Priority Biomarkers</span>
-            </h3>
+          <AnalysisDropdown 
+            title="Tier 3: Lower Priority Biomarkers"
+            icon={TestTube}
+            bgColor="bg-yellow-50"
+            textColor="text-yellow-700"
+          >
             <p className="text-yellow-700 mb-3">Limited evidence with more variable associations.</p>
             <ul className="list-none space-y-3">
               <li className="flex items-start gap-2">
@@ -568,14 +566,14 @@ const MicrobiomeCRCReport = () => {
                 </div>
               </li>
             </ul>
-          </div>
+          </AnalysisDropdown>
 
-          {/* Tier 4 Biomarkers */}
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <h3 className="font-medium text-gray-900 flex items-center gap-2 mb-2">
-              <BadgeAlert className="h-5 w-5 text-blue-500" />
-              <span>Tier 4: Markers for Adenoma Testing</span>
-            </h3>
+          <AnalysisDropdown 
+            title="Tier 4: Markers for Adenoma Testing"
+            icon={BadgeAlert}
+            bgColor="bg-blue-50"
+            textColor="text-blue-700"
+          >
             <p className="text-blue-700 mb-3">Potential indicators of early metabolic dysbiosis.</p>
             <ul className="list-none space-y-3">
               <li className="flex items-start gap-2">
@@ -591,34 +589,14 @@ const MicrobiomeCRCReport = () => {
                 </div>
               </li>
             </ul>
-          </div>
-
-          {/* Additional Notes in a different style */}
-          <div className="bg-green-50 p-4 rounded-lg space-y-3">
-            <h3 className="font-medium text-gray-900 flex items-center gap-2">
-              <Info className="h-5 w-5 text-green-600" />
-              <span>Additional Insights</span>
-            </h3>
-            <div className="flex items-start gap-2">
-              <ArrowUpCircle className="h-4 w-4 text-green-600 mt-1" />
-              <p>
-                <span className="font-semibold">Oral Species:</span> Increased oral species richness and abundance are observed in CRC, suggesting possible translocation of oral bacteria to the gut environment.
-              </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <ArrowDownCircle className="h-4 w-4 text-green-600 mt-1" />
-              <p>
-                <span className="font-semibold">Control-Enriched Taxa:</span> Species like <em>Gordonibacter pamelaeae</em> and <em>Bifidobacterium longum</em> are generally beneficial and more abundant in healthy controls.
-              </p>
-            </div>
-          </div>
+          </AnalysisDropdown>
         </CardContent>
       </Card>
 
       {/* Functional Pathways & Genes */}
       <Card className="bg-white">
         <CardHeader>
-          <CardTitle>Functional Pathways &amp; Microbial Genes</CardTitle>
+          <CardTitle>Functional Pathways &amp; Genes</CardTitle>
           <CardDescription className="mt-2">
             Metabolic and genetic signatures shaping CRC-associated microbiomes
           </CardDescription>
@@ -706,7 +684,7 @@ const MicrobiomeCRCReport = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <HelpCircle className="h-5 w-5 text-green-600" />
-            Frequently Asked Questions (FAQ)
+            Frequently Asked Questions
           </CardTitle>
           <CardDescription className="mt-2">
             Clarifications for common patient concerns
@@ -737,7 +715,7 @@ const MicrobiomeCRCReport = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-indigo-600" />
-            Additional Resources, Methodology &amp; References
+            Resources &amp; References
           </CardTitle>
           <CardDescription className="mt-2">
             Further reading on the science behind MicrobiomeScreen™
@@ -752,19 +730,19 @@ const MicrobiomeCRCReport = () => {
           </p>
           <p className="font-medium">Peer-Reviewed Literature &amp; Guidelines:</p>
           <ul className="list-disc list-inside mt-1 space-y-1">
-            <li>Chen, W., Liu, F., Ling, Z., Tong, X., & Xiang, C. (2022). “Gut Microbiome Signatures of Colorectal Cancer.” <em>Gastroenterology</em>, 162(4), 1232-1245.</li>
-            <li>Liang, Q., Chiu, J., Chen, Y., Huang, Y., Higashimori, A., Fang, J., Brim, H., Ashktorab, H., Ng, S.C., Ng, S.S.M., Zheng, S., Chan, F.K.L., Sung, J.J.Y., & Yu, J. (2021). “Microbial Markers for Early Detection of Colorectal Neoplasia.” <em>Nature Medicine</em>, 27(10), 1834-1842.</li>
-            <li>Wirbel, J., Pyl, P.T., Kartal, E., Zych, K., Kashani, A., Milanese, A., Fleck, J.S., Voigt, A.Y., Palleja, A., Ponnudurai, R., Sunagawa, S., Coelho, L.P., Schrotz-King, P., Vogtmann, E., Habermann, N., Niméus, E., Thomas, A.M., Manghi, P., Gandini, S., ... Zeller, G. (2019). “Meta-analysis of fecal metagenomes reveals global microbial signatures that are specific for colorectal cancer.” <em>Nature Medicine</em>, 25(4), 679-689.</li>
-            <li>Yachida, S., Mizutani, S., Shiroma, H., Shiba, S., Nakajima, T., Sakamoto, T., Watanabe, H., Masuda, K., Nishimoto, Y., Kubo, M., Hosoda, F., Rokutan, H., Matsumoto, M., Takamaru, H., Yamada, M., Matsuda, T., Iwasaki, M., Yamaji, T., Yachida, T., ... Yamada, T. (2019). “Metagenomic and metabolomic analyses reveal distinct stage-specific phenotypes of the gut microbiota in colorectal cancer.” <em>Nature Medicine</em>, 25(6), 968-976.</li>
-            <li>Feng, Q., Liang, S., Jia, H., Stadlmayr, A., Tang, L., Lan, Z., Zhang, D., Xia, H., Xu, X., Jie, Z., Su, L., Li, X., Li, X., Li, J., Xiao, L., Huber-Schönauer, U., Niederseer, D., Xu, X., Al-Aama, J.Y., ... Wang, J. (2015). “Gut microbiome development along the colorectal adenoma-carcinoma sequence.” <em>Nature Communications</em>, 6, 6528.</li>
-            <li>Zackular, J.P., Rogers, M.A., Ruffin, M.T., & Schloss, P.D. (2014). “The human gut microbiome as a screening tool for colorectal cancer.” <em>Cancer Prevention Research</em>, 7(11), 1112-1121.</li>
-            <li>Thomas, A.M., Manghi, P., Asnicar, F., Pasolli, E., Armanini, F., Zolfo, M., Beghini, F., Manara, S., Karcher, N., Pozzi, C., Gandini, S., Serrano, D., Tarallo, S., Francavilla, A., Gallo, G., Trompetto, M., Ferrero, G., Mizutani, S., Shiroma, H., ... Segata, N. (2019). “Metagenomic analysis of colorectal cancer datasets identifies cross-cohort microbial diagnostic signatures and a link with choline degradation.” <em>Nature Medicine</em>, 25(4), 667-678.</li>
-            <li>Dai, Z., Coker, O.O., Nakatsu, G., Wu, W.K.K., Zhao, L., Chen, Z., Chan, F.K.L., Kristiansen, K., Sung, J.J.Y., Wong, S.H., & Yu, J. (2018). “Multi-cohort analysis of colorectal cancer metagenome identified altered bacteria across populations and universal bacterial markers.” <em>Microbiome</em>, 6(1), 70.</li>
-            <li>Flemer, B., Lynch, D.B., Brown, J.M., Jeffery, I.B., Ryan, F.J., Claesson, M.J., O'Riordain, M., Shanahan, F., & O'Toole, P.W. (2017). “Tumour-associated and non-tumour-associated microbiota in colorectal cancer.” <em>Gut</em>, 66(4), 633-643.</li>
-            <li>Baxter, N.T., Ruffin, M.T., Rogers, M.A., & Schloss, P.D. (2016). “Microbiota-based model improves the sensitivity of fecal immunochemical test for detecting colonic lesions.” <em>Genome Medicine</em>, 8(1), 37.</li>
-            <li>Kostic, A.D., Gevers, D., Pedamallu, C.S., Michaud, M., Duke, F., Earl, A.M., Ojesina, A.I., Jung, J., Bass, A.J., Tabernero, J., Baselga, J., Liu, C., Shivdasani, R.A., Ogino, S., Birren, B.W., Huttenhower, C., Garrett, W.S., & Meyerson, M. (2012). “Genomic analysis identifies association of Fusobacterium with colorectal carcinoma.” <em>Genome Research</em>, 22(2), 292-298.</li>
-            <li>Yu, J., Feng, Q., Wong, S.H., Zhang, D., Liang, Q.Y., Qin, Y., Tang, L., Zhao, H., Stenvang, J., Li, Y., Wang, X., Xu, X., Chen, N., Wu, W.K., Al-Aama, J., Nielsen, H.J., Kiilerich, P., Jensen, B.A., Yau, T.O., ... Wang, J. (2017). “Metagenomic analysis of faecal microbiome as a tool towards targeted non-invasive biomarkers for colorectal cancer.” <em>Gut</em>, 66(1), 70-78.</li>
-            <li>Zeller, G., Tap, J., Voigt, A.Y., Sunagawa, S., Kultima, J.R., Costea, P.I., Amiot, A., Böhm, J., Brunetti, F., Habermann, N., Hercog, R., Koch, M., Luciani, A., Mende, D.R., Schneider, M.A., Schrotz-King, P., Tournigand, C., Tran Van Nhieu, J., Yamada, T., ... Bork, P. (2014). “Potential of fecal microbiota for early-stage detection of colorectal cancer.” <em>Molecular Systems Biology</em>, 10(11), 766.</li>
+            <li>Chen, W., et al. (2022). “Gut Microbiome Signatures of Colorectal Cancer.” <em>Gastroenterology</em>, 162(4), 1232-1245.</li>
+            <li>Liang, Q., et al. (2021). “Microbial Markers for Early Detection of Colorectal Neoplasia.” <em>Nature Medicine</em>, 27(10), 1834-1842.</li>
+            <li>Wirbel, J., et al. (2019). “Meta-analysis of fecal metagenomes reveals global microbial signatures that are specific for colorectal cancer.” <em>Nature Medicine</em>, 25(4), 679-689.</li>
+            <li>Yachida, S., et al. (2019). “Metagenomic and metabolomic analyses reveal distinct stage-specific phenotypes of the gut microbiota in colorectal cancer.” <em>Nature Medicine</em>, 25(6), 968-976.</li>
+            <li>Feng, Q., et al. (2015). “Gut microbiome development along the colorectal adenoma-carcinoma sequence.” <em>Nature Communications</em>, 6, 6528.</li>
+            <li>Zackular, J.P., et al. (2014). “The human gut microbiome as a screening tool for colorectal cancer.” <em>Cancer Prevention Research</em>, 7(11), 1112-1121.</li>
+            <li>Thomas, A.M., et al. (2019). “Metagenomic analysis of colorectal cancer datasets identifies cross-cohort microbial diagnostic signatures and a link with choline degradation.” <em>Nature Medicine</em>, 25(4), 667-678.</li>
+            <li>Dai, Z., et al. (2018). “Multi-cohort analysis of colorectal cancer metagenome identified altered bacteria across populations and universal bacterial markers.” <em>Microbiome</em>, 6(1), 70.</li>
+            <li>Flemer, B., et al. (2017). “Tumour-associated and non-tumour-associated microbiota in colorectal cancer.” <em>Gut</em>, 66(4), 633-643.</li>
+            <li>Baxter, N.T., et al. (2016). “Microbiota-based model improves the sensitivity of fecal immunochemical test for detecting colonic lesions.” <em>Genome Medicine</em>, 8(1), 37.</li>
+            <li>Kostic, A.D., et al. (2012). “Genomic analysis identifies association of Fusobacterium with colorectal carcinoma.” <em>Genome Research</em>, 22(2), 292-298.</li>
+            <li>Yu, J., et al. (2017). “Metagenomic analysis of faecal microbiome as a tool towards targeted non-invasive biomarkers for colorectal cancer.” <em>Gut</em>, 66(1), 70-78.</li>
+            <li>Zeller, G., et al. (2014). “Potential of fecal microbiota for early-stage detection of colorectal cancer.” <em>Molecular Systems Biology</em>, 10(11), 766.</li>
           </ul>
           <p>
             Additional materials, including patient support and educational resources, can be found at the 
@@ -797,7 +775,7 @@ const MicrobiomeCRCReport = () => {
       </Card>
 
       {/* Footer */}
-      <div className="text-center text-gray-500 pt-8 space-y-1" style={{ fontSize: '0.5rem' }}>
+      <div className="text-center text-gray-500 pt-1 space-y-1" style={{ fontSize: '0.5rem' }}>
         <p>MicrobiomeScreen™ is a registered trademark of BioTech Diagnostics, Inc.</p>
         <p>For questions, contact your healthcare provider or call (800) 555-1234 (Mon-Fri, 9am-5pm EST).</p>
         <p className="mt-3">Laboratory Director: Jane Smith, MD, PhD • CLIA #: 99D9999999</p>
