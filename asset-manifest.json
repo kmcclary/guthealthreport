@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/guthealthreport/static/css/main.b7a146a1.css",
-    "main.js": "/guthealthreport/static/js/main.957a6dcd.js",
+    "main.js": "/guthealthreport/static/js/main.a3c3e44f.js",
     "static/media/zl.png": "/guthealthreport/static/media/zl.6264465750bd10702e7d.png",
     "index.html": "/guthealthreport/index.html",
     "main.b7a146a1.css.map": "/guthealthreport/static/css/main.b7a146a1.css.map",
-    "main.957a6dcd.js.map": "/guthealthreport/static/js/main.957a6dcd.js.map"
+    "main.a3c3e44f.js.map": "/guthealthreport/static/js/main.a3c3e44f.js.map"
   },
   "entrypoints": [
     "static/css/main.b7a146a1.css",
-    "static/js/main.957a6dcd.js"
+    "static/js/main.a3c3e44f.js"
   ]
 }
