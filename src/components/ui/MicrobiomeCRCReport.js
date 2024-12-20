@@ -610,7 +610,7 @@ const MicrobiomeCRCReport = () => {
 
     {/* CRC-Associated Functional Pathways */}
     <AnalysisDropdown
-      title="CRC-Associated Functional Pathways"
+      title="CRC-Associated Pathways"
       icon={ArrowUpCircle}
       bgColor="bg-red-50"
       textColor="text-red-700"
@@ -657,43 +657,43 @@ const MicrobiomeCRCReport = () => {
     <AnalysisDropdown
       title="CRC-Associated Genes"
       icon={Binary}
-      bgColor="bg-red-50"
-      textColor="text-red-700"
+      bgColor="bg-orange-50"
+      textColor="text-orange-700"
     >
-      <p className="text-red-700 mb-3">
+      <p className="text-orange-700 mb-3">
         Genetic markers in the microbiome influence metabolite profiles and tumor promotion.
       </p>
       <ul className="list-none space-y-3 text-gray-700">
         <li className="flex items-start gap-2">
-          <Fingerprint className="h-4 w-4 text-red-500 mt-1" />
+          <Fingerprint className="h-4 w-4 text-orange-500 mt-1" />
           <div>
             <span className="font-semibold">Choline Trimethylamine-Lyase (cutC, cutD):</span> 
             Overabundant in CRC, these genes convert choline into trimethylamine (TMA), a precursor to TMAO, which can aggravate vascular inflammation and potentially support tumorigenesis.
           </div>
         </li>
         <li className="flex items-start gap-2">
-          <Fingerprint className="h-4 w-4 text-red-500 mt-1" />
+          <Fingerprint className="h-4 w-4 text-orange-500 mt-1" />
           <div>
             <span className="font-semibold">Expansions in UniRef Gene Families:</span> 
             CRC microbiomes often show a broad genomic expansion, reflecting microbial adaptability within the tumor microenvironment and fostering conditions that promote cancer progression.
           </div>
         </li>
         <li className="flex items-start gap-2">
-          <Fingerprint className="h-4 w-4 text-red-500 mt-1" />
+          <Fingerprint className="h-4 w-4 text-orange-500 mt-1" />
           <div>
             <span className="font-semibold">Virulence &amp; Toxin Genes (e.g., fadA, bft, pks):</span>
             These genes are linked to microbial virulence factors such as adhesins and enterotoxins from species like <em>Fusobacterium nucleatum</em> and <em>Bacteroides fragilis</em>, enhancing tumor-promoting inflammatory responses.
           </div>
         </li>
       </ul>
-      <div className="mt-3 p-2 bg-red-100 text-red-800 text-xs rounded-md">
+      <div className="mt-3 p-2 bg-orange-100 text-red-800 text-xs rounded-md">
         <strong>Clinical Insight:</strong> Identifying gene-level shifts provides biomarkers for early detection and potential therapeutic targets. Future interventions may modulate these gene functions via tailored probiotics or precision antibiotics.
       </div>
     </AnalysisDropdown>
 
     {/* Control-Associated Functional Pathways */}
     <AnalysisDropdown
-      title="Control-Associated Functional Pathways"
+      title="Control-Associated Pathways"
       icon={ArrowDownCircle}
       bgColor="bg-green-50"
       textColor="text-green-700"
@@ -765,7 +765,7 @@ const MicrobiomeCRCReport = () => {
 
     {/* Integrating Research & Future Directions */}
     <AnalysisDropdown
-      title="Integrating Research & Future Directions"
+      title="Research & Future Directions"
       icon={Crown}
       bgColor="bg-blue-50"
       textColor="text-blue-700"
