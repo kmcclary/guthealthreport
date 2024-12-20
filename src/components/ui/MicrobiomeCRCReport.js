@@ -250,7 +250,7 @@ const MicrobiomeCRCReport = () => {
       </Card>
 
       {/* Risk Assessment Details with added icon */}
-      <Card className="bg-white">
+      <Card className="bg-white border-t-4 border-t-blue-500">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-blue-500" />
@@ -349,7 +349,7 @@ const MicrobiomeCRCReport = () => {
       </Card>
 
       {/* Microbial Markers Detail with added icon */}
-      <Card className="bg-white">
+      <Card className="bg-white border-t-4 border-t-amber-500">
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-amber-500" />
@@ -420,7 +420,7 @@ const MicrobiomeCRCReport = () => {
 
 
       {/* Detailed Taxa Section */}
-      <Card className="bg-white">
+      <Card className="bg-white border-t-4 border-t-purple-500">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CircuitBoard className="h-5 w-5 text-purple-600" /> {/* Changed from Bacteria */}
@@ -593,8 +593,7 @@ const MicrobiomeCRCReport = () => {
       </Card>
 
 {/* Functional Pathways & Genes */}
-{/* Functional Pathways & Genes */}
-<Card className="bg-white">
+<Card className="bg-white border-t-4 border-t-gray-500">
   <CardHeader>
     <CardTitle className="flex items-center gap-2">
       <HeartPulse className="h-5 w-5 text-gray-600" /> {/* Added icon */}
@@ -806,7 +805,7 @@ const MicrobiomeCRCReport = () => {
 </Card>
 
       {/* Understanding Your Results */}
-      <Card className="bg-white">
+      <Card className="bg-white border-t-4 border-t-blue-600">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Info className="h-5 w-5 text-blue-600" /> {/* Added icon */}
@@ -853,7 +852,7 @@ const MicrobiomeCRCReport = () => {
       </Card>
 
       {/* FAQ Section */}
-      <Card className="bg-white">
+      <Card className="bg-white border-t-4 border-t-green-600">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <HelpCircle className="h-5 w-5 text-green-600" /> {/* Added icon */}
@@ -883,9 +882,8 @@ const MicrobiomeCRCReport = () => {
         </CardContent>
       </Card>
 
-      {/* Additional Resources, Methodology & References */}
 {/* Additional Resources, Methodology & References */}
-<Card className="bg-white">
+<Card className="bg-white border-t-4 border-t-indigo-600">
   <CardHeader>
     <CardTitle className="flex items-center gap-2">
       <BookOpen className="h-5 w-5 text-indigo-600" />
@@ -1064,7 +1062,7 @@ const MicrobiomeCRCReport = () => {
 </Card>
 
       {/* Data Privacy & Compliance */}
-      <Card className="bg-white">
+      <Card className="bg-white border-t-4 border-t-blue-600">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-blue-600" /> {/* Added icon */}
