@@ -382,7 +382,7 @@ const MicrobiomeCRCReport = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between text-gray-600 mb-1" style={{ fontSize: '0.6rem' }}>
                     <div className="flex items-center gap-1">
-                      <TestTube className="h-5 w-5 text-blue-500" />
+                      <TestTube className="h-5 w-5 text-gray-500" />
                       <span className="md:text-xs">
                         Patient Value:<br />
                         {marker.value} {marker.unit}
@@ -393,7 +393,7 @@ const MicrobiomeCRCReport = () => {
                         Reference Range: <br />
                         {marker.referenceRange}
                       </span>
-                      <Target className="h-5 w-5 text-green-500" />
+                      <Target className="h-5 w-5 text-gray-500" />
                     </div>
                   </div>
                   {renderGradientMeter(marker.value, marker.referenceRange, marker.status)}
